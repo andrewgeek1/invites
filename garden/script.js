@@ -41,8 +41,12 @@
   }
 
   /* ── порядковый номер для ступенчатого появления списков ── */
-  document.querySelectorAll('.clock li, .asks li').forEach(function (li, i) {
-    li.style.setProperty('--i', i % 6);
+  document.querySelectorAll('.clock, .asks').forEach(function (list) {
+    Array.prototype.forEach.call(list.children, function (li, i) {
+      /* нумеруем каждый список отдельно; потолок, а не остаток —
+         иначе длинный список заворачивается в 0 и ломает порядок */
+      li.style.setProperty('--i', i < 5 ? i : 5);
+    });
   });
 
   function measure() {
