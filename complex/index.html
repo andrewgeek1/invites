@@ -20,7 +20,7 @@
 <!-- ======================= 01 HERO ======================= -->
 <header class="hero" id="top">
   <div class="hero__media">
-    <img src="assets/hero.jpg" alt="Артём и Ксения вечером под гирляндами" fetchpriority="high">
+    <img decoding="async" src="assets/hero.jpg" alt="Артём и Ксения вечером под гирляндами" fetchpriority="high">
     <div class="hero__veil"></div>
   </div>
 
@@ -47,7 +47,7 @@
   </div>
 
   <div class="hero__content">
-    <p class="label rise" style="--d:300ms" data-en="11 September 2027 / Saturday">11&nbsp;сентября 2027 / суббота</p>
+    <p class="label rise" style="--d:300ms" data-dt="full-dow" data-en="11 September 2027 / Saturday">11&nbsp;сентября 2027 / суббота</p>
     <h1 class="rise" style="--d:520ms" data-en="Artyom&amp;nbsp;&amp;&amp;nbsp;Ksenia">Артём&nbsp;и&nbsp;Ксения</h1>
     <p class="hero__where rise" style="--d:700ms" data-en="Osinki Estate — 24 km from Nizhny Novgorod">Усадьба «Осинки» — 24&nbsp;км от&nbsp;Нижнего&nbsp;Новгорода</p>
     <div class="hero__act rise" style="--d:880ms">
@@ -55,7 +55,7 @@
         <span class="btn__fill"></span>
         <span class="btn__label" data-en="Confirm I'm coming">Подтвердить, что приду</span>
       </a>
-      <p class="friction" data-en="We need your answer by 28 August">Ответ нужен до&nbsp;28&nbsp;августа</p>
+      <p class="friction" data-dt="need-by" data-en="We need your answer by 28 August">Ответ нужен до&nbsp;28&nbsp;августа</p>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
 <!-- sticky mini-bar -->
 <div class="dock" id="dock" aria-hidden="true">
   <a class="dock__name" href="#top" data-en="Artyom&amp;nbsp;&amp;&amp;nbsp;Ksenia">Артём&nbsp;и&nbsp;Ксения</a>
-  <span class="dock__date" data-en="11.09.2027 / Osinki Estate">11.09.2027 / усадьба «Осинки»</span>
+  <span class="dock__date" data-dt="dock" data-en="11.09.2027 / Osinki Estate">11.09.2027 / усадьба «Осинки»</span>
   <a class="btn btn--fill btn--sm" href="#rsvp">
     <span class="btn__fill"></span>
     <span class="btn__label" data-en="Reply">Ответить</span>
@@ -80,7 +80,7 @@
     <div class="invite__text">
       <p class="label rise" data-en="01 / Invitation">01 / Приглашение</p>
       <h2 class="rise" style="--d:80ms" data-en="We are gathering the people closest to&amp;nbsp;us, so that this day stays a&amp;nbsp;shared one.">Мы собираем самых близких, чтобы этот день остался&nbsp;общим.</h2>
-      <p class="lead rise" style="--d:160ms" data-en="We have been together eight years and have long stopped counting anniversaries. But there is one day we want to spend with everyone who matters to us — all in one place, at one long table.">Мы вместе восемь лет и давно перестали считать годовщины. Но есть один день, который хочется провести со&nbsp;всеми, кто нам дорог — в&nbsp;одном месте, за&nbsp;одним длинным столом.</p>
+      <p class="lead rise" style="--d:160ms" data-en="Eight years together. One day we want to spend with everyone who matters to us — at one long table.">Восемь лет вместе. Один день, который хочется провести со&nbsp;всеми, кто нам дорог&nbsp;— за&nbsp;одним длинным столом.</p>
       <p class="sign rise" style="--d:240ms" data-en="Artyom &amp; Ksenia">Артём и&nbsp;Ксения</p>
     </div>
 
@@ -88,8 +88,8 @@
       <div class="key__row rise" style="--d:120ms">
         <dt data-en="When">Когда</dt>
         <dd>
-          <b data-en="11 September 2027">11 сентября 2027</b>
-          <span data-en="Saturday, guests arrive at 15:00">Суббота, сбор гостей в&nbsp;15:00</span>
+          <b data-dt="full" data-en="11 September 2027">11 сентября 2027</b>
+          <span data-dt="arrive" data-en="Saturday, guests arrive at 15:00">Суббота, сбор гостей в&nbsp;15:00</span>
         </dd>
       </div>
       <div class="key__row rise" style="--d:200ms">
@@ -102,7 +102,7 @@
       <div class="key__row rise" style="--d:280ms">
         <dt data-en="Reply">Ответить</dt>
         <dd>
-          <b data-en="by 28 August">до&nbsp;28&nbsp;августа</b>
+          <b data-dt="by" data-en="by 28 August">до&nbsp;28&nbsp;августа</b>
           <span data-en="The form is at the bottom of this page, about a minute">Форма внизу страницы, около минуты</span>
         </dd>
       </div>
@@ -110,7 +110,7 @@
   </div>
 
   <figure class="invite__band rise" style="--d:160ms">
-    <img src="assets/invite.jpg" alt="Гирлянды между деревьев в вечернем саду" loading="lazy">
+    <img decoding="async" src="assets/invite.jpg" alt="Гирлянды между деревьев в вечернем саду" loading="lazy">
   </figure>
 </section>
 
@@ -144,27 +144,27 @@
       <p class="reel__hint" data-en="Scroll — the film moves">Листайте — плёнка едет</p>
     </div>
     <div class="reel__track" id="reelTrack">
-      <figure class="frame"><img src="assets/gal-3.jpg" alt="Гости поднимают бокалы в тёплом свете" loading="lazy"><figcaption>
+      <figure class="frame"><img decoding="async" src="assets/gal-3.jpg" alt="Гости поднимают бокалы в тёплом свете" loading="lazy"><figcaption>
         <span class="frame__top"><b>2019</b><i></i><span data-en="Rozhdestvenskaya">Рождественская</span></span>
         <span class="frame__note" data-en="She took the last free table. He asked whether the second seat was taken.">Она заняла последний свободный столик. Он спросил, свободно&nbsp;ли второе место.</span>
       </figcaption></figure>
-      <figure class="frame frame--tall"><img src="assets/gal-6.jpg" alt="Силуэт пары в вечернем свете" loading="lazy"><figcaption>
+      <figure class="frame frame--tall"><img decoding="async" src="assets/gal-6.jpg" alt="Силуэт пары в вечернем свете" loading="lazy"><figcaption>
         <span class="frame__top"><b>2021</b><i></i><span data-en="Karelia">Карелия</span></span>
         <span class="frame__note" data-en="The first trip together. Three days of rain, one gas burner, not a single argument.">Первая поездка вдвоём. Трое суток дождя, одна горелка, ни&nbsp;одной ссоры.</span>
       </figcaption></figure>
-      <figure class="frame"><img src="assets/gal-1.jpg" alt="Аллея со свечами в вечернем саду" loading="lazy"><figcaption>
+      <figure class="frame"><img decoding="async" src="assets/gal-1.jpg" alt="Аллея со свечами в вечернем саду" loading="lazy"><figcaption>
         <span class="frame__top"><b>2022</b><i></i><span data-en="First winter">Первая зима</span></span>
         <span class="frame__note" data-en="The lights over the kitchen stayed up until April. They have stayed up every year since.">Гирлянды на&nbsp;кухне не&nbsp;сняли до&nbsp;апреля. С&nbsp;тех пор так и&nbsp;повелось.</span>
       </figcaption></figure>
-      <figure class="frame frame--tall"><img src="assets/gal-5.jpg" alt="Одна свеча в темноте" loading="lazy"><figcaption>
+      <figure class="frame frame--tall"><img decoding="async" src="assets/gal-5.jpg" alt="Кот в открытом окне, за ним тёплый свет комнаты" loading="lazy"><figcaption>
         <span class="frame__top"><b>2023</b><i></i><span data-en="Kovalikha">Ковалиха</span></span>
         <span class="frame__note" data-en="Two rooms, a window facing the courtyard, and Tikhon the cat, who moved in on his own.">Две комнаты, окно во&nbsp;двор и&nbsp;кот Тихон, который въехал сам.</span>
       </figcaption></figure>
-      <figure class="frame"><img src="assets/gal-4.jpg" alt="Длинный стол при свечах" loading="lazy"><figcaption>
+      <figure class="frame"><img decoding="async" src="assets/gal-4.jpg" alt="Длинный стол при свечах" loading="lazy"><figcaption>
         <span class="frame__top"><b>2025</b><i></i><span data-en="One long table">Общий стол</span></span>
         <span class="frame__note" data-en="We realised everyone who matters to us fits around one table.">Поняли, что за&nbsp;одним столом с&nbsp;нами помещаются все, кто нужен.</span>
       </figcaption></figure>
-      <figure class="frame frame--tall"><img src="assets/gal-2.jpg" alt="Гости с бенгальскими огнями" loading="lazy"><figcaption>
+      <figure class="frame frame--tall"><img decoding="async" src="assets/gal-2.jpg" alt="Гости с бенгальскими огнями" loading="lazy"><figcaption>
         <span class="frame__top"><b>2026</b><i></i><span data-en="The proposal">Предложение</span></span>
         <span class="frame__note" data-en="The same coffee shop, the same corner table. This time the seat had been reserved.">Та&nbsp;же кофейня, тот&nbsp;же угловой столик. В&nbsp;этот раз место было занято заранее.</span>
       </figcaption></figure>
@@ -176,19 +176,19 @@
 <!-- ======================= 06 ПРОГРАММА ======================= -->
 <section class="program" id="program">
   <figure class="program__media">
-    <img src="assets/timeline.jpg" alt="Накрытый стол при свечах в тёмном зале" loading="lazy">
+    <img decoding="async" src="assets/timeline.jpg" alt="Накрытый стол при свечах в тёмном зале" loading="lazy">
   </figure>
   <div class="program__body">
     <p class="label rise" data-en="04 / Schedule">04 / Программа</p>
     <h2 class="rise" style="--d:80ms" data-en="How the day will go">Как пройдёт этот день</h2>
     <ol class="times">
-      <li class="rise"><span class="times__t">15:00</span><span class="times__w"><b data-en="Guests arrive">Сбор гостей</b><em data-en="Welcome drinks in the orangery. Come earlier if you want photos in the daylight.">Welcome-зона в&nbsp;оранжерее. Приезжайте раньше, если хотите фото на&nbsp;свету.</em></span></li>
-      <li class="rise" style="--d:50ms"><span class="times__t">16:00</span><span class="times__w"><b data-en="The ceremony">Церемония</b><em data-en="On the terrace by the water. Forty minutes, chairs for everyone.">На&nbsp;террасе у&nbsp;воды. Сорок минут, стулья есть для&nbsp;всех.</em></span></li>
-      <li class="rise" style="--d:100ms"><span class="times__t">17:00</span><span class="times__w"><b data-en="Reception and the group photo">Фуршет и&nbsp;общее фото</b><em data-en="The one frame with everyone in it. Please do not disappear at this hour.">Тот самый кадр, где все. В&nbsp;этот час, пожалуйста, не&nbsp;теряйтесь.</em></span></li>
-      <li class="rise" style="--d:150ms"><span class="times__t">18:30</span><span class="times__w"><b data-en="Dinner">Ужин</b><em data-en="Seating by name cards. Your table is in the section below.">Рассадка по&nbsp;карточкам. Свой стол можно найти в&nbsp;блоке ниже.</em></span></li>
-      <li class="rise" style="--d:200ms"><span class="times__t">21:00</span><span class="times__w"><b data-en="First dance">Первый танец</b><em data-en="After it the floor is yours — the band plays until half past eleven.">После него танцпол ваш — группа играет до&nbsp;половины двенадцатого.</em></span></li>
-      <li class="rise" style="--d:250ms"><span class="times__t">22:00</span><span class="times__w"><b data-en="Cake and sparklers">Торт и&nbsp;бенгальские огни</b><em data-en="Outside, by the pond. Warm layer recommended — September evenings are cold.">На&nbsp;улице, у&nbsp;пруда. Возьмите тёплое — сентябрьский вечер холодный.</em></span></li>
-      <li class="rise" style="--d:300ms"><span class="times__t">23:30</span><span class="times__w"><b data-en="First bus back to the city">Первый автобус в&nbsp;город</b><em data-en="The second one leaves at one in the morning. Both are free.">Второй уходит в&nbsp;час ночи. Оба бесплатные.</em></span></li>
+      <li class="rise"><span class="times__t">15:00</span><span class="times__w"><b data-en="Guests arrive">Сбор гостей</b><em data-en="Welcome drinks in the orangery. Come earlier for daylight photos.">Welcome-зона в&nbsp;оранжерее. Раньше приедете — больше света для&nbsp;фото.</em></span></li>
+      <li class="rise" style="--d:50ms"><span class="times__t">16:00</span><span class="times__w"><b data-en="The ceremony">Церемония</b><em data-en="On the terrace by the water. Forty minutes.">На&nbsp;террасе у&nbsp;воды. Сорок минут.</em></span></li>
+      <li class="rise" style="--d:100ms"><span class="times__t">17:00</span><span class="times__w"><b data-en="Reception and the group photo">Фуршет и&nbsp;общее фото</b><em data-en="The one frame with everyone in it. Please do not disappear.">Тот самый кадр, где&nbsp;все. Не&nbsp;теряйтесь.</em></span></li>
+      <li class="rise" style="--d:150ms"><span class="times__t">18:30</span><span class="times__w"><b data-en="Dinner">Ужин</b><em data-en="Seating by name cards. Your table is in the section below.">Рассадка по&nbsp;карточкам. Свой стол&nbsp;— в&nbsp;блоке ниже.</em></span></li>
+      <li class="rise" style="--d:200ms"><span class="times__t">21:00</span><span class="times__w"><b data-en="First dance">Первый танец</b><em data-en="After it the floor is yours — the band plays until midnight.">Дальше танцпол ваш: группа играет до&nbsp;полуночи.</em></span></li>
+      <li class="rise" style="--d:250ms"><span class="times__t">22:00</span><span class="times__w"><b data-en="Cake and sparklers">Торт и&nbsp;бенгальские огни</b><em data-en="By the pond. Bring a warm layer — the evening is cold.">У пруда. Возьмите тёплое&nbsp;— вечер холодный.</em></span></li>
+      <li class="rise" style="--d:300ms"><span class="times__t">23:30</span><span class="times__w"><b data-en="First bus back to the city">Первый автобус в&nbsp;город</b><em data-en="The second leaves at one. Both are free.">Второй в&nbsp;час ночи. Оба бесплатные.</em></span></li>
     </ol>
   </div>
 </section>
@@ -198,7 +198,7 @@
   <div class="venue__head">
     <p class="label rise" data-en="05 / Venue">05 / Локация</p>
     <h2 class="rise" style="--d:80ms" data-en="Osinki Estate">Усадьба «Осинки»</h2>
-    <p class="lead rise" style="--d:160ms" data-en="Nizhny Novgorod region, Bogoroditskoye village. Twenty-four kilometres from Minin Square — about thirty-five minutes by the Kstovo highway, without traffic lights on the way out of town.">Нижегородская область, село&nbsp;Богородицкое. Двадцать четыре километра от&nbsp;площади Минина — примерно тридцать пять минут по&nbsp;Кстовской трассе, без&nbsp;светофоров на&nbsp;выезде.</p>
+    <p class="lead rise" style="--d:160ms" data-en="Bogoroditskoye village, 24 km from Minin Square. Thirty-five minutes by the Kstovo highway.">Село Богородицкое, 24&nbsp;км от&nbsp;площади Минина.<br>Тридцать пять минут по&nbsp;Кстовской трассе.</p>
   </div>
 
   <div class="route rise" style="--d:120ms">
@@ -276,47 +276,47 @@
 <!-- ======================= 08 ДРЕСС-КОД ======================= -->
 <section class="dress" id="dress">
   <figure class="dress__band">
-    <img src="assets/venue.jpg" alt="Светящаяся арка в вечернем саду усадьбы" loading="lazy">
+    <img decoding="async" src="assets/venue.jpg" alt="Светящаяся арка в вечернем саду усадьбы" loading="lazy">
   </figure>
 
   <header class="mid">
     <p class="label rise" data-en="06 / Dress code">06 / Дресс-код</p>
     <h2 class="rise" style="--d:80ms" data-en="Evening dress, in&amp;nbsp;dark tones">Вечерний, в&nbsp;тёмных тонах</h2>
-    <p class="lead rise" style="--d:160ms" data-en="We are not asking anyone to buy a new outfit. Just keep to the deep end of the palette — the evening is lit by candles and garlands, and dark fabric looks its best in that light.">Мы никого не&nbsp;просим покупать новый наряд. Просто держитесь глубокой части палитры: вечер освещают свечи и&nbsp;гирлянды, и&nbsp;тёмная ткань в&nbsp;этом свете выглядит лучше всего.</p>
+    <p class="lead rise" style="--d:160ms" data-en="No need to buy a new outfit — just keep to the deep tones. In candlelight dark fabric looks its best.">Не&nbsp;нужно покупать новый наряд&nbsp;— просто держитесь глубоких тонов.<br>При свечах тёмная ткань выглядит лучше всего.</p>
   </header>
 
   <ul class="looks">
     <li class="look rise" style="--d:220ms">
-      <figure><img src="assets/look-1.jpg" alt="Мужчина в тёмном костюме в вечернем свете" loading="lazy"></figure>
+      <figure><img decoding="async" src="assets/look-1.jpg" alt="Мужчина в тёмном костюме в вечернем свете" loading="lazy"></figure>
       <h3 data-en="For him">Ему</h3>
       <p data-en="A dark suit — graphite, ink blue or deep green. A shirt in the same depth, tie optional. Black is fine too: it is the bride's dress that must not have competition, not the colour black.">Тёмный костюм — графит, чернильный синий, глубокий зелёный. Рубашка той&nbsp;же плотности, галстук по&nbsp;желанию. Чёрный тоже уместен.</p>
     </li>
     <li class="look rise" style="--d:280ms">
-      <figure><img src="assets/look-2.jpg" alt="Женщина в винном вечернем платье" loading="lazy"></figure>
+      <figure><img decoding="async" src="assets/look-2.jpg" alt="Женщина в винном вечернем платье" loading="lazy"></figure>
       <h3 data-en="For her">Ей</h3>
       <p data-en="Any length, as long as the colour is deep: wine, emerald, ink, graphite. Long sleeves or a shawl will come in handy after ten in the evening.">Любая длина, лишь&nbsp;бы цвет был глубоким: винный, изумруд, чернильный, графит. После десяти вечера пригодится рукав или шаль.</p>
     </li>
     <li class="look rise" style="--d:340ms">
-      <figure><img src="assets/look-3.jpg" alt="Украшение крупным планом в тёплом свете" loading="lazy"></figure>
+      <figure><img decoding="async" src="assets/look-3.jpg" alt="Украшение крупным планом в тёплом свете" loading="lazy"></figure>
       <h3 data-en="The detail">Деталь</h3>
       <p data-en="One warm accent is enough — sand, brass, amber. In candlelight metal reads better than stones, and one detail better than three.">Хватит одного тёплого акцента — песочный, латунь, янтарь. При&nbsp;свечах металл читается лучше камней, а&nbsp;одна деталь лучше трёх.</p>
     </li>
   </ul>
 
-  <dl class="care">
-    <div class="care__row rise" style="--d:280ms">
-      <dt data-en="No white">Без белого</dt>
-      <dd data-en="In this light white photographs as a bright patch, and in this day it is taken.">В этом свете белое снимается ярким пятном, а&nbsp;в&nbsp;этот день оно занято.</dd>
-    </div>
-    <div class="care__row rise" style="--d:330ms">
-      <dt data-en="Shoes">Обувь</dt>
-      <dd data-en="The terrace is laid on grass — stilettos sink into it by the second hour. Bring a second pair.">Терраса стоит на&nbsp;газоне, и&nbsp;шпильки уходят в&nbsp;него ко&nbsp;второму часу. Возьмите вторую пару.</dd>
-    </div>
-    <div class="care__row rise" style="--d:380ms">
-      <dt data-en="Warmth">Тепло</dt>
-      <dd data-en="By ten in the evening it is around ten degrees by the pond. A jacket or a shawl will not be out of place.">К десяти вечера у&nbsp;пруда около десяти градусов. Пиджак или шаль не&nbsp;будут лишними.</dd>
-    </div>
-  </dl>
+  <ul class="care">
+    <li class="care__item rise" style="--d:280ms">
+      <h3 data-en="White">Белый цвет</h3>
+      <p data-en="Today it belongs to the bride alone.">В этот день он только у&nbsp;невесты.</p>
+    </li>
+    <li class="care__item rise" style="--d:330ms">
+      <h3 data-en="Heels">Каблуки</h3>
+      <p data-en="The terrace stands on grass — a stiletto sinks in. Bring a second pair.">Терраса стоит на&nbsp;газоне: шпилька в&nbsp;нём тонет. Возьмите вторую пару.</p>
+    </li>
+    <li class="care__item rise" style="--d:380ms">
+      <h3 data-en="Something warm">Тёплые вещи</h3>
+      <p data-en="By ten it is around ten degrees by the pond.">К десяти у&nbsp;пруда около десяти градусов.</p>
+    </li>
+  </ul>
 </section>
 
 <!-- ======================= 09 РАССАДКА ======================= -->
@@ -346,7 +346,7 @@
 <!-- ======================= 10 ПОДАРКИ ======================= -->
 <section class="gift" id="gift">
   <div class="gift__media" aria-hidden="true">
-    <img src="assets/gift.jpg" alt="" loading="lazy">
+    <img decoding="async" src="assets/gift.jpg" alt="" loading="lazy">
     <div class="gift__veil"></div>
   </div>
 
@@ -365,7 +365,7 @@
 
 <!-- ======================= 11 RSVP ======================= -->
 <section class="rsvp" id="rsvp">
-  <div class="rsvp__media" aria-hidden="true"><img src="assets/rsvp.jpg" alt="" loading="lazy"></div>
+  <div class="rsvp__media" aria-hidden="true"><img decoding="async" src="assets/rsvp.jpg" alt="" loading="lazy"></div>
 
   <div class="rsvp__panel">
     <header class="rsvp__head">
@@ -462,7 +462,7 @@
           <span class="btn__label" data-en="Send our answer">Отправить ответ</span>
         </button>
       </div>
-      <p class="friction" data-en="You can change the answer at any time until 28 August">Ответ можно изменить в&nbsp;любой момент до&nbsp;28&nbsp;августа</p>
+      <p class="friction" data-dt="change-by" data-en="You can change the answer at any time until 28 August">Ответ можно изменить в&nbsp;любой момент до&nbsp;28&nbsp;августа</p>
     </form>
 
     <div class="done" id="done" hidden>
@@ -516,7 +516,7 @@
 <!-- ======================= ФУТЕР ======================= -->
 <footer class="foot">
   <div class="foot__top">
-    <p class="foot__big" data-en="See you on<br>11&amp;nbsp;September">До встречи<br>11&nbsp;сентября</p>
+    <p class="foot__big" data-dt="seeyou" data-en="See you on<br>11&amp;nbsp;September">До встречи<br>11&nbsp;сентября</p>
     <div class="foot__col">
       <p class="label" data-en="Coordinator">Координатор</p>
       <p class="foot__line">Марина Соколова</p>
@@ -530,13 +530,13 @@
     </div>
     <div class="foot__col">
       <p class="label" data-en="Answer by">Ответить до</p>
-      <p class="foot__line" data-en="28 August 2027">28 августа 2027</p>
+      <p class="foot__line" data-dt="deadline" data-en="28 August 2027">28 августа 2027</p>
       <a class="foot__link" href="#rsvp" data-en="Go to the form">Перейти к форме</a>
     </div>
   </div>
   <div class="foot__end">
     <span class="mono mono--sm"><span data-en="A">А</span><i></i><span data-en="K">К</span></span>
-    <span class="foot__cr" data-en="Artyom &amp; Ksenia / 11 September 2027">Артём и Ксения / 11 сентября 2027</span>
+    <span class="foot__cr" data-dt="credit" data-en="Artyom &amp; Ksenia / 11 September 2027">Артём и Ксения / 11 сентября 2027</span>
   </div>
 </footer>
 

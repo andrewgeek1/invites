@@ -5,12 +5,80 @@
 (function () {
   'use strict';
 
-  var WEDDING = new Date('2027-09-11T15:00:00+03:00');
-  var STORE   = 'ak-rsvp-2027';
+  /* ---------------------------------------------------------
+     Дата демонстрации.
+     Это витрина, а не приглашение конкретной пары. Фиксированная
+     дата через пару месяцев протухает, и счётчик уходит в минус,
+     а слишком дальняя показывает бессмысленные «375 дней».
+     Поэтому берём ближайшую субботу не раньше чем через 60 дней
+     и подставляем её во все места на странице разом.
+
+     Под реальную пару — заменить тело функции на одну строку:
+         return new Date('2027-09-11T15:00:00+03:00');
+     --------------------------------------------------------- */
+  function demoDate() {
+    var d = new Date();
+    d.setHours(15, 0, 0, 0);
+    d.setDate(d.getDate() + 60);
+    while (d.getDay() !== 6) d.setDate(d.getDate() + 1);   // 6 — суббота
+    return d;
+  }
+
+  var WEDDING  = demoDate();
+  var DEADLINE = new Date(WEDDING); DEADLINE.setDate(DEADLINE.getDate() - 14);
+  var STORE    = 'ak-rsvp-demo';
   var reduce  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ---------------------------------------------------------
+     Дата в разметке: элемент помечен data-dt="вид", остальное
+     проставляется здесь. Заполняем ДО переключателя языка —
+     он кэширует русский вариант из innerHTML при первом запуске.
+     --------------------------------------------------------- */
+  var MON_RU = ['января','февраля','марта','апреля','мая','июня',
+                'июля','августа','сентября','октября','ноября','декабря'];
+  var MON_EN = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+  var pad2 = function (n) { return (n < 10 ? '0' : '') + n; };
+
+  function stamp(d, kind, en) {
+    var day = d.getDate(), m = d.getMonth(), y = d.getFullYear();
+    var ru = day + '&nbsp;' + MON_RU[m], enn = day + ' ' + MON_EN[m];
+    switch (kind) {
+      case 'full':     return en ? enn + ' ' + y : ru + ' ' + y;
+      case 'daymonth': return en ? enn : ru;
+      case 'full-dow': return en ? enn + ' ' + y + ' / Saturday'
+                                 : ru + ' ' + y + ' / суббота';
+      case 'dock':     return pad2(day) + '.' + pad2(m + 1) + '.' + y +
+                              (en ? ' / Osinki Estate' : ' / усадьба «Осинки»');
+      case 'arrive':   return en ? 'Saturday, guests arrive at 15:00'
+                                 : 'Суббота, сбор гостей в&nbsp;15:00';
+      case 'seeyou':   return en ? 'See you on<br>' + enn : 'До встречи<br>' + ru;
+      case 'credit':   return (en ? 'Artyom &amp; Ksenia / ' : 'Артём и Ксения / ') +
+                              (en ? enn : ru) + ' ' + y;
+      case 'by':       return en ? 'by ' + enn : 'до&nbsp;' + ru;
+      case 'need-by':  return en ? 'We need your answer by ' + enn
+                                 : 'Ответ нужен до&nbsp;' + ru;
+      case 'change-by':return en ? 'You can change the answer at any time until ' + enn
+                                 : 'Ответ можно изменить в&nbsp;любой момент до&nbsp;' + ru;
+    }
+    return '';
+  }
+
+  (function fillDates() {
+    $$('[data-dt]').forEach(function (el) {
+      var kind = el.dataset.dt;
+      var onDeadline = /^(deadline|by|need-by|change-by)$/.test(kind);
+      var d = onDeadline ? DEADLINE : WEDDING;
+      var k = kind === 'deadline' ? 'full' : kind;
+      el.innerHTML     = stamp(d, k, false);
+      el.dataset.en    = stamp(d, k, true);
+    });
+    var plain = stamp(WEDDING, 'full', false).replace(/&nbsp;/g, ' ');
+    document.title = 'Артём и Ксения — ' + plain;
+  })();
 
   /* ---------------------------------------------------------
      Словарь для строк, которые рождаются в JS
@@ -123,13 +191,16 @@
   var icsBtn = $('#ics');
   if (icsBtn) {
     icsBtn.addEventListener('click', function () {
+      // те же сутки, что и в счётчике: 15:00 по Москве = 12:00 UTC
+      var ymd = WEDDING.getFullYear() + pad2(WEDDING.getMonth() + 1) + pad2(WEDDING.getDate());
+      var now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
       var ics = [
         'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//osinki//wedding//RU', 'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
-        'UID:ak-20270911@osinki',
-        'DTSTAMP:20260827T090000Z',
-        'DTSTART:20270911T120000Z',
-        'DTEND:20270911T220000Z',
+        'UID:ak-' + ymd + '@osinki',
+        'DTSTAMP:' + now,
+        'DTSTART:' + ymd + 'T120000Z',
+        'DTEND:' + ymd + 'T220000Z',
         'SUMMARY:Свадьба Артёма и Ксении',
         'LOCATION:Усадьба «Осинки»\\, село Богородицкое\\, Нижегородская область',
         'DESCRIPTION:Сбор гостей в 15:00\\, церемония в 16:00. Автобус от площади Минина в 14:00 и 14:30.',
@@ -137,7 +208,7 @@
       ].join('\r\n');
       var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
       var a = document.createElement('a');
-      a.href = url; a.download = 'artyom-ksenia-11-09-2027.ics';
+      a.href = url; a.download = 'artyom-ksenia-' + ymd + '.ics';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     });
