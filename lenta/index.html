@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Илья и Соня — 6 июня 2026</title>
+<meta name="description" content="Приглашение на свадьбу Ильи и Сони. 6 июня 2026, эко-отель «Заречье», берег Ветлуги, 90 км от Нижнего Новгорода.">
+<meta name="theme-color" content="#8FB3D0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=IBM+Plex+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ══════════ МИР: небо, светила, берег, вода ══════════ -->
+<div class="world" aria-hidden="true">
+
+  <div class="sky">
+    <b class="sky__l sky__l--0"></b><b class="sky__l sky__l--1"></b><b class="sky__l sky__l--2"></b>
+    <b class="sky__l sky__l--3"></b><b class="sky__l sky__l--4"></b><b class="sky__l sky__l--5"></b>
+    <b class="sky__l sky__l--6"></b>
+  </div>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="celest">
+    <div class="sun" id="sun">
+      <i class="sun__glow sun__glow--day"></i><i class="sun__glow sun__glow--set"></i>
+      <i class="sun__disc sun__disc--day"></i><i class="sun__disc sun__disc--set"></i>
+    </div>
+    <div class="moon" id="moon"><i></i></div>
+  </div>
+
+  <div class="ridge">
+    <div class="band band--hills" id="bandHills">
+      <i class="tint tint--day"></i><i class="tint tint--set"></i><i class="tint tint--night"></i>
+    </div>
+    <div class="band band--trees" id="bandTrees">
+      <i class="tint tint--day"></i><i class="tint tint--set"></i><i class="tint tint--night"></i>
+    </div>
+  </div>
+
+  <div class="water">
+    <b class="water__l water__l--0"></b><b class="water__l water__l--1"></b><b class="water__l water__l--2"></b>
+    <b class="water__l water__l--3"></b><b class="water__l water__l--4"></b><b class="water__l water__l--5"></b>
+    <b class="water__l water__l--6"></b>
+    <div class="mirrorclip">
+      <div class="band band--mirror" id="bandMirror">
+        <i class="tint tint--day"></i><i class="tint tint--set"></i><i class="tint tint--night"></i>
+      </div>
+    </div>
+    <i class="water__glit" id="glitter"></i>
+    <i class="water__glit water__glit--moon" id="moonpath"></i>
+    <i class="water__ripple"></i>
+    <i class="water__edge"></i>
+  </div>
+
+  <div class="band band--reeds" id="bandReeds">
+    <i class="tint tint--day"></i><i class="tint tint--set"></i><i class="tint tint--night"></i>
+  </div>
+</div>
+
+<a class="skip" href="#rsvp">Перейти к ответу</a>
+
+<!-- ══════════ ЛЕНТА ══════════ -->
+<main class="ribbon" id="ribbon">
+
+  <!-- 1 · 15:00 -->
+  <section class="stop stop--open tone--day" style="--w:100" data-time="15:00" data-name="начало">
+    <div class="stop__in">
+      <p class="eyebrow">суббота, 6 июня 2026</p>
+      <h1 class="names"><span>Илья</span><em>и</em><span>Соня</span></h1>
+      <p class="place">эко-отель «Заречье» · берег Ветлуги</p>
+      <p class="hint" id="hint"><i></i>Крутите. День пойдёт своим чередом</p>
+    </div>
+  </section>
+
+  <!-- веха -->
+  <div class="mark tone--day" style="--w:24" data-time="15:40" data-name="дорога">
+    <div class="mark__in"><span class="mark__t">15:40</span><span class="mark__w">дорога</span></div>
+  </div>
+
+  <!-- 2 · 16:00 -->
+  <section class="stop stop--gather tone--day" style="--w:82" data-time="16:00" data-name="сбор">
+    <figure class="shot shot--wide">
+      <span class="shot__frame"><img src="assets/table.jpg" alt="Длинный накрытый стол под открытым небом" loading="lazy" decoding="async"></span>
+      <span class="shot__mirror"><img src="assets/table.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"></span>
+      <figcaption>терраса у воды</figcaption>
+    </figure>
+    <div class="stop__in stop__in--side">
+      <p class="tstamp">16:00</p>
+      <h2 class="h">Сбор</h2>
+      <p class="line">Стол уже накрыт. Приезжайте раньше — до воды десять шагов.</p>
+    </div>
+  </section>
+
+  <!-- 3 · 17:30 -->
+  <section class="stop stop--rite tone--day" style="--w:68" data-time="17:30" data-name="церемония">
+    <div class="stop__in">
+      <p class="tstamp">17:30</p>
+      <h2 class="h h--xl">Церемония</h2>
+      <p class="line">На берегу. Если пойдёт дождь — в оранжерее. Но дождя не будет.</p>
+    </div>
+  </section>
+
+  <!-- веха -->
+  <div class="mark tone--dusk" style="--w:24" data-time="18:20" data-name="фотосессия">
+    <div class="mark__in"><span class="mark__t">18:20</span><span class="mark__w">фотосессия</span></div>
+  </div>
+
+  <!-- 4 · 19:30 -->
+  <section class="stop stop--dinner tone--dusk" style="--w:54" data-time="19:30" data-name="ужин">
+    <div class="stop__in">
+      <p class="tstamp">19:30</p>
+      <h2 class="h">Ужин</h2>
+      <p class="line">Длинный стол, местная рыба, тосты не по списку.</p>
+    </div>
+  </section>
+
+  <!-- 5 · 21:07 -->
+  <section class="stop stop--sunset tone--sunset" style="--w:96" data-time="21:07" data-name="закат">
+    <div class="stop__in stop__in--side">
+      <p class="tstamp">21:07</p>
+      <h2 class="h h--xl">Закат</h2>
+      <p class="line">Солнце сядет ровно в 21:07. Мы попросим всех выйти к воде.</p>
+    </div>
+    <figure class="shot shot--tall">
+      <span class="shot__frame"><img src="assets/couple.jpg" alt="Пара под фатой в поле на закате" loading="lazy" decoding="async"></span>
+      <span class="shot__mirror"><img src="assets/couple.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"></span>
+      <figcaption>шесть минут золотого света</figcaption>
+    </figure>
+  </section>
+
+  <!-- 6 · 22:40 -->
+  <section class="stop stop--dance tone--night" style="--w:56" data-time="22:40" data-name="танцы">
+    <div class="stop__in">
+      <p class="tstamp">22:40</p>
+      <h2 class="h">Танцы</h2>
+      <p class="line">Пока горят гирлянды. То есть долго.</p>
+    </div>
+  </section>
+
+  <!-- веха -->
+  <div class="mark tone--night" style="--w:24" data-time="23:30" data-name="фейерверк">
+    <div class="mark__in"><span class="mark__t">23:30</span><span class="mark__w">фейерверк</span></div>
+  </div>
+
+  <!-- 7 · 00:00 -->
+  <section class="stop stop--rsvp tone--night" style="--w:76" data-time="00:00" data-name="ответ" id="rsvp">
+    <div class="stop__in">
+      <p class="tstamp">00:00</p>
+      <h2 class="h">Останетесь?</h2>
+      <form class="form" id="form" novalidate>
+        <div class="field">
+          <input id="who" name="who" type="text" required autocomplete="name" placeholder=" ">
+          <label for="who">Как вас записать</label>
+        </div>
+        <fieldset class="pick">
+          <legend class="vh">Ваш ответ</legend>
+          <label><input type="radio" name="go" value="yes" checked><span>Буду</span></label>
+          <label><input type="radio" name="go" value="no"><span>Не смогу</span></label>
+        </fieldset>
+        <button class="send" type="submit"><span>Отправить</span></button>
+        <p class="note">Ответьте до 10 мая</p>
+      </form>
+      <p class="done" id="done" hidden></p>
+    </div>
+  </section>
+
+  <!-- 8 · финал -->
+  <section class="stop stop--end tone--night" style="--w:64" data-time="00:40" data-name="в конце">
+    <div class="stop__in">
+      <dl class="facts">
+        <div><dt>Где</dt><dd>«Заречье», деревня Затон<br>90 км от Нижнего Новгорода</dd></div>
+        <div><dt>Одежда</dt><dd>лён, светлое,<br>обувь для травы</dd></div>
+        <div><dt>Вопросы</dt><dd>Илья +7 903 000-11-24<br>Соня +7 903 000-11-25</dd></div>
+      </dl>
+      <p class="bye">до встречи на берегу</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════ ПРИБОРЫ ══════════ -->
+<div class="hud" id="hud">
+  <p class="hud__id"><span>Илья и Соня</span><span>6 июня 2026</span></p>
+  <p class="hud__clock"><span class="hud__time" id="clock">15:00</span><span class="hud__phase" id="phase">день</span></p>
+  <nav class="rail" id="rail" aria-label="Ход дня"><i class="rail__line"></i><i class="rail__dot" id="railDot"></i></nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

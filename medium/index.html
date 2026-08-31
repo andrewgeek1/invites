@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Артём и Ксения — 12 сентября 2026</title>
+<meta name="description" content="Приглашение на свадьбу Артёма и Ксении. 12 сентября 2026, усадьба «Осинки», село Богородицкое под Нижним Новгородом.">
+<meta name="theme-color" content="#F4F1E8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#rsvp">Перейти к форме ответа</a>
+
+<!-- ===== шапка, появляется после первого экрана ===== -->
+<div class="bar" id="bar">
+  <a class="mark bar__mark" href="#top" aria-label="Артём и Ксения">А<i></i>К</a>
+  <nav class="bar__nav">
+    <a href="#day">Программа</a>
+    <a href="#venue">Локация</a>
+    <a class="btn btn--fill btn--sm" href="#rsvp">
+      <span class="btn__fill"></span><span class="btn__label">Ответить</span>
+    </a>
+  </nav>
+</div>
+
+<!-- ======================= 01 HERO ======================= -->
+<header class="hero" id="top">
+  <div class="hero__text">
+    <div class="hero__top">
+      <a class="mark" href="#top" aria-label="Артём и Ксения">А<i></i>К</a>
+      <nav class="hero__nav">
+        <a href="#day">Программа</a>
+        <a href="#venue">Локация</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+    </div>
+
+    <div class="hero__block">
+      <p class="hero__date rise" style="--d:200ms">12&nbsp;сентября 2026 / суббота</p>
+
+      <h1 class="names">
+        <span class="name"><i style="--i:0">А</i><i style="--i:1">р</i><i style="--i:2">т</i><i style="--i:3">ё</i><i style="--i:4">м</i></span>
+        <span class="amp" aria-hidden="true"><b></b><em>и</em><b></b></span>
+        <span class="vis-hidden"> и </span>
+        <span class="name"><i style="--i:6">К</i><i style="--i:7">с</i><i style="--i:8">е</i><i style="--i:9">н</i><i style="--i:10">и</i><i style="--i:11">я</i></span>
+      </h1>
+
+      <p class="hero__place rise" style="--d:1180ms">Усадьба «Осинки»</p>
+      <p class="hero__geo rise" style="--d:1280ms">Село Богородицкое / 24&nbsp;км от&nbsp;Нижнего&nbsp;Новгорода</p>
+
+      <div class="hero__act rise" style="--d:1400ms">
+        <a class="btn btn--fill" href="#rsvp">
+          <span class="btn__fill"></span><span class="btn__label">Подтвердить, что&nbsp;приду</span>
+        </a>
+        <p class="friction">Ответ нужен до&nbsp;28&nbsp;августа</p>
+      </div>
+    </div>
+
+    <div class="hero__foot" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__media">
+    <img src="assets/hero.jpg" alt="Артём и Ксения у белого дома усадьбы" fetchpriority="high" width="1400" height="2100">
+  </div>
+</header>
+
+<!-- ======================= 02 ПРИГЛАШЕНИЕ ======================= -->
+<section class="invite" id="invite">
+  <div class="invite__media reveal reveal--flat">
+    <img src="assets/invite.jpg" alt="Дорожка вдоль кирпичной стены сада, вдали дом" loading="lazy" width="1800" height="1350">
+  </div>
+
+  <div class="invite__text">
+    <h2 class="reveal">Приезжайте в&nbsp;сад,<br>где мы скажем «да»</h2>
+    <p class="reveal" style="--d:120ms">Двенадцатого сентября в&nbsp;усадьбе «Осинки» мы соберём тех,<br class="lg">
+      без&nbsp;кого этот день не&nbsp;имеет смысла. Будет долгий обед<br class="lg">
+      в&nbsp;саду, музыка до&nbsp;ночи и&nbsp;ни&nbsp;одного конкурса — обещаем.</p>
+
+      <div class="sign reveal" style="--d:240ms">
+      <span class="sign__rule" aria-hidden="true"></span>
+      <p class="sign__from">Ждём вас</p>
+      <p class="sign__names">Артём и&nbsp;Ксения</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 03 ОТСЧЁТ ======================= -->
+<section class="count" id="count">
+  <div class="wrap count__in">
+    <p class="count__l reveal">До свадьбы остаётся</p>
+    <div class="count__row reveal" style="--d:120ms" id="clock">
+      <div class="cell"><span class="cell__n" data-u="d">—</span><span class="cell__l">дней</span></div>
+      <div class="cell"><span class="cell__n" data-u="h">—</span><span class="cell__l">часов</span></div>
+      <div class="cell"><span class="cell__n" data-u="m">—</span><span class="cell__l">минут</span></div>
+      <div class="cell"><span class="cell__n" data-u="s">—</span><span class="cell__l">секунд</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 04 ХОД ДНЯ ======================= -->
+<section class="day" id="day">
+  <div class="day__stage">
+    <div class="day__sky" id="sky">
+      <div class="sky__layer sky__layer--noon"></div>
+      <div class="sky__layer sky__layer--gold" id="skyGold"></div>
+      <div class="sky__layer sky__layer--dusk" id="skyDusk"></div>
+      <div class="sky__stars" id="stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="sky__sun" id="sun" aria-hidden="true"></div>
+      <div class="sky__hedge" id="hedge" aria-hidden="true"></div>
+      <div class="sky__land" id="land" aria-hidden="true"></div>
+      <p class="sky__clock" id="skyClock" aria-hidden="true">14:00</p>
+    </div>
+
+    <div class="day__list">
+      <div class="day__head">
+        <p class="label">Ход дня</p>
+        <h2>Как устроен день<br>и&nbsp;когда вас ждут</h2>
+      </div>
+
+      <ol class="tl" id="tl">
+        <li class="tl__i" data-at="0.00">
+          <span class="tl__t">14:00</span>
+          <div class="tl__b"><h3>Сбор гостей</h3><p>Встречаем у&nbsp;ворот усадьбы. Лимонад, тень и&nbsp;полчаса на&nbsp;то, чтобы выдохнуть с&nbsp;дороги.</p></div>
+        </li>
+        <li class="tl__i" data-at="0.16">
+          <span class="tl__t">15:00</span>
+          <div class="tl__b"><h3>Церемония</h3><p>В&nbsp;яблоневом саду за&nbsp;домом. Тридцать минут, без&nbsp;репетиций и&nbsp;лишних слов.</p></div>
+        </li>
+        <li class="tl__i" data-at="0.32">
+          <span class="tl__t">16:00</span>
+          <div class="tl__b"><h3>Фуршет</h3><p>Игристое, закуски и&nbsp;время найти своих. Фотограф работает, но&nbsp;не&nbsp;мешает.</p></div>
+        </li>
+        <li class="tl__i" data-at="0.52">
+          <span class="tl__t">17:30</span>
+          <div class="tl__b"><h3>Ужин</h3><p>Длинный стол под&nbsp;тентом. Тосты только по&nbsp;желанию — никого не&nbsp;будут вызывать.</p></div>
+        </li>
+        <li class="tl__i" data-at="0.76">
+          <span class="tl__t">21:00</span>
+          <div class="tl__b"><h3>Танцы</h3><p>Сначала живой сет, потом диджей до&nbsp;последнего гостя. Свет гирлянд над&nbsp;площадкой.</p></div>
+        </li>
+        <li class="tl__i" data-at="0.94">
+          <span class="tl__t">23:30</span>
+          <div class="tl__b"><h3>Отъезд</h3><p>Два автобуса до&nbsp;города от&nbsp;ворот усадьбы. Мы проверим, что никого не&nbsp;забыли.</p></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 05 ЛОКАЦИЯ ======================= -->
+<section class="venue" id="venue">
+  <div class="venue__media reveal reveal--flat">
+    <img src="assets/venue.jpg" alt="Белый дом усадьбы «Осинки» за лугом" loading="lazy" width="1800" height="1195">
+  </div>
+
+  <div class="wrap venue__in">
+    <div class="venue__head mid">
+      <h2 class="reveal">Усадьба «Осинки»</h2>
+      <span class="rule" style="--d:100ms" aria-hidden="true"></span>
+      <p class="venue__sub reveal" style="--d:160ms">Село Богородицкое, 24&nbsp;км от&nbsp;Нижнего Новгорода</p>
+    </div>
+
+    <div class="venue__grid">
+      <div class="col reveal" style="--d:220ms">
+        <p class="col__l">Адрес</p>
+        <p>Нижегородская область, село Богородицкое, усадьба «Осинки», строение&nbsp;1</p>
+      </div>
+      <div class="col reveal" style="--d:300ms">
+        <p class="col__l">На машине</p>
+        <p>Поворот за&nbsp;указателем «Осинки». Парковка на&nbsp;40&nbsp;мест за&nbsp;воротами, бесплатная.</p>
+      </div>
+      <div class="col reveal" style="--d:380ms">
+        <p class="col__l">Трансфер</p>
+        <p>Автобус от&nbsp;площади Минина в&nbsp;13:00 и&nbsp;обратно в&nbsp;23:30. Место бронируется в&nbsp;форме.</p>
+      </div>
+    </div>
+
+    <div class="venue__act reveal" style="--d:460ms">
+      <a class="btn btn--line" href="https://yandex.ru/maps/?text=Нижегородская%20область%20село%20Богородицкое" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <span class="btn__label">Проложить маршрут</span>
+      </a>
+      <p class="friction">Около 35&nbsp;минут от&nbsp;центра города</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 06 ГАЛЕРЕЯ ======================= -->
+<section class="gal" id="gallery">
+  <div class="wrap gal__head mid">
+    <h2 class="reveal">Так выглядит место,<br>куда мы вас зовём</h2>
+  </div>
+
+  <figure class="gal__lead reveal reveal--flat">
+    <div class="gal__frame" data-par="0.06"><img src="assets/gal-2.jpg" alt="Кирпичная дорожка через подстриженный сад" loading="lazy"></div>
+    <figcaption><span>01</span>Дорожка от&nbsp;ворот к&nbsp;дому</figcaption>
+  </figure>
+
+  <div class="gal__spread">
+    <figure class="gal__f gal__f--a reveal reveal--flat">
+      <div class="gal__frame" data-par="0.05"><img src="assets/gal-6.jpg" alt="Пара спускается по ступеням белого дома" loading="lazy"></div>
+      <figcaption><span>02</span>Ступени южного крыла</figcaption>
+    </figure>
+
+    <div class="gal__note reveal" style="--d:120ms">
+      <p>Усадьбу построили в&nbsp;1897&nbsp;году, а&nbsp;сад<br class="lg">
+        заложили позже — яблони в&nbsp;нём старше<br class="lg">
+        нас обоих. Церемония будет там.</p>
+    </div>
+
+    <figure class="gal__f gal__f--b reveal reveal--flat">
+      <div class="gal__frame" data-par="0.08"><img src="assets/gal-1.jpg" alt="Невеста с букетом полевых цветов в поле" loading="lazy"></div>
+      <figcaption><span>03</span>Букет изБукет из&nbsp;садовых розnbsp;садовых цветов</figcaption>
+    </figure>
+
+    <figure class="gal__f gal__f--c reveal reveal--flat">
+      <div class="gal__frame" data-par="0.04"><img src="assets/gal-5.jpg" alt="Садовая арка над дорожкой в зелени" loading="lazy"></div>
+      <figcaption><span>04</span>Арка перед яблоневым садом</figcaption>
+    </figure>
+
+    <figure class="gal__f gal__f--d reveal reveal--flat">
+      <div class="gal__frame" data-par="0.07"><img src="assets/gal-3.jpg" alt="Гости на церемонии в саду" loading="lazy"></div>
+      <figcaption><span>05</span>Здесь будут стоять стулья</figcaption>
+    </figure>
+
+    <figure class="gal__f gal__f--e reveal reveal--flat">
+      <div class="gal__frame" data-par="0.05"><img src="assets/gal-4.jpg" alt="Белые розы в вазе на светлом фоне" loading="lazy"></div>
+      <figcaption><span>06</span>Столы накроют этими</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ======================= 07 ДРЕСС-КОД ======================= -->
+<section class="dress" id="dress">
+  <div class="dress__in">
+    <div class="dress__text mid">
+      <h2 class="reveal">Дресс-код мягкий,<br>но он всё-таки есть</h2>
+      <p class="reveal" style="--d:120ms">Мы не&nbsp;просим вечерних платьев и&nbsp;бабочек —<br class="lg">
+        хочется, чтобы вы попали в&nbsp;один тон с&nbsp;садом<br class="lg">
+        и&nbsp;чтобы вам было в&nbsp;нём удобно весь день.</p>
+      <ul class="pal reveal" style="--d:200ms">
+        <li><i style="--c:#8C9877"></i><span>шалфей</span></li>
+        <li><i style="--c:#D8D2C2"></i><span>лён</span></li>
+        <li><i style="--c:#C7B49A"></i><span>песок</span></li>
+        <li><i style="--c:#6B7A4F"></i><span>олива</span></li>
+        <li><i style="--c:#9AA0A0"></i><span>дымчатый</span></li>
+      </ul>
+    </div>
+
+    <div class="dress__media reveal reveal--flat">
+      <img src="assets/dress.jpg" alt="Белые розы и эвкалипт на светлой скатерти" loading="lazy" width="1500" height="1000">
+    </div>
+  </div>
+
+  <ol class="asks wrap">
+    <li class="reveal"><span class="asks__n">01</span><h3>Про белый</h3><p>Белое платье в&nbsp;этот день только одно. Все остальные оттенки — ваши.</p></li>
+    <li class="reveal" style="--d:80ms"><span class="asks__n">02</span><h3>Про каблуки</h3><p>Церемония и&nbsp;фуршет проходят на&nbsp;траве. Возьмите вторую пару обуви.</p></li>
+    <li class="reveal" style="--d:160ms"><span class="asks__n">03</span><h3>Про вечер</h3><p>После заката в&nbsp;саду прохладно. Жакет или шаль не&nbsp;помешают.</p></li>
+  </ol>
+</section>
+
+<!-- ======================= 08 RSVP ======================= -->
+<section class="rsvp" id="rsvp">
+  <div class="rsvp__bg" aria-hidden="true"><img src="assets/rsvp.jpg" alt="" loading="lazy"></div>
+
+  <div class="wrap">
+    <div class="panel reveal reveal--flat">
+      <div class="rsvp__head">
+        <h2>Ответьте</h2>
+        <p class="rsvp__till"><span class="rule" aria-hidden="true"></span>до&nbsp;28&nbsp;августа</p>
+        <p class="rsvp__sub">Это займёт минуту — мы просто считаем стулья и&nbsp;порции.</p>
+      </div>
+
+      <form class="form" id="form" novalidate>
+        <div class="f f--wide">
+          <label for="fName">Как вас зовут</label>
+          <input id="fName" name="name" type="text" autocomplete="name" placeholder="Имя и фамилия">
+          <p class="err" data-for="fName"></p>
+        </div>
+
+        <fieldset class="f f--wide">
+          <legend>Придёте?</legend>
+          <div class="pick">
+            <label class="pick__i"><input type="radio" name="going" value="yes" checked><span>Приду</span></label>
+            <label class="pick__i"><input type="radio" name="going" value="no"><span>Не&nbsp;смогу</span></label>
+          </div>
+        </fieldset>
+
+        <div class="only-yes">
+          <div class="f">
+            <label for="fPlus">Кто с вами</label>
+            <input id="fPlus" name="plus" type="text" placeholder="Имя спутника или «один»">
+          </div>
+          <div class="f">
+            <label for="fMenu">Что вам подать</label>
+            <div class="sel">
+              <select id="fMenu" name="menu">
+                <option value="Мясо">Мясо</option>
+                <option value="Рыба">Рыба</option>
+                <option value="Вегетарианское">Вегетарианское</option>
+              </select>
+              <svg class="sel__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg>
+            </div>
+          </div>
+          <fieldset class="f f--wide">
+            <legend>Нужно место в автобусе?</legend>
+            <div class="pick">
+              <label class="pick__i"><input type="radio" name="bus" value="Нужно" checked><span>Нужно</span></label>
+              <label class="pick__i"><input type="radio" name="bus" value="Приеду сам"><span>Приеду сам</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="f f--wide">
+          <label for="fNote">Что нам стоит знать</label>
+          <textarea id="fNote" name="note" rows="3" placeholder="Аллергия, ребёнок, песня, которую надо поставить"></textarea>
+        </div>
+
+        <div class="form__act">
+          <button class="btn btn--fill" type="submit">
+            <span class="btn__fill"></span><span class="btn__label" id="submitLabel">Подтвердить, что&nbsp;приду</span>
+          </button>
+          <p class="friction">Ответ уходит нам — больше никому</p>
+        </div>
+      </form>
+
+      <div class="done" id="done" hidden>
+        <svg class="done__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg>
+        <h3 id="doneTitle">Записали</h3>
+        <p id="doneText">Спасибо. Ждём вас двенадцатого сентября в&nbsp;14:00 у&nbsp;ворот усадьбы.</p>
+        <button class="link" type="button" id="again">Изменить ответ</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 09 ВОПРОСЫ ======================= -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq__head mid">
+      <h2 class="reveal">Что ещё спрашивают</h2>
+      <span class="rule" style="--d:100ms" aria-hidden="true"></span>
+    </div>
+
+    <div class="acc reveal" style="--d:160ms" id="acc">
+      <div class="acc__i">
+        <button class="acc__q" type="button" aria-expanded="false">
+          <span>Можно приехать с ребёнком?</span>
+          <svg class="acc__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc__a"><p>Да. Напишите возраст в&nbsp;поле пожеланий — мы найдём, чем его занять, пока вы танцуете.</p></div>
+      </div>
+      <div class="acc__i">
+        <button class="acc__q" type="button" aria-expanded="false">
+          <span>Что дарить?</span>
+          <svg class="acc__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc__a"><p>Ничего не&nbsp;нужно — нам правда хватит того, что вы приедете. Если очень хочется, пусть это будет конверт, а&nbsp;не&nbsp;сервиз.</p></div>
+      </div>
+      <div class="acc__i">
+        <button class="acc__q" type="button" aria-expanded="false">
+          <span>Где остановиться, если ехать далеко?</span>
+          <svg class="acc__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc__a"><p>В&nbsp;усадьбе десять номеров, они бронируются через нас — напишите в&nbsp;форме. Рядом, в&nbsp;шести километрах, есть гостиница «Заречье».</p></div>
+      </div>
+      <div class="acc__i">
+        <button class="acc__q" type="button" aria-expanded="false">
+          <span>А если планы поменяются?</span>
+          <svg class="acc__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc__a"><p>Просто напишите нам до&nbsp;пятого сентября. Стул никуда не&nbsp;денется, а&nbsp;порцию мы успеем снять.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a class="mark mark--foot" href="#top" aria-label="Наверх">А<i></i>К</a>
+    <p class="foot__l">Артём и&nbsp;Ксения / 12&nbsp;сентября 2026</p>
+    <button class="foot__ics" type="button" id="ics">Положить дату в&nbsp;календарь</button>
+    <p class="foot__l foot__l--dim">Вопросы — Ксения, +7&nbsp;900&nbsp;000-00-00</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

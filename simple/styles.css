@@ -1,0 +1,307 @@
+/* =========================================================
+   Артём и Ксения — простой тариф. Направление «Афиша».
+   Токены: крем / чернила / сургуч. Одна кривая. Oswald 300 + Golos Text 400.
+   Радиусы нулевые везде, включая кнопки — это третий почерк линейки.
+   ========================================================= */
+
+:root{
+  --paper:#F0EBE3;
+  --paper-deep:#E5DCCC;
+  --ink:#191714;
+  --seal:#9E3B2E;
+
+  --line:rgba(25,23,20,.20);
+  --line-soft:rgba(25,23,20,.10);
+
+  --e:cubic-bezier(.22,1,.36,1);
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:96px; --s7:144px;
+  --pad:clamp(20px,4.6vw,88px);
+  --sec:clamp(80px,10vw,160px);
+
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Golos Text",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:400; font-size:clamp(15px,1.05vw,17px); line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+p{margin:0;text-wrap:pretty}
+ul,ol{margin:0;padding:0;list-style:none}
+fieldset{margin:0;padding:0;border:0;min-width:0}
+legend{padding:0}
+
+/* ---------------- типографика ---------------- */
+h1,h2,h3{
+  margin:0; font-family:"Oswald",Impact,"Haettenschweiler",sans-serif;
+  font-weight:300; text-transform:uppercase; hyphens:none; text-wrap:balance;
+}
+h1{font-size:clamp(3.2rem,13.4vw,13.2rem);line-height:.82;letter-spacing:-.008em}
+.names{font-size:1em}
+/* 1.12, а не 0.9–1.0 из TYP-04: у Oswald ascent 1.19em, и на капслоке
+   точки «Ё» и бревис «Й» второй строки физически въезжают в первую.
+   Ниже 1.06 заголовок ломается на любой правке текста заказчиком. */
+h2{font-size:clamp(2.1rem,5.6vw,4.9rem);line-height:1.12;letter-spacing:-.012em}
+h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
+
+.label{font-family:"Golos Text",sans-serif;font-size:11.5px;line-height:1.85;
+  text-transform:uppercase;letter-spacing:.19em;opacity:.55}
+.lead{font-size:clamp(14.5px,1.15vw,17px);line-height:1.5;opacity:.78;max-width:40ch;text-wrap:balance}
+.body{font-size:clamp(15px,1.08vw,17.5px);line-height:1.62;opacity:.8;max-width:52ch;text-wrap:balance}
+.friction{font-size:12.5px;line-height:1.5;opacity:.52;max-width:36ch;text-wrap:balance}
+.sign{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
+  font-size:clamp(17px,1.4vw,22px);letter-spacing:.01em;opacity:.72}
+
+.wrap{width:100%;max-width:1360px;margin:0 auto;padding-inline:var(--pad)}
+.sect{padding-block:var(--sec)}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  background-size:200px 200px}
+
+.skip{position:fixed;left:-9999px;top:12px;z-index:120;background:var(--ink);color:var(--paper);padding:10px 18px}
+.skip:focus{left:12px}
+:focus-visible{outline:2px solid var(--seal);outline-offset:3px}
+
+/* ---------------- кнопки: два типа, радиус ноль ---------------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;
+  min-height:54px;padding:0 32px;border:0;border-radius:0;background:transparent;
+  font-family:"Golos Text",sans-serif;font-size:14.5px;line-height:1.2;
+  cursor:pointer;overflow:hidden;text-align:center}
+.btn__fill{position:absolute;inset:0;transform:scaleX(0);transform-origin:left;
+  transition:transform 500ms var(--e)}
+.btn__label{position:relative;z-index:2;transition:color 320ms var(--e)}
+.btn:hover .btn__fill,.btn:focus-visible .btn__fill{transform:scaleX(1)}
+
+.btn--fill{background:var(--ink);color:var(--paper)}
+.btn--fill .btn__fill{background:var(--seal)}
+
+.btn--line{color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.btn--line .btn__fill{background:var(--ink)}
+.btn--line:hover .btn__label,.btn--line:focus-visible .btn__label{color:var(--paper)}
+
+.btn--wide{width:100%}
+
+/* ═══════════════════ HERO — схема B ═══════════════════ */
+.hero{
+  position:relative; height:100svh;
+  display:flex; flex-direction:column;
+  padding-inline:var(--pad);
+  padding-block:clamp(16px,2.2vh,28px) clamp(24px,3.4vh,48px);
+}
+.hero__top{flex:0 0 auto;display:flex;justify-content:space-between;align-items:baseline;
+  gap:var(--s4);padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+.wordmark{font-family:"Golos Text",sans-serif;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.19em;opacity:.6;white-space:nowrap}
+.hero__nav{display:flex;gap:clamp(16px,2vw,34px);font-size:13.5px}
+.hero__nav a{position:relative;padding-block:14px;opacity:.72;transition:opacity 320ms var(--e)}
+.hero__nav a::after{content:"";position:absolute;left:0;right:0;bottom:11px;height:1px;
+  background:var(--seal);transform:scaleX(0);transform-origin:left;
+  transition:transform 420ms var(--e)}
+.hero__nav a:hover{opacity:1}
+.hero__nav a:hover::after{transform:scaleX(1)}
+
+.stage{position:relative;flex:1 1 auto;min-height:0;font-size:min(13.4vw,36svh)}
+.names{position:absolute;inset:0}
+.names__a,.names__b{position:absolute;display:block;white-space:nowrap}
+.names__a{left:0;top:.24em}
+.names__b{right:0;bottom:.02em}
+
+.stage__ph{position:absolute;z-index:2;margin:0;overflow:hidden;
+  left:2.06em;width:2.07em;top:.26em;bottom:-.08em;
+  max-height:3.3em;margin-block:auto;   /* иначе на портретном планшете кадр вытягивается в щель */
+  box-shadow:0 30px 60px -34px rgba(25,23,20,.5)}
+.stage__ph img{width:100%;height:100%;object-fit:cover}
+
+.hero__foot{flex:0 0 auto;display:flex;justify-content:space-between;align-items:flex-end;
+  gap:var(--s4);padding-top:var(--s3);border-top:1px solid var(--line)}
+.hero__meta{display:flex;flex-direction:column;gap:var(--s1)}
+.hero__act{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+
+/* ═══════════════════ общий заголовок секции ═══════════════════ */
+.tag{font-family:"Golos Text",sans-serif;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.19em;opacity:.6;display:flex;align-items:baseline;gap:12px;
+  padding-bottom:var(--s3);margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
+.tag__n{color:var(--seal);opacity:1;font-variant-numeric:tabular-nums}
+
+/* ═══════════════════ 01 приглашение ═══════════════════ */
+.invite__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s4);align-items:start}
+.invite__grid h2{grid-column:1/7}
+.invite__text{grid-column:8/13;display:flex;flex-direction:column;gap:var(--s2);padding-top:8px}
+
+.invite{padding-bottom:0}
+.road{padding-top:0}
+.bleed{margin:var(--s7) 0 0;overflow:hidden}
+.bleed img{width:100%;height:clamp(280px,44vw,660px);object-fit:cover}
+
+/* ═══════════════════ 02 что нужно знать ═══════════════════ */
+.facts-sect .tag{margin-bottom:var(--s6)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s4)}
+.fact{border-top:1px solid var(--line);padding-top:var(--s3);
+  display:flex;flex-direction:column;gap:12px}
+.fact__n{font-size:11.5px;letter-spacing:.19em;color:var(--seal);font-variant-numeric:tabular-nums}
+.fact .body{max-width:34ch;text-wrap:balance}
+
+/* ═══════════════════ 03 галерея — три кадра ═══════════════════ */
+.gal{display:grid;grid-template-columns:.95fr 1.3fr 1.15fr;gap:var(--s4);align-items:end}
+.gal__i{margin:0;display:flex;flex-direction:column;gap:14px}
+.gal__i img{width:100%;object-fit:cover}
+.gal__i--1 img{height:clamp(300px,40vw,600px)}
+.gal__i--2 img{height:clamp(220px,29vw,440px)}
+.gal__i--3 img{height:clamp(250px,33vw,500px)}
+.gal__i figcaption{font-size:12.5px;line-height:1.5;opacity:.55;max-width:34ch;
+  min-height:calc(2 * 1.5em);text-wrap:balance}
+
+/* ═══════════════════ 04 дорога ═══════════════════ */
+.road .bleed{margin:0 0 var(--s7)}
+.road__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s4);align-items:start}
+.road__grid h2{grid-column:1/7}
+.road__text{grid-column:8/13;display:flex;flex-direction:column;gap:var(--s4);padding-top:8px}
+.road__act{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+
+/* ═══════════════════ 05 ответ ═══════════════════ */
+.rsvp{background:var(--paper-deep)}
+.rsvp__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5) var(--s4);align-items:start}
+.rsvp__side{grid-column:1/6;display:flex;flex-direction:column;gap:var(--s3)}
+.form{grid-column:7/13;display:flex;flex-direction:column;gap:var(--s4);max-width:520px}
+.done{grid-column:7/13;display:flex;flex-direction:column;gap:var(--s3);max-width:520px}
+
+.field{display:flex;flex-direction:column;gap:10px}
+.field input{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+  border-radius:0;padding:12px 0;font-size:clamp(17px,1.4vw,21px);
+  transition:border-color 320ms var(--e)}
+.field input::placeholder{color:var(--ink);opacity:.32}
+.field input:focus{border-bottom-color:var(--ink)}
+
+.pick{display:flex;flex-direction:column;gap:12px}
+.pick__row{display:flex;width:max-content;max-width:100%;box-shadow:inset 0 0 0 1px var(--ink)}
+.pick input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.pick label{position:relative;min-height:54px;padding:0 clamp(20px,3vw,38px);
+  display:flex;align-items:center;cursor:pointer;font-size:14.5px;
+  transition:background 380ms var(--e),color 300ms var(--e)}
+.pick label+input+label{box-shadow:inset 1px 0 0 var(--ink)}
+.pick input:checked+label{background:var(--ink);color:var(--paper)}
+.pick input:focus-visible+label{outline:2px solid var(--seal);outline-offset:-6px}
+
+/* ═══════════════════ футер ═══════════════════ */
+.foot{padding-block:var(--s4) var(--s5);border-top:1px solid var(--line)}
+.foot__row{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;
+  font-size:12.5px;opacity:.55;text-transform:uppercase;letter-spacing:.14em}
+
+/* ═══════════════════ моушен ═══════════════════ */
+.rise{opacity:0;transform:translateY(28px);filter:blur(14px)}
+.is-in .rise,.rise.is-in{opacity:1;transform:none;filter:blur(0);
+  transition:opacity 900ms var(--e) var(--d,0ms),
+             transform 900ms var(--e) var(--d,0ms),
+             filter 900ms var(--e) var(--d,0ms)}
+
+/* телефон в альбомной: экран ниже 520px — иначе две строки имён не влезают */
+@media (orientation:landscape) and (max-height:520px){
+  .stage{font-size:min(13.4vw,25svh)}
+  .hero__foot{gap:var(--s3)}
+  .lead{font-size:14px}
+}
+
+/* ═══════════════════ портретная ориентация ═══════════════════
+   Две длинные кириллические строки съедают всю ширину, а полоса под кадр
+   становится узкой и высокой. Имена уходят в поток и центрируются, кадр
+   держит пропорцию 1:2 и клюёт хвост первой строки и голову второй —
+   та же схема B, но по-портретному. */
+@media (orientation:portrait){
+  .stage{font-size:12.5vw;display:flex;flex-direction:column;justify-content:center}
+  .names{position:static;display:flex;flex-direction:column;gap:.1em}
+  .names__a,.names__b{position:static}
+  .names__b{align-self:flex-end}
+  .stage__ph{left:1.97em;width:2.68em;height:5.36em;max-height:none;
+    top:calc(50% - 2.68em);bottom:auto;margin-block:0}
+}
+
+
+/* ═══════════════════ лесенка появления ═══════════════════
+   Задержки живут здесь, а не в атрибутах style — §0 запрещает
+   инлайновые стили в разметке. Шаг 50ms внутри группы, 100ms между группами. */
+.names__a{--d:340ms}
+.stage__ph{--d:480ms}
+.names__b{--d:620ms}
+.hero__meta{--d:820ms}
+.hero__act{--d:940ms}
+
+.invite__text .body:nth-of-type(1){--d:120ms}
+.invite__text .body:nth-of-type(2){--d:180ms}
+.invite__text .sign{--d:220ms}
+.invite .bleed{--d:120ms}
+
+.fact:nth-child(2){--d:90ms}
+.fact:nth-child(3){--d:180ms}
+
+.gal__i--2{--d:110ms}
+.gal__i--3{--d:220ms}
+
+.road__text .body:nth-of-type(1){--d:120ms}
+.road__text .body:nth-of-type(2){--d:180ms}
+.road__act{--d:220ms}
+
+.form{--d:120ms}
+
+/* ═══════════════════ планшет ═══════════════════ */
+@media (max-width:1080px){
+  .invite__grid h2,.road__grid h2{grid-column:1/8}
+  .invite__text,.road__text{grid-column:1/10}
+  .rsvp__side{grid-column:1/9}
+  .form,.done{grid-column:1/11}
+  .facts{grid-template-columns:1fr 1fr}
+  .gal{grid-template-columns:1fr 1fr;align-items:start}
+  .gal__i--1{grid-row:span 2}
+  .gal__i--1 img{height:clamp(420px,58vw,700px)}
+  .gal__i--2 img,.gal__i--3 img{height:clamp(200px,26vw,320px)}
+}
+
+/* ═══════════════════ телефон ═══════════════════ */
+@media (max-width:720px){
+  .hero{padding-block:14px 22px}
+  .hero__nav{display:none}
+  .hero__top{border-bottom:0;padding-bottom:10px}
+
+
+  .hero__foot{flex-direction:column;align-items:flex-start;gap:var(--s3);padding-top:var(--s2)}
+  .hero__act{align-items:flex-start;width:100%}
+  .hero__act .btn{width:100%}
+
+  .tag{margin-bottom:var(--s4)}
+  .invite__grid,.road__grid,.rsvp__grid{grid-template-columns:1fr;gap:var(--s3)}
+  .invite__grid h2,.road__grid h2,.invite__text,.road__text,
+  .rsvp__side,.form,.done{grid-column:auto}
+  .invite__text,.road__text{padding-top:var(--s1)}
+
+  .bleed{margin-top:var(--s5)}
+  .road .bleed{margin-bottom:var(--s5)}
+  .bleed img{height:clamp(240px,62vw,380px)}
+
+  .facts{grid-template-columns:1fr;gap:var(--s4)}
+  .gal{grid-template-columns:1fr;gap:var(--s4)}
+  .gal__i--1 img,.gal__i--2 img,.gal__i--3 img{height:auto;aspect-ratio:4/5}
+  .gal__i--2 img,.gal__i--3 img{aspect-ratio:5/4}
+
+  .pick__row{width:100%}
+  .pick label{flex:1 1 50%;justify-content:center;padding:0 12px}
+  .foot__row{flex-direction:column;gap:6px}
+}
+
+/* совсем узкие экраны: ручной перенос в подзаголовке hero даёт третью
+   строку в треть длины — отдаём разбивку балансировщику */
+@media (max-width:360px){
+  .lead br{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;filter:none}
+  .is-in .rise,.rise.is-in{transition:none}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
