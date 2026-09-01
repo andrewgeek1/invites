@@ -48,7 +48,7 @@
     <p class="kicker">Приглашаем на свадьбу</p>
     <h1 class="names">
       <span class="names__a">Даниил</span>
-      <span class="names__amp" aria-hidden="true">и</span>
+      <span class="names__link" aria-hidden="true"><i></i><em>и</em><i></i></span>
       <span class="vis-hidden"> и </span>
       <span class="names__b">Вера</span>
     </h1>
@@ -142,7 +142,8 @@
         <span class="asks__n">01</span>
         <div>
           <b>Одежда</b>
-          <p>Мы всё задумали в&nbsp;зелени и&nbsp;тёплом золоте. Будет здорово, если ваш наряд попадёт в&nbsp;эти оттенки. Белое платье в&nbsp;этот день только у&nbsp;невесты&nbsp;— остальные цвета свободны.</p>
+          <p>Мы всё задумали в&nbsp;зелени и&nbsp;тёплом золоте. Белое платье в&nbsp;этот день только у&nbsp;невесты&nbsp;— остальные цвета свободны.</p>
+          <p class="swatches__lead">Рекомендуем эти оттенки</p>
           <span class="swatches">
             <i style="--c:#2E4A38"><b>зелёный</b></i>
             <i style="--c:#7E8C6A"><b>олива</b></i>
@@ -197,11 +198,20 @@
 
       <fieldset class="field field--choice" id="guests-wrap" hidden>
         <legend>Со мной приедет</legend>
-        <div class="choice choice--four">
+        <div class="choice choice--five">
           <label><input type="radio" name="guests" value="0" checked><span>Никого</span></label>
           <label><input type="radio" name="guests" value="1"><span>+1</span></label>
           <label><input type="radio" name="guests" value="2"><span>+2</span></label>
           <label><input type="radio" name="guests" value="3"><span>+3</span></label>
+          <label><input type="radio" name="guests" value="more"><span>Больше</span></label>
+        </div>
+        <div class="more" id="guests-more" hidden>
+          <label class="more__lab" for="f-guests-n">Сколько человек приедет с&nbsp;вами</label>
+          <div class="more__row">
+            <input class="more__n" id="f-guests-n" type="number" inputmode="numeric"
+                   min="1" max="20" step="1" value="4" aria-describedby="more-hint">
+            <span class="more__hint" id="more-hint">до 20&nbsp;человек</span>
+          </div>
         </div>
       </fieldset>
 

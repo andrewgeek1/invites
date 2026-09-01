@@ -139,11 +139,11 @@ a{ color:inherit; text-decoration:none }
 
 .head{
   font-family:var(--f-disp); font-weight:300;
-  font-size:clamp(2.3rem, 5.4vw, 4.6rem); line-height:.98; letter-spacing:-.018em;
+  font-size:clamp(2.5rem, 5.9vw, 5.1rem); line-height:.98; letter-spacing:-.018em;
   margin-top:clamp(14px,2vh,24px);
 }
-.head--sm{ font-size:clamp(1.9rem, 3.4vw, 2.9rem) }
-.head--wide{ font-size:clamp(2.6rem, 6.2vw, 5.8rem) }
+.head--sm{ font-size:clamp(2.05rem, 3.8vw, 3.25rem) }
+.head--wide{ font-size:clamp(2.8rem, 6.6vw, 6.2rem) }
 
 .prose{ margin-top:clamp(16px,2.4vh,28px); max-width:58ch }
 .prose p{ font-size:clamp(16px,1.25vw,20px); line-height:1.62; color:rgba(232,226,212,.84) }
@@ -181,12 +181,26 @@ a{ color:inherit; text-decoration:none }
   margin:clamp(10px,1.6vh,20px) 0 0;
   display:grid; justify-items:start;
 }
-/* «и» стоит отдельной строкой между именами и смещено чуть правее середины
-   верхнего имени — не по центру, иначе читается как выравнивание, а не как связка */
-.names__amp{
-  font-family:var(--f-ink); font-size:.4em; color:var(--gold);
-  line-height:1; margin:.1em 0 .06em var(--amp-x, 3.9em);
+/* Союз — не отдельно висящая буква, а звено цепи: золотая нить спускается
+   от верхнего имени, на ней сидит «и», нить продолжается ко второму имени.
+   Ось звена — по центру короткого имени, чтобы нить шла внутри обоих. */
+.names__link{
+  display:flex; flex-direction:column; align-items:center;
+  margin-left:var(--link-x, .8em);
+  padding:.06em 0;
 }
+.names__link i{
+  width:1px; height:var(--wire, .34em); background:var(--gold); opacity:.85;
+  transform:scaleY(0);
+}
+.names__link i:first-child{ transform-origin:bottom }
+.names__link i:last-child{ transform-origin:top }
+.names__link em{
+  font-family:var(--f-ink); font-style:normal; font-size:.34em; color:var(--gold);
+  line-height:1; padding:.16em 0; opacity:0;
+}
+.is-live .names__link i{ transform:scaleY(1); transition:transform 700ms var(--e-soft) 520ms }
+.is-live .names__link em{ opacity:1; transition:opacity 600ms var(--e) 420ms }
 
 /* ─── подпись под именами ─── */
 .cover__meta{
@@ -203,7 +217,8 @@ a{ color:inherit; text-decoration:none }
 }
 .cover__venue{
   font-family:var(--f-disp); font-weight:300;
-  font-size:clamp(1.45rem,2.5vw,2.5rem); line-height:1.06; letter-spacing:-.012em;
+  font-size:clamp(1.55rem,2.7vw,2.7rem); line-height:1.1; letter-spacing:-.012em;
+  width:max-content; max-width:100%; text-align:center;
 }
 .cover__geo{
   margin-top:clamp(11px,1.4vh,16px);
@@ -305,7 +320,7 @@ a{ color:inherit; text-decoration:none }
 }
 .clock span{
   display:block; margin-top:clamp(10px,1.5vh,17px);
-  font-size:clamp(14px,1.05vw,16.5px); line-height:1.5; color:rgba(232,226,212,.84);
+  font-size:clamp(16px,1.25vw,20px); line-height:1.55; color:rgba(232,226,212,.84);
 }
 
 /* ─────────── 05 детали ─────────── */
@@ -322,18 +337,29 @@ a{ color:inherit; text-decoration:none }
 }
 .asks b{
   display:block; font-family:var(--f-disp); font-weight:500;
-  font-size:clamp(1.2rem,1.6vw,1.6rem); letter-spacing:-.01em;
+  font-size:clamp(1.32rem,1.78vw,1.8rem); letter-spacing:-.01em;
 }
-.asks p{ margin-top:.4em; font-size:clamp(14.5px,1.05vw,16.5px); line-height:1.56; color:rgba(232,226,212,.82) }
-.swatches{ display:flex; flex-wrap:wrap; gap:clamp(12px,1.7vw,24px); margin-top:15px }
-.swatches i{ display:flex; flex-direction:column; gap:7px; font-style:normal }
+.asks p{ margin-top:.45em; font-size:clamp(16px,1.25vw,20px); line-height:1.6; color:rgba(232,226,212,.82) }
+.swatches__lead{
+  margin-top:clamp(14px,1.9vh,20px);
+  font-size:12px; text-transform:uppercase; letter-spacing:.18em;
+  color:rgba(232,226,212,.66);
+}
+.swatches{ display:flex; flex-wrap:wrap; gap:clamp(14px,2vw,30px); margin-top:14px }
+/* образец — лист, а не квадрат: скругления по двум углам дают форму листа,
+   поворот ставит его вертикально, диагональ внутри работает прожилкой */
+.swatches i{ display:flex; flex-direction:column; align-items:center; gap:11px; font-style:normal }
 .swatches i::before{
-  content:""; width:32px; height:32px; background:var(--c);
-  box-shadow:inset 0 0 0 1px rgba(13,23,18,.35);
+  content:""; width:30px; height:30px; margin:5px 0 1px; background:var(--c);
+  border-radius:0 100% 0 100%; transform:rotate(45deg);
+  box-shadow:inset 0 0 0 1px rgba(13,23,18,.3);
+  background-image:linear-gradient(to top right,
+    transparent calc(50% - .5px), rgba(13,23,18,.28) calc(50% - .5px),
+    rgba(13,23,18,.28) calc(50% + .5px), transparent calc(50% + .5px));
 }
 .swatches b{
-  font-weight:400; font-size:11px; text-transform:uppercase;
-  letter-spacing:.13em; color:rgba(232,226,212,.6);
+  font-weight:400; font-size:11.5px; text-transform:uppercase;
+  letter-spacing:.13em; color:rgba(232,226,212,.72); text-align:center;
 }
 
 /* ─────────── кнопки ─────────── */
@@ -384,7 +410,7 @@ a{ color:inherit; text-decoration:none }
 }
 .card__note{
   margin-top:clamp(8px,1.2vh,14px);
-  font-size:15px; line-height:1.5; color:rgba(232,226,212,.78);
+  font-size:clamp(16px,1.25vw,19px); line-height:1.58; color:rgba(232,226,212,.78);
 }
 .form{ margin-top:clamp(14px,2.2vh,24px) }
 .field + .field{ margin-top:clamp(11px,1.6vh,17px) }
@@ -393,20 +419,35 @@ a{ color:inherit; text-decoration:none }
   color:rgba(232,226,212,.66); margin-bottom:8px;
 }
 .field label i{ font-style:normal; text-transform:none; letter-spacing:.02em; opacity:.72 }
-input[type=text], textarea{
+input[type=text], input[type=number], textarea{
   width:100%; min-height:44px; padding:10px 14px;
   background:rgba(13,23,18,.5); border:1px solid rgba(232,226,212,.3);
   border-radius:0; font-size:16px; font-weight:300;
   transition:border-color 320ms var(--e), background 320ms var(--e);
 }
 textarea{ resize:vertical; min-height:60px; line-height:1.5 }
-input[type=text]:focus, textarea:focus{
+input[type=text]:focus, input[type=number]:focus, textarea:focus{
   outline:none; border-color:var(--gold); background:rgba(13,23,18,.72);
 }
 ::placeholder{ color:rgba(232,226,212,.38) }
 .field--choice{ border:0 }
 .choice{ display:flex; gap:10px }
 .choice--four{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px }
+.choice--five{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px }
+.more{ margin-top:13px }
+.more__lab{ display:block; margin-bottom:8px;
+  font-size:12px; text-transform:uppercase; letter-spacing:.16em;
+  color:rgba(232,226,212,.66) }
+.more__row{ display:flex; align-items:center; gap:12px }
+/* Селектор с классом здесь проигрывает: input[type="number"] весит (0,1,1)
+   из-за атрибута, а .more__n — (0,1,0). Поднимаем вес родителем. */
+.more__row .more__n{
+  width:104px; flex:none; text-align:center; font-variant-numeric:tabular-nums;
+  -moz-appearance:textfield;
+}
+.more__n::-webkit-outer-spin-button,
+.more__n::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
+.more__hint{ font-size:12.5px; color:rgba(232,226,212,.58) }
 .choice label{ flex:1; margin:0; cursor:pointer }
 .guest-names{ display:grid; gap:9px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)) }
 .choice input{ position:absolute; opacity:0; pointer-events:none }
@@ -588,17 +629,19 @@ input[type=text]:focus, textarea:focus{
 
 @media (max-width:560px){
   .prose{ max-width:none }
-  .prose p{ font-size:14.5px }
+  .prose p{ font-size:15.5px }
+  .asks p{ font-size:15.5px }
   .clock li{ padding:16px 12px 0 0 }
   .clock b{ font-size:1.45rem }
-  .clock span{ font-size:13.5px; margin-top:8px }
+  .clock span{ font-size:15px; margin-top:8px }
   .swatches i::before{ width:26px; height:26px }
   .choice--four{ grid-template-columns:repeat(2,1fr) }
+  .choice--five{ grid-template-columns:repeat(2,1fr) }
   .asks li{ padding:11px 0 }
   .card{ margin-left:14px; margin-right:14px; padding:20px 17px }
   .card .head--sm{ font-size:1.75rem }
   .card .form{ margin-top:12px }
-  .card__note{ font-size:14px }
+  .card__note{ font-size:15px }
   .guest-names{ grid-template-columns:1fr }
   .choice{ flex-direction:column }
   .hud__mark{ font-size:13px }
@@ -612,6 +655,24 @@ input[type=text]:focus, textarea:focus{
   .clock{ margin-top:clamp(22px,3.5vh,40px) }
   .asks li{ padding:9px 0 }
   .card{ padding:20px }
+}
+
+/* Экран «Детали» не помещался на низких телефонах ещё до укрупнения текста:
+   последний пункт уходил под обрез, а .screen{overflow:hidden} его прятал.
+   Ужимаем вертикальный ритм и разрешаем прокрутку внутри экрана —
+   контент не должен пропадать совсем. */
+@media (max-width:900px) and (max-height:760px){
+  .screen{ overflow-y:auto; -webkit-overflow-scrolling:touch }
+  .screen--details .pane--text{ padding-bottom:clamp(54px,8vh,84px) }
+  .screen--details .head{ font-size:1.95rem }
+  .asks li{ padding:7px 0 }
+  .asks b{ font-size:1.1rem }
+  .asks p{ font-size:14.5px; line-height:1.48; margin-top:.3em }
+  .swatches__lead{ margin-top:8px; font-size:11px; letter-spacing:.14em }
+  .swatches{ gap:10px; margin-top:8px }
+  .swatches i{ gap:6px }
+  .swatches i::before{ width:22px; height:22px; margin:4px 0 0 }
+  .swatches b{ font-size:10px; letter-spacing:.1em }
 }
 
 /* ─────────── бережный режим ─────────── */

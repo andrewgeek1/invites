@@ -183,9 +183,25 @@
     if (box) box.textContent = text || '';
   }
 
+  var moreWrap = document.getElementById('guests-more');
+  var moreN    = document.getElementById('f-guests-n');
+  var MAX_GUESTS = 20;
+
+  /* «Больше» открывает поле с числом: спутников может быть и десять.
+     Потолок стоит не из вредности — 20 полей это предел, за которым
+     форму проще заменить звонком. */
   function guestCount() {
     var r = form.querySelector('input[name=guests]:checked');
-    return r ? +r.value : 0;
+    if (!r) return 0;
+    if (r.value !== 'more') return +r.value;
+    var n = parseInt(moreN.value, 10);
+    if (!(n > 0)) return 0;
+    return n > MAX_GUESTS ? MAX_GUESTS : n;
+  }
+
+  function syncMore() {
+    var r = form.querySelector('input[name=guests]:checked');
+    moreWrap.hidden = !r || r.value !== 'more';
   }
 
   /* Сколько спутников выбрали — столько строк под имена.
@@ -217,15 +233,26 @@
     var yes = form.querySelector('input[name=going][value=yes]').checked;
     guests.hidden = !yes;
     bus.hidden = !yes;
-    if (!yes) { namesWrap.hidden = true; namesBox.textContent = ''; }
-    else renderNameRows();
+    if (!yes) { namesWrap.hidden = true; namesBox.textContent = ''; moreWrap.hidden = true; }
+    else { syncMore(); renderNameRows(); }
   }
 
   form.querySelectorAll('input[name=going]').forEach(function (r) {
     r.addEventListener('change', function () { toggleExtras(); showErr('going', ''); });
   });
   form.querySelectorAll('input[name=guests]').forEach(function (r) {
-    r.addEventListener('change', function () { renderNameRows(); showErr('names', ''); });
+    r.addEventListener('change', function () {
+      syncMore();
+      renderNameRows();
+      showErr('names', '');
+      if (r.value === 'more') moreN.focus();
+    });
+  });
+  moreN.addEventListener('input', function () {
+    var n = parseInt(this.value, 10);
+    if (n > MAX_GUESTS) this.value = MAX_GUESTS;
+    renderNameRows();
+    showErr('names', '');
   });
   form.querySelector('#f-name').addEventListener('input', function () {
     this.classList.remove('is-bad'); showErr('name', '');
