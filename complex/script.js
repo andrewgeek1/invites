@@ -269,17 +269,17 @@
       // Раньше его верхняя точка-место (cy − ring = 108 − 78 = 30) попадала
       // внутрь плашки зоны (y 0–44). Вся раскладка сдвинута вниз на 30,
       // холст вырос на столько же: клиренс стал 16px вместо −14.
-      vb: [1160, 656], r: 54, ring: 78, num: 22, name: 16,
+      vb: [1160, 656], top: -5, r: 54, ring: 78, num: 22, name: 16,
       zones: [
-        { x: 430, y: 0,   w: 300, h: 44, ru: 'ТЕРРАСА / ЦЕРЕМОНИЯ', en: 'TERRACE / CEREMONY' },
+        { x: 430, y: -5,  w: 300, h: 44, ru: 'ТЕРРАСА / ЦЕРЕМОНИЯ', en: 'TERRACE / CEREMONY' },
         { x: 452, y: 296, w: 256, h: 92, ru: 'ТАНЦПОЛ',             en: 'DANCE FLOOR' }
       ],
       pos: [[140, 160], [580, 138], [1020, 160], [140, 478], [580, 500], [1020, 478]]
     },
     tall: {
-      vb: [560, 940], r: 52, ring: 74, num: 21, name: 15,
+      vb: [560, 940], top: -5, r: 52, ring: 74, num: 21, name: 15,
       zones: [
-        { x: 150, y: 0,   w: 260, h: 48, ru: 'ТЕРРАСА / ЦЕРЕМОНИЯ', en: 'TERRACE / CEREMONY' },
+        { x: 150, y: -5,  w: 260, h: 48, ru: 'ТЕРРАСА / ЦЕРЕМОНИЯ', en: 'TERRACE / CEREMONY' },
         { x: 175, y: 580, w: 210, h: 96, ru: 'ТАНЦПОЛ',             en: 'DANCE FLOOR' }
       ],
       pos: [[145, 170], [415, 170], [145, 420], [415, 420], [145, 800], [415, 800]]
@@ -304,7 +304,7 @@
     planBox.classList.toggle('is-hunt', hitTable >= 0);
 
     var svg = el('svg', {
-      viewBox: '0 0 ' + L.vb[0] + ' ' + L.vb[1],
+      viewBox: '0 ' + (L.top || 0) + ' ' + L.vb[0] + ' ' + (L.vb[1] - (L.top || 0)),
       role: 'img',
       'aria-label': lang === 'ru' ? 'Схема зала: шесть столов, терраса и танцпол'
                                   : 'Floor plan: six tables, terrace and dance floor'

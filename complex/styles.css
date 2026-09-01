@@ -265,39 +265,49 @@ html[lang="en"] .lang__on{ opacity:.42; }
   padding:clamp(90px,13vh,180px) 0 0;
   display:flex; flex-direction:column; gap:clamp(64px,9vh,120px);
 }
-.invite__grid{
-  display:grid; grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
-  gap:clamp(32px,3.4vw,64px); align-items:start;
-  padding:0 var(--pad);
-}
-.invite__text{ display:flex; flex-direction:column; gap:var(--s3); max-width:min(760px, 100%); }
-/* крупнее — иначе колонка не добирает ширину и в центре остаётся дыра */
-.invite__text h2{ margin-top:6px; font-size:clamp(2.05rem, 4.5vw, 4.1rem); }
-.invite__text .lead{ max-width:none; }
 .sign{
   font-family:"Playfair Display", serif; font-size:clamp(21px,2vw,28px);
   color:var(--sand); margin-top:var(--s2);
 }
 
-/* три строки, ради которых гость и открыл страницу */
-.key{ margin:0; display:flex; flex-direction:column; }
-.key__row{
-  display:grid; grid-template-columns:clamp(88px,9vw,130px) minmax(0,1fr);
-  gap:clamp(14px,2vw,32px); align-items:baseline;
-  padding:clamp(22px,2.8vh,34px) 0; border-top:1px solid var(--rule);
+/* Приглашение-карточка: одна колонка по центру, под чертой —
+   три строки, ради которых гость и открыл страницу. */
+.invite__card{
+  padding:0 var(--pad); text-align:center;
+  max-width:min(1000px, 100%); margin-inline:auto;
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(14px,2vh,24px);
 }
-.key__row:last-child{ border-bottom:1px solid var(--rule); }
+.invite__card h2{
+  margin:6px 0 0; max-width:19ch;
+  font-size:clamp(2.1rem, 4.6vw, 4rem); line-height:1.05; letter-spacing:-.022em;
+}
+.invite__card .lead{ max-width:52ch; }
+.invite__card .sign{ margin-top:clamp(6px,1vh,12px); }
+
+.key{
+  margin:clamp(26px,4.2vh,54px) 0 0; width:100%;
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(20px,3vw,52px);
+  border-top:1px solid var(--rule); padding-top:clamp(24px,3.4vh,40px);
+}
+.key__row{ display:flex; flex-direction:column; align-items:center; gap:10px; }
 .key dt{
   font-size:12px; line-height:1.8; letter-spacing:.19em; text-transform:uppercase;
-  color:rgba(242,237,230,.55);
+  color:var(--sand);
 }
-.key dd{ margin:0; display:flex; flex-direction:column; gap:7px; }
+.key dd{ margin:0; display:flex; flex-direction:column; align-items:center; gap:7px; }
 .key dd b{
   font-family:"Playfair Display", serif; font-weight:400;
-  font-size:clamp(24px,2.5vw,38px); line-height:1.05; letter-spacing:-.025em;
+  font-size:clamp(20px,1.85vw,28px); line-height:1.1; letter-spacing:-.02em;
   font-variant-numeric:lining-nums; font-feature-settings:"lnum" 1;
 }
-.key dd span{ font-size:clamp(15px,1.15vw,17px); line-height:1.55; color:rgba(242,237,230,.62); max-width:38ch; }
+.key dd span{ font-size:clamp(14px,1.05vw,16px); line-height:1.5; color:rgba(242,237,230,.62); max-width:27ch; }
+
+@media (max-width:860px){
+  .key{ grid-template-columns:1fr; gap:clamp(22px,3.4vh,32px); }
+  .key dd span{ max-width:34ch; }
+}
 
 .invite__band{ margin:0; height:clamp(280px,48vh,560px); }
 .invite__band img{ width:100%; height:100%; object-fit:cover; object-position:50% 58%; }
@@ -723,7 +733,6 @@ html[lang="en"] .lang__on{ opacity:.42; }
    ========================================================= */
 
 @media (max-width:1080px){
-  .invite__grid{ grid-template-columns:1fr; gap:var(--s5); }
   .looks{ grid-template-columns:1fr; gap:var(--s4); }
   .look figure{ height:clamp(260px,40vh,420px); }
   .program{ grid-template-columns:1fr; padding-left:var(--pad); padding-right:var(--pad); }
