@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Матвей и Нина — приглашение</title>
+<meta name="description" content="Приглашение на свадьбу Матвея и Нины. Стеклянный павильон «Затон» на Гребном канале, Нижний Новгород.">
+<meta name="theme-color" content="#08090C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300&family=Geist:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Фон: шёлк из видео. Источник ставится скриптом — на телефоне и при
+     prefers-reduced-motion остаётся один постер. Под видео лежит градиент:
+     если чужой CDN отвалится, экран не станет чёрным. -->
+<div class="veil" aria-hidden="true">
+  <video class="veil__v" id="bgv" muted loop playsinline preload="none" poster="assets/poster.webp"></video>
+  <div class="veil__fade"></div>
+</div>
+
+<!-- Направляющие: по ним же стоят левые края всех заголовков. -->
+<div class="rails" aria-hidden="true"><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══ 1. Обложка ═══════════════════════════════════════════════════ -->
+<header class="cover" id="top">
+  <div class="wrap cover__in">
+
+    <p class="cover__titles rise" style="--d:200ms">
+      <span data-en="Invitation">Приглашение</span>
+      <span data-en="Nizhny Novgorod">Нижний Новгород</span>
+    </p>
+
+    <div class="cover__bottom">
+      <h1 class="names rise" style="--d:420ms">
+        <span class="names__l shine">Матвей</span>
+        <span class="names__l shine">и&nbsp;Нина</span>
+      </h1>
+
+      <p class="cover__meta rise" style="--d:560ms">
+        <b data-dt="dow-day"></b>
+        <span data-en="Zaton glass pavilion / Grebnoy Canal">стеклянный павильон «Затон» / Гребной канал</span>
+      </p>
+
+      <div class="cover__act rise" style="--d:700ms">
+        <a class="btn btn--fill" href="#answer">
+          <span class="btn__fill" aria-hidden="true"></span>
+          <span class="btn__label" data-en="Reply to the invitation">Ответить на приглашение</span>
+        </a>
+        <span class="hint" data-en="One minute, three questions">Одна минута, три вопроса</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+  <!-- ══ 2. Полоса-курс ═════════════════════════════════════════════
+       Липкая, но БЕЗ backdrop-filter: под ней едет контент, и блюр
+       пересчитывался бы каждый кадр прокрутки. Фон сплошной. -->
+  <div class="course">
+    <div class="wrap course__in">
+      <a class="course__mark" href="#top" data-en="Matvey and Nina">Матвей и&nbsp;Нина</a>
+      <p class="course__date"><span data-dt="day-year"></span></p>
+      <nav class="course__nav">
+        <a href="#hours" data-en="Programme">Программа</a>
+        <a href="#place" data-en="Venue">Место</a>
+        <a href="#dress" data-en="Dress">Одежда</a>
+        <a class="course__ans" href="#answer" data-en="Reply">Ответить</a>
+        <button class="course__lang" type="button" id="lang" lang="en">EN</button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ══ 3. Приглашение ═════════════════════════════════════════════ -->
+  <section class="invite" id="invite">
+    <div class="wrap">
+      <article class="glass invite__card rise">
+        <span class="sheen" aria-hidden="true"></span>
+
+        <p class="lab" data-en="Invitation">Приглашение</p>
+        <h2 class="invite__h rise rise--blur" style="--d:80ms" data-en="We are getting married<br>and we want you there">Мы женимся<br>и&nbsp;зовём вас</h2>
+
+        <p class="invite__lead rise" style="--d:180ms" data-en="Five years ago we met on this embankment, two hundred steps from the pavilion where we will say yes. Come: without you it is just a dinner with a good view.">
+          Пять лет назад мы&nbsp;познакомились на&nbsp;этой набережной, в&nbsp;двухстах
+          шагах от&nbsp;павильона, где скажем «да». Приезжайте: без&nbsp;вас это будет
+          просто ужин с&nbsp;хорошим видом.
+        </p>
+
+        <p class="invite__sign rise" style="--d:260ms" data-en="Matvey and Nina">Матвей и&nbsp;Нина</p>
+
+        <dl class="invite__facts rise" style="--d:340ms">
+          <div>
+            <dt data-en="When">Когда</dt>
+            <dd data-en="<span data-dt=&quot;dow-day&quot;></span>, arrival at 17:00"><span data-dt="dow-day"></span>, сбор в&nbsp;17:00</dd>
+          </div>
+          <div>
+            <dt data-en="Where">Где</dt>
+            <dd data-en="Zaton pavilion, Grebnoy Canal">павильон «Затон», Гребной канал</dd>
+          </div>
+          <div>
+            <dt data-en="Reply by">Ответ</dt>
+            <dd data-en="<span data-dt=&quot;deadline&quot;></span>">ждём до&nbsp;<span data-dt="deadline"></span></dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══ 4. Хроника вечера ══════════════════════════════════════════ -->
+  <section class="hours" id="hours">
+    <div class="wrap">
+      <p class="lab rise" data-en="How the evening goes">Как пройдёт вечер</p>
+      <h2 class="hours__h rise rise--blur" style="--d:80ms" data-en="From the first glass<br>to the lights on the water">От&nbsp;первого бокала<br>до&nbsp;огней на&nbsp;воде</h2>
+
+      <ol class="hours__line">
+        <li class="hour rise" style="--d:120ms">
+          <b>17:00</b>
+          <h3 data-en="Arrival">Сбор</h3>
+          <p data-en="The terrace, cold sparkling wine, the canal. Twenty minutes late is fine.">Терраса, игристое, вид на&nbsp;канал. Опоздать на&nbsp;двадцать минут — нормально.</p>
+        </li>
+        <li class="hour rise" style="--d:180ms">
+          <b>17:30</b>
+          <h3 data-en="Ceremony">Церемония</h3>
+          <p data-en="Right by the water, under open sky. Twenty minutes, then the party.">У&nbsp;самой воды, под&nbsp;открытым небом. Двадцать минут — и&nbsp;дальше праздник.</p>
+        </li>
+        <li class="hour rise" style="--d:240ms">
+          <b>19:00</b>
+          <h3 data-en="Dinner">Ужин</h3>
+          <p data-en="Long, in several courses, with toasts and room to talk.">Долгий, в&nbsp;несколько подач, с&nbsp;тостами и&nbsp;паузами на&nbsp;поговорить.</p>
+        </li>
+        <li class="hour rise" style="--d:300ms">
+          <b>21:00</b>
+          <h3 data-en="Dancing">Танцы</h3>
+          <p data-en="A live set, then a DJ. By this hour the glass turns into a mirror.">Живой сет, потом диджей. Стекло павильона к&nbsp;ночи становится зеркалом.</p>
+        </li>
+        <li class="hour rise" style="--d:360ms">
+          <b>23:30</b>
+          <h3 data-en="Lights">Огни</h3>
+          <p data-en="We walk out to the pontoon and watch the river. The end of the evening.">Выходим на&nbsp;понтон, смотрим на&nbsp;реку и&nbsp;огни моста. Финал вечера.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ 5. Место ═══════════════════════════════════════════════════ -->
+  <section class="place" id="place">
+    <div class="wrap">
+      <p class="lab rise" data-en="Venue">Место</p>
+      <h2 class="rise rise--blur" style="--d:80ms" data-en="A glass pavilion<br>on the Grebnoy Canal">Стеклянный павильон<br>на&nbsp;Гребном канале</h2>
+    </div>
+
+    <!-- Фото во всю ширину окна, впритык к краям: кадр в скруглённой
+         рамке посреди страницы — первый признак шаблона. -->
+    <figure class="shot rise" style="--d:140ms">
+      <img src="assets/venue.webp"
+           srcset="assets/venue-sm.webp 1000w, assets/venue.webp 2000w"
+           sizes="100vw"
+           width="2000" height="1125" loading="lazy" decoding="async"
+           alt="Стеклянный павильон вечером: свет изнутри, тёмный сад вокруг">
+      <figcaption data-en="Zaton pavilion after sunset">Павильон «Затон» после заката</figcaption>
+    </figure>
+
+    <div class="wrap place__grid">
+      <p class="place__lead rise" data-en="A turn off the embankment, a barrier and parking by the water. Twenty minutes from the centre, and the only house on the whole bank: there are no neighbours to be bothered by music.">
+        Съезд с&nbsp;набережной, шлагбаум и&nbsp;парковка у&nbsp;самой воды. От&nbsp;центра —
+        двадцать минут на&nbsp;машине, и&nbsp;это единственный дом на&nbsp;всём берегу:
+        соседей, которым мешает музыка, здесь нет.
+      </p>
+
+      <dl class="place__facts rise" style="--d:80ms">
+        <div><dt data-en="Address">Адрес</dt><dd data-en="Grebnoy Canal 3, Nizhny Novgorod">Нижний Новгород, Гребной канал, 3</dd></div>
+        <div><dt data-en="Parking">Парковка</dt><dd data-en="free, right at the entrance">своя, бесплатная, у&nbsp;входа</dd></div>
+        <div><dt data-en="Shuttle">Трансфер</dt><dd data-en="bus from Minin Square at 16:15">автобус от&nbsp;площади Минина в&nbsp;16:15</dd></div>
+      </dl>
+
+      <div class="place__act rise" style="--d:140ms">
+        <a class="btn btn--ghost" href="https://yandex.ru/maps/47/nizhny-novgorod/" target="_blank" rel="noopener">
+          <span class="btn__fill" aria-hidden="true"></span>
+          <span class="btn__label" data-en="Open the route">Построить маршрут</span>
+        </a>
+        <span class="hint" data-en="The bus back leaves at 00:30">Обратный автобус уходит в&nbsp;00:30</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6. Вечер и одежда ══════════════════════════════════════════ -->
+  <section class="dress" id="dress">
+    <div class="wrap">
+      <p class="lab rise" data-en="Dress">Одежда</p>
+      <h2 class="rise rise--blur" style="--d:80ms" data-en="Dark and simple,<br>nothing too formal">Тёмное и&nbsp;простое,<br>без парадного блеска</h2>
+
+      <p class="dress__lead rise" style="--d:140ms" data-en="We will be in dark colours and would love it if you were too. There is no strict code — it is a request: dark tones hold best in photographs by the water.">
+        Мы будем в&nbsp;тёмном — и&nbsp;будем рады, если вы&nbsp;тоже. Строгого кода нет,
+        это просто просьба: на&nbsp;фотографиях у&nbsp;воды тёмные тона держатся лучше всего.
+      </p>
+
+      <ul class="palette rise" style="--d:200ms">
+        <li><i style="background:#0F1A2B"></i><span data-en="Midnight">Полночный</span></li>
+        <li><i style="background:#232830"></i><span data-en="Graphite">Графит</span></li>
+        <li><i style="background:#3E4A5A"></i><span data-en="Steel">Сталь</span></li>
+        <li><i style="background:#A8B7C7"></i><span data-en="Silver">Серебро</span></li>
+        <li><i style="background:#1D3730"></i><span data-en="Pine">Хвойный</span></li>
+      </ul>
+
+      <div class="asks">
+        <div class="ask rise" style="--d:60ms">
+          <h3 data-en="White">Белый цвет</h3>
+          <p data-en="Leave it to the bride — it is taken that evening.">Оставьте его невесте — в&nbsp;этот вечер он&nbsp;занят.</p>
+        </div>
+        <div class="ask rise" style="--d:120ms">
+          <h3 data-en="Heels">Каблуки</h3>
+          <p data-en="The deck and the pontoon are wooden: thin heels sink into them.">Настил и&nbsp;понтон деревянные: тонкая шпилька в&nbsp;них вязнет.</p>
+        </div>
+        <div class="ask rise" style="--d:180ms">
+          <h3 data-en="Something warm">Тёплые вещи</h3>
+          <p data-en="It gets noticeably colder by the water after sunset. A jacket or a shawl helps.">После заката у&nbsp;воды заметно холоднее. Пиджак или шаль пригодятся.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="shot shot--flat rise">
+      <img src="assets/water.webp"
+           srcset="assets/water-sm.webp 1000w, assets/water.webp 2000w"
+           sizes="100vw"
+           width="2000" height="857" loading="lazy" decoding="async"
+           alt="Тёмная вода канала с отражением огней">
+    </figure>
+
+    <div class="wrap">
+      <h2 class="faq__h rise" data-en="Short answers">Короткие ответы</h2>
+      <div class="faq rise" style="--d:80ms">
+        <details>
+          <summary data-en="Can we bring children?">Можно&nbsp;ли с&nbsp;детьми?</summary>
+          <p data-en="Yes. A nanny works from seven, and the kids table stands next to ours.">Да. С&nbsp;семи вечера работает няня, детский стол стоит рядом с&nbsp;общим.</p>
+        </details>
+        <details>
+          <summary data-en="What about gifts?">Что подарить?</summary>
+          <p data-en="Nothing is needed. If you insist — an envelope: we are saving for a house.">Ничего не&nbsp;нужно. Если очень хочется — конверт: мы&nbsp;копим на&nbsp;дом.</p>
+        </details>
+        <details>
+          <summary data-en="Where can we stay?">Где остановиться?</summary>
+          <p data-en="Two hotels are ten minutes away; rooms are held under the word Zaton.">В&nbsp;десяти минутах два отеля, для гостей держим брони по&nbsp;слову «Затон».</p>
+        </details>
+        <details>
+          <summary data-en="Can we take photos?">Можно снимать?</summary>
+          <p data-en="Yes, but put the phones away during the ceremony — our photographer covers it.">Да, но&nbsp;во&nbsp;время церемонии уберите телефоны: эти двадцать минут снимает наш фотограф.</p>
+        </details>
+        <details>
+          <summary data-en="When does it end?">Во&nbsp;сколько всё закончится?</summary>
+          <p data-en="The bus leaves at 00:30. A taxi at the barrier takes about five minutes.">Автобус увозит в&nbsp;00:30. Такси у&nbsp;шлагбаума ловится за&nbsp;пять минут.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7. Ответ ═══════════════════════════════════════════════════ -->
+  <section class="answer" id="answer">
+    <div class="wrap">
+      <div class="glass answer__card rise">
+        <span class="sheen" aria-hidden="true"></span>
+
+        <div class="answer__head">
+          <p class="lab" data-en="Reply">Ответ</p>
+          <h2 id="answer-h" data-en="Will you be there?">Будете с&nbsp;нами?</h2>
+          <p class="answer__lead" data-en="Please reply by <span data-dt=&quot;deadline&quot;></span> — by that day we give the venue the final count and seat the tables.">
+            Ответьте до&nbsp;<span data-dt="deadline"></span> — к&nbsp;этому дню
+            мы&nbsp;называем площадке число гостей и&nbsp;рассаживаем столы.
+          </p>
+        </div>
+
+        <form class="form" id="rsvp" novalidate>
+          <div class="field">
+            <label for="f-name" data-en="Full name">Имя и&nbsp;фамилия</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+            <span class="err" data-for="name"></span>
+          </div>
+
+          <fieldset class="field">
+            <legend data-en="Coming?">Придёте?</legend>
+            <div class="choice">
+              <label class="pick"><input type="radio" name="going" value="yes" checked><span data-en="We will">Придём</span></label>
+              <label class="pick"><input type="radio" name="going" value="no"><span data-en="We cannot">Не&nbsp;сможем</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field" id="wrap-guests">
+            <legend data-en="Anyone with you?">Кто&nbsp;с вами?</legend>
+            <div class="choice" id="guests-pick">
+              <label class="pick"><input type="radio" name="guests" value="0" checked><span data-en="No one">Никого</span></label>
+              <label class="pick"><input type="radio" name="guests" value="1"><span>+1</span></label>
+              <label class="pick"><input type="radio" name="guests" value="2"><span>+2</span></label>
+              <label class="pick"><input type="radio" name="guests" value="3"><span>+3</span></label>
+            </div>
+            <div class="companions" id="companions"></div>
+            <span class="err" data-for="companions"></span>
+          </fieldset>
+
+          <fieldset class="field" id="wrap-food">
+            <legend data-en="Dinner preference">Что подать на&nbsp;ужин</legend>
+            <div class="choice">
+              <label class="pick"><input type="radio" name="food" value="meat" checked><span data-en="Meat">Мясо</span></label>
+              <label class="pick"><input type="radio" name="food" value="fish"><span data-en="Fish">Рыба</span></label>
+              <label class="pick"><input type="radio" name="food" value="veg"><span data-en="No meat">Без&nbsp;мяса</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field" id="wrap-bus">
+            <legend data-en="Bus from Minin Square">Автобус от&nbsp;площади Минина</legend>
+            <div class="choice">
+              <label class="pick"><input type="radio" name="bus" value="yes" checked><span data-en="We will take it">Поедем на&nbsp;нём</span></label>
+              <label class="pick"><input type="radio" name="bus" value="no"><span data-en="We will drive">Доберёмся сами</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="f-note" data-en="Anything we should know">Что нам стоит знать</label>
+            <textarea id="f-note" name="note" rows="3" placeholder="аллергия, детское кресло, что-нибудь ещё"></textarea>
+          </div>
+
+          <div class="form__send">
+            <button class="btn btn--fill" type="submit" id="f-submit">
+              <span class="btn__fill" aria-hidden="true"></span>
+              <span class="btn__label" data-en="Save us a seat">Занять место за&nbsp;столом</span>
+            </button>
+            <span class="hint" data-en="Changed your mind? Just write to us, the answer can be updated">Передумаете — просто напишите нам, ответ можно поменять</span>
+          </div>
+        </form>
+
+        <div class="thanks" id="thanks" hidden>
+          <h2 id="thanks-h">Записали</h2>
+          <p id="thanks-text"></p>
+          <button class="link" type="button" id="again" data-en="Answer again">Ответить заново</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 8. Финал ═══════════════════════════════════════════════════ -->
+  <section class="final" id="final">
+    <img class="final__bg" src="assets/lights.webp"
+         srcset="assets/lights-sm.webp 1000w, assets/lights.webp 2000w"
+         sizes="100vw" width="2000" height="1125" loading="lazy" decoding="async" alt="">
+    <div class="final__fade" aria-hidden="true"></div>
+
+    <div class="wrap final__in">
+      <p class="lab rise" data-en="Time until the evening">До&nbsp;вечера осталось</p>
+
+      <ol class="count rise" style="--d:80ms" id="count">
+        <li><b data-c="d">—</b><span>дней</span></li>
+        <li><b data-c="h">—</b><span>часов</span></li>
+        <li><b data-c="m">—</b><span>минут</span></li>
+      </ol>
+
+      <h2 class="final__names rise" style="--d:160ms">
+        <span class="shine">Матвей</span>
+        <span class="shine">и&nbsp;Нина</span>
+      </h2>
+
+      <div class="final__act rise" style="--d:240ms">
+        <button class="btn btn--ghost" type="button" id="ics">
+          <span class="btn__fill" aria-hidden="true"></span>
+          <span class="btn__label" data-en="Add to calendar">Отметить в&nbsp;календаре</span>
+        </button>
+        <span class="hint" data-en="<span data-dt=&quot;dow-day&quot;></span>, arrival at 17:00"><span data-dt="dow-day"></span>, сбор в&nbsp;17:00</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__names" data-en="Matvey and Nina">Матвей и&nbsp;Нина</p>
+    <p class="foot__meta" data-en="<span data-dt=&quot;day-year&quot;></span> / Zaton pavilion, Grebnoy Canal"><span data-dt="day-year"></span> / павильон «Затон», Гребной канал</p>
+    <p class="foot__call" data-en="Questions — call Nina: <a href=&quot;tel:+79000000000&quot;>+7 900 000-00-00</a>">Вопросы — Нине: <a href="tel:+79000000000">+7 900 000-00-00</a></p>
+    <p class="foot__cred" data-en="Photographs — Viktor Talashuk, Yuheng Ouyang, Ryan Yao (Unsplash)">Фотографии — Viktor&nbsp;Talashuk, Yuheng&nbsp;Ouyang, Ryan&nbsp;Yao (Unsplash)</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

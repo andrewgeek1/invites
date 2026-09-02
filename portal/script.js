@@ -35,9 +35,9 @@ const DATA = {
                      en: ['Reception', 'Old lime trees, cold wine and one photograph of everyone.'] },
     { time: '19:44', ru: ['Закат', 'Тот самый повод. Просим в этот момент отложить телефоны.'],
                      en: ['Sunset', 'The whole point. Please put your phones down for this one.'], key: true },
-    { time: '21:00', ru: ['Первый танец', 'И сразу за ним общий — стоять в стороне не выйдет.'],
+    { time: '21:00', ru: ['Первый танец', 'И сразу за ним общий: стоять в стороне не выйдет.'],
                      en: ['First dance', 'And everyone right after — standing aside won’t work.'] },
-    { time: '23:00', ru: ['Огни', 'Фонари над водой. Автобус в город — в половине первого.'],
+    { time: '23:00', ru: ['Огни', 'Фонари над водой. Автобус в город уходит в половине первого.'],
                      en: ['Lights', 'Lanterns over the water. The bus back leaves at half past midnight.'] }
   ],
 
@@ -51,39 +51,39 @@ const DATA = {
   ],
 
   asks: [
-    { ru: ['Белый цвет', 'Он один на весь вечер и уже занят. Всё остальное — пожалуйста.'],
+    { ru: ['Белый цвет', 'Он один на весь вечер и уже занят. Всё остальное можно.'],
       en: ['White', 'There is one white outfit tonight and it is taken. Everything else is welcome.'] },
-    { ru: ['Каблуки', 'Под ногами трава и песок. Возьмите вторую пару — переобуться будет где.'],
+    { ru: ['Каблуки', 'Под ногами трава и песок. Возьмите вторую пару: переобуться будет где.'],
       en: ['Heels', 'Grass and sand underfoot. Bring a second pair — there is somewhere to change.'] },
-    { ru: ['Подарки', 'Ничего не нужно везти. Если очень хочется — конверт, и на этом закончим.'],
+    { ru: ['Подарки', 'Ничего не нужно везти. Если очень хочется, то конверт, и на этом закончим.'],
       en: ['Gifts', 'Please bring nothing. If you insist — an envelope, and let’s leave it there.'] }
   ],
 
   faq: [
     { q: { ru: 'Можно с детьми?', en: 'Can we bring the children?' },
-      a: { ru: 'Да, и мы будем рады. В усадьбе есть няня с 16:00 до 22:00 и тихая комната с играми — скажите в ответе, сколько детей и какого возраста.',
+      a: { ru: 'Да, и мы будем рады. В усадьбе есть няня с 16:00 до 22:00 и тихая комната с играми. Скажите в ответе, сколько детей и какого возраста.',
            en: 'Yes, and we’ll be glad. There’s a nanny from 16:00 to 22:00 and a quiet room with games — tell us how many children and their ages in the RSVP.' } },
     { q: { ru: 'Что если пойдёт дождь?', en: 'What if it rains?' },
       a: { ru: 'Ничего не отменяется. Церемония переезжает под стеклянную веранду, вид на реку оттуда тот же. Зонты будут у входа.',
            en: 'Nothing is cancelled. The ceremony moves to the glass veranda — same view of the river. Umbrellas at the entrance.' } },
     { q: { ru: 'Я не знаю почти никого из гостей', en: 'I hardly know anyone else coming' },
-      a: { ru: 'Поэтому мы и делаем рассадку заранее. За вашим столом будут те, с кем вам точно найдётся о чём поговорить, — это не случайный порядок.',
+      a: { ru: 'Поэтому мы и делаем рассадку заранее. Порядок не случайный: за вашим столом будут те, с кем вам точно найдётся о чём поговорить.',
            en: 'That’s exactly why we plan the seating. Your table is not random — you’ll have something to talk about.' } },
     { q: { ru: 'До скольки идёт трансфер?', en: 'How late does the shuttle run?' },
-      a: { ru: 'Автобус от площади Минина в 13:30, обратно в 00:30. Если остаётесь ночевать — скажите в ответе, комнату придержим.',
+      a: { ru: 'Автобус от площади Минина в 13:30, обратно в 00:30. Остаётесь ночевать? Скажите в ответе, и мы придержим комнату.',
            en: 'The bus leaves Minin square at 13:30 and returns at 00:30. If you stay over, say so in the RSVP and we’ll hold a room.' } },
     { q: { ru: 'Можно приехать только на вечер?', en: 'Can we come only for the evening?' },
-      a: { ru: 'Можно, но постарайтесь успеть к 19:00. Закат — единственное, что мы не сможем отложить ради опоздавших.',
+      a: { ru: 'Можно, но постарайтесь успеть к 19:00. Закат мы не сможем отложить ради опоздавших.',
            en: 'You can, but try to be there by 19:00. The sunset is the one thing we can’t hold for latecomers.' } }
   ],
 
   tables: [
-    { id: 'zarya',   ru: 'Заря',    en: 'Zarya',   guests: ['Воронов Никита', 'Воронова Мария', 'Тихонов Роман', 'Соболева Нина', 'Ерёмин Пётр'] },
-    { id: 'yarilo',  ru: 'Ярило',   en: 'Yarilo',  guests: ['Гущина Ольга', 'Гущин Кирилл', 'Ланская Вера', 'Мосин Артур', 'Мосина Даша'] },
-    { id: 'strizhi', ru: 'Стрижи',  en: 'Strizhi', guests: ['Белкин Захар', 'Белкина Рита', 'Юдин Тимур', 'Королёва Аня', 'Сотников Глеб'] },
-    { id: 'poyma',   ru: 'Пойма',   en: 'Poyma',   guests: ['Астахова Лида', 'Астахов Марк', 'Веденеев Илья', 'Веденеева Соня', 'Лапина Женя'] },
-    { id: 'veranda', ru: 'Веранда', en: 'Veranda', guests: ['Зотов Савелий', 'Зотова Инна', 'Панкратова Юля', 'Рыжов Матвей', 'Рыжова Катя'] },
-    { id: 'prichal', ru: 'Причал',  en: 'Prichal', guests: ['Дёмина Полина', 'Дёмин Роман', 'Ушаков Тихон', 'Сафина Алина', 'Хрусталёв Егор'] }
+    { id: 't1', n: 1, guests: ['Воронов Никита', 'Воронова Мария', 'Тихонов Роман', 'Соболева Нина', 'Ерёмин Пётр'] },
+    { id: 't2', n: 2, guests: ['Гущина Ольга', 'Гущин Кирилл', 'Ланская Вера', 'Мосин Артур', 'Мосина Даша'] },
+    { id: 't3', n: 3, guests: ['Белкин Захар', 'Белкина Рита', 'Юдин Тимур', 'Королёва Аня', 'Сотников Глеб'] },
+    { id: 't4', n: 4, guests: ['Астахова Лида', 'Астахов Марк', 'Веденеев Илья', 'Веденеева Соня', 'Лапина Женя'] },
+    { id: 't5', n: 5, guests: ['Зотов Савелий', 'Зотова Инна', 'Панкратова Юля', 'Рыжов Матвей', 'Рыжова Катя'] },
+    { id: 't6', n: 6, guests: ['Дёмина Полина', 'Дёмин Роман', 'Ушаков Тихон', 'Сафина Алина', 'Хрусталёв Егор'] }
   ],
 
   gallery: [
@@ -92,7 +92,8 @@ const DATA = {
     { ru: 'Липы у ворот усадьбы', en: 'Limes at the estate gate', h: 0 },
     { ru: 'Волга в семь вечера', en: 'The Volga at seven', h: 1 },
     { ru: 'Стол, накрытый заранее', en: 'The table, set early', h: 0 },
-    { ru: 'Последняя полоса света', en: 'The last band of light', h: 0 }
+    { ru: 'Последняя полоса света', en: 'The last band of light', h: 0 },
+    { ru: 'Ужин, который не хочется заканчивать', en: 'A dinner nobody wants to end', h: 0 }
   ]
 };
 
@@ -346,8 +347,9 @@ function renderDay() {
 }
 
 function renderPalette() {
-  $('#pal').innerHTML = DATA.palette.map(c =>
-    `<li><i style="background:${c.hex}"></i><span>${t(c)}</span></li>`).join('');
+  $('#pal').innerHTML = DATA.palette.map((c, i) =>
+    `<li><i style="--c:${c.hex};--rot:${(i % 2 ? 1 : -1) * (1.4 + (i % 3) * .9)}deg"></i>
+       <span>${t(c)}</span></li>`).join('');
 }
 
 function renderAsks() {
@@ -383,9 +385,22 @@ function renderGallery() {
 }
 
 function renderHall() {
+  // Стол рисуется круглым, стулья расставлены по кругу — это план зала.
+  const seatPlan = (seats, guests) => {
+    const R = 27, C = 40;
+    const dots = guests.map((g, i) => {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / seats;
+      return `<circle class="table__seat" data-g="${g.toLowerCase()}"
+        cx="${(C + Math.cos(a) * R * 1.42).toFixed(1)}"
+        cy="${(C + Math.sin(a) * R * 1.42).toFixed(1)}" r="5.6"></circle>`;
+    }).join('');
+    return `<svg viewBox="0 0 80 80" aria-hidden="true">${dots}
+      <circle class="table__top" cx="${C}" cy="${C}" r="${R}"></circle></svg>`;
+  };
   $('#hall').innerHTML = DATA.tables.map(tb =>
     `<button type="button" class="table" data-id="${tb.id}">
-       <b>${t(tb)}</b>
+       <span class="table__plan">${seatPlan(tb.guests.length, tb.guests)}</span>
+       <b>${LANG === 'ru' ? 'Стол ' + tb.n : 'Table ' + tb.n}</b>
        <span>${tb.guests.length} ${LANG === 'ru' ? 'мест' : 'seats'}</span>
        <div class="table__fold"><ul>${
          tb.guests.map(g => `<li data-g="${g.toLowerCase()}">${g}</li>`).join('')
@@ -404,7 +419,7 @@ function seatSearch() {
   // is-open снимаем тоже: иначе после неудачного поиска на экране
   // оставался раскрытым стол, найденный предыдущим запросом.
   $$('#hall .table').forEach(b => b.classList.remove('is-hit', 'is-dim', 'is-open'));
-  $$('#hall li').forEach(li => li.classList.remove('is-me'));
+  $$('#hall li, #hall .table__seat').forEach(el => el.classList.remove('is-me'));
   if (q.length < 2) { out.textContent = ''; return; }
 
   let found = null, who = '';
@@ -422,26 +437,25 @@ function seatSearch() {
   $$('#hall .table').forEach(b => {
     if (b.dataset.id === found.id) {
       b.classList.add('is-hit', 'is-open');
-      const li = Array.from(b.querySelectorAll('li'))
-        .find(x => x.dataset.g === who.toLowerCase());
-      if (li) li.classList.add('is-me');
+      b.querySelectorAll(`[data-g="${who.toLowerCase()}"]`)
+        .forEach(el => el.classList.add('is-me'));
       b.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' });
     } else b.classList.add('is-dim');
   });
   out.innerHTML = LANG === 'ru'
-    ? `${who} — стол <b>«${found.ru}»</b>.`
-    : `${who} — table <b>${found.en}</b>.`;
+    ? `${who}, ваше место за <b>столом ${found.n}</b>.`
+    : `${who}, your seat is at <b>table ${found.n}</b>.`;
 }
 
 /* ══ 6. Ответ гостя: пять шагов ════════════════════════════════════ */
 
 const STEPS = [
-  { key: 'name',  ru: ['Как вас зовут?', 'Имя и фамилия — чтобы найти вас в списке.'],
+  { key: 'name',  ru: ['Как вас зовут?', 'Имя и фамилия, чтобы найти вас в списке.'],
                   en: ['What is your name?', 'First and last name, so we can find you on the list.'] },
   { key: 'going', ru: ['Придёте?', 'Ответ можно поменять до 20 июля.'],
                   en: ['Will you come?', 'You can change your answer until 20 July.'] },
-  { key: 'with',  ru: ['Кто с вами?', 'Мы считаем стулья, а не гостей.'],
-                  en: ['Who is with you?', 'We are counting chairs, not guests.'] },
+  { key: 'with',  ru: ['Сколько вас будет?', 'Считая вас. Под каждого появится строка для имени.'],
+                  en: ['How many of you?', 'Including you. A name field appears for each.'] },
   { key: 'food',  ru: ['Что вам нельзя?', 'Аллергия, вегетарианство, что угодно.'],
                   en: ['Any food limits?', 'Allergies, vegetarian, anything at all.'] },
   { key: 'road',  ru: ['Как доберётесь?', 'И пара слов нам, если хочется.'],
@@ -475,30 +489,40 @@ function stepBody(key) {
       <button type="button" data-v="yes"${answers.going === 'yes' ? ' class="on"' : ''}>${L ? 'Буду' : 'I’ll be there'}</button>
       <button type="button" data-v="no"${answers.going === 'no' ? ' class="on"' : ''}>${L ? 'Не смогу' : 'I can’t'}</button></div>`;
   if (key === 'with')
-    return `<div class="pick" id="f-with">
-        ${[0, 1, 2, 3].map(n => `<button type="button" data-v="${n}"${answers.with === n ? ' class="on"' : ''}>${
-          n === 0 ? (L ? 'Один(а)' : 'Just me') : '+' + n}</button>`).join('')}
+    return `<div class="stepper" id="f-with">
+        <button type="button" data-d="-1" aria-label="${L ? 'Меньше' : 'Fewer'}">–</button>
+        <output id="f-with-n">${answers.with + 1}</output>
+        <button type="button" data-d="1" aria-label="${L ? 'Больше' : 'More'}">+</button>
+        <em>${L ? 'человек, считая вас' : 'people, including you'}</em>
       </div><div class="names-fields" id="f-names"></div>`;
   if (key === 'food')
     return `<input class="in" id="f-food" type="text"
-      placeholder="${L ? 'Пусто — значит, ем всё' : 'Empty means anything goes'}" value="${answers.food}">`;
+      placeholder="${L ? 'Пусто значит, что ем всё' : 'Empty means anything goes'}" value="${answers.food}">`;
   return `<div class="pick" id="f-road">
       ${[['bus', L ? 'Автобусом' : 'By bus'], ['car', L ? 'На машине' : 'By car'], ['own', L ? 'Сам(а) доберусь' : 'I’ll manage']]
         .map(([v, l]) => `<button type="button" data-v="${v}"${answers.road === v ? ' class="on"' : ''}>${l}</button>`).join('')}
     </div>
     <label class="check"><input type="checkbox" id="f-room"${answers.room ? ' checked' : ''}>
-      <span>${L ? 'Останемся ночевать — придержите комнату' : 'We’ll stay the night — hold a room'}</span></label>
+      <span>${L ? 'Останемся ночевать, придержите комнату' : 'We’ll stay the night — hold a room'}</span></label>
     <textarea class="in in--area" id="f-note" rows="3"
       placeholder="${L ? 'Пара слов нам' : 'A word for us'}">${answers.note}</textarea>`;
 }
+
+const MAX_GUESTS = 20;   // столько стульев физически влезает за стол
 
 function companionFields() {
   const host = $('#f-names');
   if (!host) return;
   const L = LANG === 'ru';
+  const out = $('#f-with-n');
+  if (out) out.textContent = answers.with + 1;
+  $$('#f-with button').forEach(b => {
+    const d = +b.dataset.d;
+    b.disabled = d < 0 ? answers.with === 0 : answers.with >= MAX_GUESTS - 1;
+  });
   host.innerHTML = Array.from({ length: answers.with }, (_, i) =>
     `<input class="in" data-c="${i}" type="text" value="${answers.names[i] || ''}"
-      placeholder="${L ? 'Имя спутника ' + (i + 1) : 'Companion ' + (i + 1)}">`).join('');
+      placeholder="${L ? 'Имя гостя ' + (i + 2) : 'Guest ' + (i + 2)}">`).join('');
   $$('[data-c]', host).forEach(inp => inp.addEventListener('input', () => {
     answers.names[+inp.dataset.c] = inp.value.trim();
   }));
@@ -515,13 +539,16 @@ function bindStep() {
       $$('button', host).forEach(o => o.classList.remove('on'));
       b.classList.add('on');
       answers[key] = cast(b.dataset.v);
-      if (key === 'with') { answers.names.length = answers.with; companionFields(); }
       if (key === 'going') syncNav();
     }));
   };
   pick('#f-going', 'going');
-  pick('#f-with', 'with', Number);
   pick('#f-road', 'road');
+  $$('#f-with button').forEach(b => b.addEventListener('click', () => {
+    answers.with = Math.min(MAX_GUESTS - 1, Math.max(0, answers.with + (+b.dataset.d)));
+    answers.names.length = answers.with;
+    companionFields();
+  }));
   companionFields();
 }
 
@@ -537,7 +564,7 @@ function validate() {
     return false;
   }
   if (step === 2 && answers.with > 0 && answers.names.filter(Boolean).length < answers.with) {
-    err.textContent = L ? 'Впишите имена спутников — по ним мы делаем рассадку.'
+    err.textContent = L ? 'Впишите имена гостей: по ним мы делаем рассадку.'
                         : 'Please name your companions — the seating depends on it.';
     return false;
   }
@@ -593,13 +620,24 @@ function submit() {
   $('#form').hidden = true;
   $('#rsvp-title').hidden = true;
   $('#thanks').hidden = false;
-  const L = LANG === 'ru';
-  $('#thanks-line').textContent = answers.going === 'no'
-    ? (L ? 'Жаль, что не выйдет. Мы всё равно пришлём вам фотографии.'
-         : 'Sorry you can’t make it. We’ll send you the photographs anyway.')
-    : (L ? `${1 + answers.names.filter(Boolean).length} ${PLUR(1 + answers.names.filter(Boolean).length, ['место', 'места', 'мест'])} за столом ваши. Увидимся на закате.`
-         : `${1 + answers.names.filter(Boolean).length} seat(s) are yours. See you at sunset.`);
+  paintThanks();
   requestAnimationFrame(buildRibbon);
+}
+
+/* Заголовок и подпись зависят от ответа. «Ждём вас» человеку, который
+   написал «не смогу», читается насмешкой — у отказа свой текст. */
+function paintThanks() {
+  const L = LANG === 'ru';
+  const seats = 1 + answers.names.filter(Boolean).length;
+  const no = answers.going === 'no';
+  $('#thanks-h').textContent = no
+    ? (L ? 'Записали. Очень жаль.' : 'Noted. What a pity.')
+    : (L ? 'Записали. Ждём вас.' : 'Noted. See you there.');
+  $('#thanks-line').textContent = no
+    ? (L ? 'Будем скучать. Фотографии всё равно пришлём, вы их увидите одними из первых.'
+         : 'We’ll miss you. We’ll send the photographs anyway.')
+    : (L ? `${seats} ${PLUR(seats, ['место', 'места', 'мест'])} за столом ваши. Увидимся на закате.`
+         : `${seats} seat(s) are yours. See you at sunset.`);
 }
 
 /* ══ 7. Панель ответов: пять щелчков по монограмме ═════════════════ */
@@ -712,6 +750,7 @@ function applyLang() {
   countdown();
   $('#ics').href = icsHref();
   $('#seat-answer').textContent = '';
+  if (!$('#thanks').hidden) paintThanks();
   observe();
   requestAnimationFrame(buildRibbon);
 }
