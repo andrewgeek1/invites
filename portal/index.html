@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лев и Агата · 21 августа 2027</title>
+<meta name="description" content="Приглашение на свадьбу Льва и Агаты — 21 августа 2027, усадьба «Красный Яр» на Волге.">
+<meta name="theme-color" content="#2A0E15">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Общие defs: заливка голубей куском той же картины и градиент ленты. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="doveGold" patternUnits="objectBoundingBox" width="1" height="1">
+      <image href="assets/dove-fill.webp" x="0" y="0" width="100" height="100"
+             preserveAspectRatio="xMidYMid slice"></image>
+    </pattern>
+    <linearGradient id="ribbonGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="#E8323F"></stop>
+      <stop offset=".45" stop-color="#BE1330"></stop>
+      <stop offset="1"   stop-color="#7E0A1E"></stop>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- Шаблон голубя: три позы крыла, переключаются ступенями. -->
+<template id="dove-tpl">
+  <div class="dove__bob">
+    <!-- Три позы крыла лежат ОТДЕЛЬНЫМИ svg, а не группами внутри одного:
+         opacity на <g> внутри SVG не компонуется и заставляет перерисовку.
+         Замер дал 7 медленных кадров из 242 с группами и 0 без голубей —
+         отдельный слой с will-change:opacity переключается композитором.
+         Дальнее крыло уходит ЗА корпус, ближнее ложится поверх: без этой
+         глубины силуэт читается плоской галочкой, а не птицей. -->
+      <svg class="pose pose--1" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M61 52C58 39 52 25 38 13 45 27 51 40 53 52Z" fill="var(--dove-far)" opacity=".75"/>
+        <path d="M95 47C92.5 43.5 90.5 42 88 42 84 41.5 81.5 43 81 45L67 47 30 53.5 9 48.5 16 55.5 8 61.5 30 62.5C50 64 64 62.5 77 55.5 83 52.5 88.5 50 95 47Z" fill="var(--dove)"/>
+        <circle cx="86" cy="45.4" r="1.5" fill="#2A0E15" opacity=".75"/>
+        <path d="M70 51C66 33 58 15 38 1 47 18 54 34 58 51Z" fill="var(--dove)"/>
+      </svg>
+      <svg class="pose pose--2" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M63 53C57 51 48 49 32 44 45 52 56 55 60 56Z" fill="var(--dove-far)" opacity=".75"/>
+        <path d="M95 47C92.5 43.5 90.5 42 88 42 84 41.5 81.5 43 81 45L67 47 30 53.5 9 48.5 16 55.5 8 61.5 30 62.5C50 64 64 62.5 77 55.5 83 52.5 88.5 50 95 47Z" fill="var(--dove)"/>
+        <circle cx="86" cy="45.4" r="1.5" fill="#2A0E15" opacity=".75"/>
+        <path d="M70 51C62 48 50 45 24 38 44 49 59 53 63 54Z" fill="var(--dove)"/>
+      </svg>
+      <svg class="pose pose--3" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M61 52C58 65 52 79 38 91 45 77 51 64 53 52Z" fill="var(--dove-far)" opacity=".75"/>
+        <path d="M95 47C92.5 43.5 90.5 42 88 42 84 41.5 81.5 43 81 45L67 47 30 53.5 9 48.5 16 55.5 8 61.5 30 62.5C50 64 64 62.5 77 55.5 83 52.5 88.5 50 95 47Z" fill="var(--dove)"/>
+        <circle cx="86" cy="45.4" r="1.5" fill="#2A0E15" opacity=".75"/>
+        <path d="M70 51C66 69 58 87 38 100 47 83 54 68 58 51Z" fill="var(--dove)"/>
+      </svg>
+  </div>
+</template>
+
+<!-- ══ обложка ══════════════════════════════════════════════════════ -->
+<header class="hero" id="top">
+  <picture>
+    <source media="(max-width: 720px)" sizes="100vw"
+            srcset="assets/sky-hero-m-750.webp 750w, assets/sky-hero-m.webp 1100w">
+    <img class="hero__sky" src="assets/sky-hero-1500.webp" sizes="100vw"
+         srcset="assets/sky-hero-1500.webp 1500w, assets/sky-hero.webp 2200w"
+         width="2200" height="1611" fetchpriority="high"
+         alt="Закатное небо: золото, тёмное облако и низкое красное солнце над рекой">
+  </picture>
+  <div class="hero__veil"></div>
+  <div class="doves" id="doves" aria-hidden="true"></div>
+
+  <div class="hero__top">
+    <button class="mono" id="mono" type="button" aria-label="Лев и Агата">Л · А</button>
+    <div class="hero__tools">
+      <button class="tool" id="music" type="button" aria-pressed="false">
+        <span data-ru="Музыка" data-en="Music">Музыка</span>
+      </button>
+      <button class="tool lang" id="lang" type="button">
+        <b>RU</b> <span>EN</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero__body">
+    <h1 class="names" id="names">Лев<span class="amp">и</span>Агата</h1>
+    <div class="hero__meta">
+      <b data-ru="Суббота, 21 августа 2027" data-en="Saturday, 21 August 2027">Суббота, 21 августа 2027</b>
+      <span data-ru="усадьба «Красный Яр» · село Кадницы · 47 км от Нижнего Новгорода"
+            data-en="Krasny Yar estate · Kadnitsy · 47 km from Nizhny Novgorod">усадьба «Красный Яр» · село Кадницы · 47 км от Нижнего Новгорода</span>
+    </div>
+  </div>
+  <div class="hero__scroll" data-ru="Вниз по ленте" data-en="Follow the ribbon">Вниз по ленте</div>
+</header>
+
+<main>
+
+<!-- ══ 01 приглашение ═══════════════════════════════════════════════ -->
+<section class="sect" id="invite">
+  <div class="wrap">
+    <div class="side-r">
+      <p class="kicker kicker--num rise" data-n="01" data-ru="Приглашение" data-en="Invitation">Приглашение</p>
+      <h2 class="h-sect rise" data-ru="Мы выбрали самый<br>длинный вечер лета" data-en="We chose the longest<br>evening of the summer">Мы выбрали самый<br>длинный вечер лета</h2>
+      <p class="lead rise" data-ru="Солнце в тот день сядет в 19:44 — и мы хотим встретить закат не вдвоём, а с вами. Приезжайте к трём, оставайтесь до огней."
+         data-en="The sun sets at 19:44 that day — and we would rather meet it with you than alone. Come at three, stay until the lights.">Солнце в тот день сядет в 19:44 — и мы хотим встретить закат не вдвоём, а с вами. Приезжайте к трём, оставайтесь до огней.</p>
+      <hr class="rule">
+      <dl class="facts rise">
+        <div><dt data-ru="Когда" data-en="When">Когда</dt><dd data-ru="21 августа 2027, суббота, сбор с 15:00" data-en="21 August 2027, Saturday, from 15:00">21 августа 2027, суббота, сбор с 15:00</dd></div>
+        <div><dt data-ru="Где" data-en="Where">Где</dt><dd data-ru="Усадьба «Красный Яр», Кадницы" data-en="Krasny Yar estate, Kadnitsy">Усадьба «Красный Яр», Кадницы</dd></div>
+        <div><dt data-ru="Ответить до" data-en="RSVP by">Ответить до</dt><dd data-ru="20 июля 2027" data-en="20 July 2027">20 июля 2027</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 отсчёт ════════════════════════════════════════════════════ -->
+<section class="sect sect--count" id="count">
+  <div class="wrap">
+    <div class="side-l count">
+      <p class="kicker kicker--num rise" data-n="02" data-ru="Отсчёт" data-en="Countdown">Отсчёт</p>
+      <h2 class="h-sect rise" data-ru="До заката" data-en="Until sunset">До заката</h2>
+      <div class="count__grid rise" id="countdown" role="timer" aria-live="off"></div>
+      <p class="rise dim" data-ru="Положите день в календарь, чтобы не держать его в голове."
+         data-en="Put the day in your calendar so you don't have to remember it.">Положите день в календарь, чтобы не держать его в голове.</p>
+      <p class="rise"><a class="btn btn--ghost" id="ics" href="#" download="lev-agata-2027.ics"
+        data-ru="Добавить в календарь" data-en="Add to calendar">Добавить в календарь</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 история ═══════════════════════════════════════════════════ -->
+<section class="sect" id="story">
+  <div class="wrap">
+    <p class="kicker kicker--num rise" data-n="03" data-ru="Как мы сюда шли" data-en="How we got here">Как мы сюда шли</p>
+    <ol class="story">
+      <li class="story__item rise">
+        <b>2019</b>
+        <p data-ru="Очередь в кассу на «Стрелке». Лев занял её за Агатой и не ушёл, когда она передумала."
+           data-en="A ticket queue at Strelka. Lev stood behind Agata and stayed when she changed her mind.">Очередь в кассу на «Стрелке». Лев занял её за Агатой и не ушёл, когда она передумала.</p>
+      </li>
+      <li class="story__item rise">
+        <b>2021</b>
+        <p data-ru="Первая общая зима и один плед на двоих в съёмной квартире на Ковалихе."
+           data-en="A first winter together and one blanket in a rented flat on Kovalikha.">Первая общая зима и один плед на двоих в съёмной квартире на Ковалихе.</p>
+      </li>
+      <li class="story__item rise">
+        <b>2024</b>
+        <p data-ru="Лодка, Волга и обгоревшие плечи. С этого лета мы считаем закаты."
+           data-en="A boat, the Volga and sunburnt shoulders. We've been counting sunsets since.">Лодка, Волга и обгоревшие плечи. С этого лета мы считаем закаты.</p>
+      </li>
+      <li class="story__item rise">
+        <b>2026</b>
+        <p data-ru="Тот самый берег в Кадницах. Предложение сделано за минуту до того, как солнце ушло."
+           data-en="That same bank at Kadnitsy. The question came a minute before the sun went down.">Тот самый берег в Кадницах. Предложение сделано за минуту до того, как солнце ушло.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══ 04 хронология — фирменное: узлы висят на ленте ════════════════ -->
+<section class="sect sect--day" id="day">
+  <div class="wrap">
+    <p class="kicker kicker--num rise" data-n="04" data-ru="Хронология дня" data-en="The day">Хронология дня</p>
+    <h2 class="h-sect rise" data-ru="Шесть узлов<br>на одной ленте" data-en="Six knots<br>on one ribbon">Шесть узлов<br>на одной ленте</h2>
+    <p class="lead dim rise" style="max-width:34em" data-ru="Лента идёт через всю страницу и завязана в тех местах, где день меняет темп. Пройденные узлы загораются."
+       data-en="The ribbon runs the whole page and is knotted where the day changes pace. Knots you pass light up.">Лента идёт через всю страницу и завязана в тех местах, где день меняет темп. Пройденные узлы загораются.</p>
+  </div>
+  <ol class="day" id="day-list"></ol>
+</section>
+
+<!-- ══ 05 место ═════════════════════════════════════════════════════ -->
+<section class="sect" id="venue">
+  <div class="wrap">
+    <div class="side-r">
+      <p class="kicker kicker--num rise" data-n="05" data-ru="Место" data-en="Venue">Место</p>
+      <h2 class="h-sect rise" data-ru="Красный Яр" data-en="Krasny Yar">Красный Яр</h2>
+      <p class="lead rise" data-ru="Высокий берег над Волгой в сорока семи километрах ниже города. Отсюда закат виден целиком, от первого золота до последней полосы."
+         data-en="A high bank over the Volga, forty-seven kilometres downstream. The sunset is visible whole from here.">Высокий берег над Волгой в сорока семи километрах ниже города. Отсюда закат виден целиком, от первого золота до последней полосы.</p>
+      <hr class="rule">
+      <div class="venue__grid rise">
+        <div><b data-ru="Дорога" data-en="Getting there">Дорога</b><p data-ru="Час на машине по Казанскому шоссе. Парковка у ворот, свободна."
+          data-en="An hour by car along Kazanskoe highway. Free parking at the gate.">Час на машине по Казанскому шоссе. Парковка у ворот, свободна.</p></div>
+        <div><b data-ru="Трансфер" data-en="Shuttle">Трансфер</b><p data-ru="Автобус от площади Минина в 13:30 и обратно в 00:30. Место бронируется в ответе."
+          data-en="A bus from Minin square at 13:30, back at 00:30. Reserve your seat in the RSVP.">Автобус от площади Минина в 13:30 и обратно в 00:30. Место бронируется в ответе.</p></div>
+        <div><b data-ru="Ночлег" data-en="Staying over">Ночлег</b><p data-ru="В усадьбе двенадцать комнат. Скажите в ответе — придержим."
+          data-en="Twelve rooms at the estate. Tell us in the RSVP and we'll hold one.">В усадьбе двенадцать комнат. Скажите в ответе — придержим.</p></div>
+      </div>
+      <p class="rise" style="margin-top:2.2em"><a class="btn" href="https://yandex.ru/maps/?text=Кадницы+Нижегородская+область" target="_blank" rel="noopener"
+        data-ru="Открыть карту" data-en="Open the map">Открыть карту</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 галерея ═══════════════════════════════════════════════════ -->
+<section class="sect" id="gallery">
+  <div class="wrap">
+    <p class="kicker kicker--num rise" data-n="06" data-ru="Тот берег" data-en="That bank">Тот берег</p>
+  </div>
+  <div class="gal" id="gal"></div>
+</section>
+
+<!-- ══ 07 дресс-код ═════════════════════════════════════════════════ -->
+<section class="sect" id="dress">
+  <div class="wrap">
+    <div class="side-l">
+      <p class="kicker kicker--num rise" data-n="07" data-ru="Одежда" data-en="Dress code">Одежда</p>
+      <h2 class="h-sect rise" data-ru="Цвета заката,<br>а не чёрный галстук" data-en="Sunset colours,<br>not black tie">Цвета заката,<br>а не чёрный галстук</h2>
+      <p class="lead rise" data-ru="Возьмите один цвет с этой полосы — и всё. Остальное на ваш вкус: мы хотим видеть вас, а не костюм."
+         data-en="Take one colour from this strip — that's all. The rest is up to you.">Возьмите один цвет с этой полосы — и всё. Остальное на ваш вкус: мы хотим видеть вас, а не костюм.</p>
+      <ul class="pal rise" id="pal"></ul>
+      <hr class="rule">
+      <p class="dim rise" data-ru="Вечер на берегу: после заката холодает, а трава мокрая. Возьмите тёплое и обувь, которой не жалко."
+         data-en="Evening by the river: it gets cold after sunset and the grass is wet. Bring something warm and shoes you don't mind.">Вечер на берегу: после заката холодает, а трава мокрая. Возьмите тёплое и обувь, которой не жалко.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 08 просьбы ═══════════════════════════════════════════════════ -->
+<section class="sect" id="asks">
+  <div class="wrap">
+    <p class="kicker kicker--num rise" data-n="08" data-ru="Три просьбы" data-en="Three requests">Три просьбы</p>
+    <div class="asks" id="asks-list"></div>
+  </div>
+</section>
+
+<!-- ══ 09 вопросы ═══════════════════════════════════════════════════ -->
+<section class="sect" id="faq">
+  <div class="wrap">
+    <div class="side-r">
+      <p class="kicker kicker--num rise" data-n="09" data-ru="Вопросы" data-en="Questions">Вопросы</p>
+      <div class="faq" id="faq-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10 рассадка ══════════════════════════════════════════════════ -->
+<section class="sect" id="seating">
+  <div class="wrap">
+    <p class="kicker kicker--num rise" data-n="10" data-ru="Рассадка" data-en="Seating">Рассадка</p>
+    <h2 class="h-sect rise" data-ru="Найдите свой стол" data-en="Find your table">Найдите свой стол</h2>
+    <div class="seat__find rise">
+      <label class="sr" for="seat-q" data-ru="Ваше имя" data-en="Your name">Ваше имя</label>
+      <input id="seat-q" type="search" autocomplete="off" placeholder="Введите имя или фамилию"
+             data-ph-ru="Введите имя или фамилию" data-ph-en="Type your name or surname">
+      <p class="seat__answer" id="seat-answer" aria-live="polite"></p>
+    </div>
+    <div class="seat__hall" id="hall"></div>
+  </div>
+</section>
+
+<!-- ══ 11 ответ ═════════════════════════════════════════════════════ -->
+<section class="sect sect--rsvp" id="rsvp">
+  <img class="rsvp__band" src="assets/sky-band.webp" width="1400" height="620" alt="" aria-hidden="true">
+  <div class="wrap">
+    <div class="card" id="rsvp-card">
+      <p class="kicker kicker--num rise" data-n="11" data-ru="Ответ" data-en="RSVP">Ответ</p>
+      <h2 class="h-sect rise" id="rsvp-title" data-ru="Будете с нами?" data-en="Will you be there?">Будете с нами?</h2>
+      <form id="form" novalidate>
+        <div class="steps" id="steps"></div>
+        <div class="step__bar"><span id="step-fill"></span></div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" id="prev" data-ru="Назад" data-en="Back">Назад</button>
+          <span class="step__num" id="step-num"></span>
+          <button class="btn" type="button" id="next" data-ru="Дальше" data-en="Next">Дальше</button>
+        </div>
+      </form>
+      <div class="thanks" id="thanks" hidden>
+        <h2 class="h-sect" data-ru="Записали. Ждём вас." data-en="Noted. See you there.">Записали. Ждём вас.</h2>
+        <p class="lead dim" id="thanks-line"></p>
+        <button class="tool" type="button" id="again" data-ru="Ответить ещё раз" data-en="Answer again">Ответить ещё раз</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 12 финал ═════════════════════════════════════════════════════ -->
+<section class="sect final" id="final">
+  <div class="doves doves--lit" id="doves2" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="final__line rise" data-ru="21 августа солнце сядет в 19:44." data-en="On 21 August the sun sets at 19:44.">21 августа солнце сядет в 19:44.</p>
+    <h2 class="final__names rise">Лев<span class="amp">и</span>Агата</h2>
+    <p class="final__wait rise" data-ru="Ждём вас на берегу" data-en="We'll be waiting on the bank">Ждём вас на берегу</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <p><span data-ru="Лев и Агата" data-en="Lev &amp; Agata">Лев и Агата</span> · 21.08.2027 · <span data-ru="Кадницы" data-en="Kadnitsy">Кадницы</span></p>
+    <p class="foot__art">
+      <span data-ru="Небо на этой странице — живопись:" data-en="The sky on this page is a painting:">Небо на этой странице — живопись:</span>
+      <i>А. И. Куинджи, «Красный закат на Днепре», 1905–1908</i>
+      <span class="dim" data-ru="и два его этюда заката. Общественное достояние." data-en="and two of his sunset studies. Public domain.">и два его этюда заката. Общественное достояние.</span>
+    </p>
+    <p><a href="#top" data-ru="Наверх" data-en="Back to top">Наверх</a></p>
+  </div>
+</footer>
+
+<!-- Панель ответов: скрыта, открывается пятью щелчками по монограмме. -->
+<aside class="admin" id="admin" hidden>
+  <div class="admin__head">
+    <b>Ответы гостей</b>
+    <span id="admin-count"></span>
+    <button class="tool" type="button" id="admin-csv">CSV</button>
+    <button class="tool" type="button" id="admin-clear">Очистить</button>
+    <button class="tool" type="button" id="admin-close">Закрыть</button>
+  </div>
+  <div class="admin__body" id="admin-body"></div>
+</aside>
+
+<script src="script.js"></script>
+</body>
+</html>

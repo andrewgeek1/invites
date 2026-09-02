@@ -22,7 +22,11 @@
     wax:    { bg:'#F0EBE3', ink:'#2A2622', acc:'#9E3B2E',
               font:'"Oswald", sans-serif', ital:'normal' },
     steel:  { bg:'#E9EDEF', ink:'#1E2A30', acc:'#5E7A85',
-              font:'"Onest", sans-serif', ital:'normal' }
+              font:'"Onest", sans-serif', ital:'normal' },
+    shade:  { bg:'#EDEDE8', ink:'#3F4A32', acc:'#B07A2E',
+              font:'"Tenor Sans", sans-serif', ital:'normal' },
+    sunset: { bg:'#2A0E15', ink:'#F2E3C8', acc:'#D08A22',
+              font:'"Forum", serif', ital:'normal' }
   };
 
   var demo = document.getElementById('demo');

@@ -133,6 +133,8 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .sw[data-p=ink]    {--dot:#C9A87C}
 .sw[data-p=wax]    {--dot:#9E3B2E}
 .sw[data-p=steel]  {--dot:#5E7A85}
+.sw[data-p=shade]  {--dot:#B07A2E}
+.sw[data-p=sunset] {--dot:#D08A22}
 
 /* демо-блок: цвета и шрифт приходят переменными, меняются мгновенно */
 .demo{

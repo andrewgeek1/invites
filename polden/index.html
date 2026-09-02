@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ника и Глеб — 22 мая 2027</title>
+<meta name="description" content="Приглашение на свадьбу Ники и Глеба. 22 мая 2027 года, усадьба «Липовка» под Нижним Новгородом.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- фоновая дымка пятен на всю страницу; густой слой живёт в обложке -->
+<div class="shade shade--a" aria-hidden="true"></div>
+
+<header class="top">
+  <span class="label">Приглашение</span>
+</header>
+
+<main>
+
+  <!-- ─────────────────────────── обложка ─────────────────────────── -->
+  <section class="hero" id="hero">
+    <h1 class="names" aria-label="Ника и Глеб">
+      <span class="names__row"><i style="--i:0">Н</i><i style="--i:1">И</i><i style="--i:2">К</i><i style="--i:3">А</i><b class="names__amp">и</b></span>
+      <span class="names__row"><i style="--i:4">Г</i><i style="--i:5">Л</i><i style="--i:6">Е</i><i style="--i:7">Б</i></span>
+    </h1>
+
+    <!-- Тень падает на имена и на бумагу, но не на саму ветвь: она здесь
+         не украшение рядом, а то, что эту тень отбрасывает. -->
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <img class="branch" src="assets/branch.webp" alt="" width="785" height="1352" fetchpriority="high" decoding="async">
+
+    <div class="hero__foot">
+      <p class="hero__where rise">
+        Суббота, 22&nbsp;мая 2027<br>
+        усадьба «Липовка»<br>
+        19&nbsp;км от&nbsp;Нижнего Новгорода
+      </p>
+      <div class="hero__act rise" style="--d:140ms">
+        <a class="btn" href="#answer">
+          <span class="btn__fill"></span>
+          <span class="btn__label">Подтвердить, что приду</span>
+        </a>
+        <p class="friction">Одно поле, тридцать секунд</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 01 приглашение ─────────────────────────── -->
+  <section class="invite" id="invite">
+    <div class="wrap invite__grid">
+      <p class="num">01</p>
+      <div class="invite__text">
+        <h2 class="rise">Приходите в&nbsp;тот день,<br>когда липы дают<br>самую густую тень</h2>
+        <p class="lead rise" style="--d:100ms">
+          Мы долго выбирали дату и&nbsp;выбрали её&nbsp;по&nbsp;свету. В&nbsp;конце мая
+          аллея в&nbsp;«Липовке» стоит уже полностью зелёной, но&nbsp;ещё
+          не&nbsp;душной, и&nbsp;весь день по&nbsp;траве ходят пятна.
+        </p>
+        <p class="rise" style="--d:180ms">
+          Ни&nbsp;речей, ни&nbsp;конкурсов, ни&nbsp;рассадки по&nbsp;табличкам
+          не&nbsp;будет. Будет длинный стол под деревьями, музыка
+          и&nbsp;люди, которых мы&nbsp;любим. Этого достаточно.
+        </p>
+      </div>
+    </div>
+    <figure class="shot">
+      <img src="assets/alley.webp" alt="Липовая аллея в полдень: свет пробивается сквозь листву на дорожку" width="2000" height="1334" loading="lazy" decoding="async">
+    </figure>
+  </section>
+
+  <!-- ─────────────────────────── 02 обещание ─────────────────────────── -->
+  <section class="vow" id="vow">
+    <p class="num num--c">02</p>
+    <blockquote class="vow__text rise">
+      Мы не&nbsp;обещаем друг другу вечность.<br>
+      Обещаем горячий ужин, тёплую руку<br>
+      и&nbsp;привычку приходить вовремя.
+    </blockquote>
+    <p class="vow__sign rise" style="--d:120ms">Ника и Глеб</p>
+  </section>
+
+  <!-- ─────────────────────────── 03 что нужно знать ─────────────────────────── -->
+  <section class="facts" id="facts">
+    <div class="wrap">
+      <p class="num">03</p>
+      <h2 class="rise">Что нужно знать</h2>
+      <ul class="facts__list">
+        <li class="fact rise">
+          <p class="fact__k">Когда</p>
+          <p class="fact__v">Сбор у&nbsp;ворот в&nbsp;14:00.<br>Церемония в&nbsp;15:00.<br>Ужин до&nbsp;последнего гостя.</p>
+        </li>
+        <li class="fact rise" style="--d:80ms">
+          <p class="fact__k">Где</p>
+          <p class="fact__v">Усадьба «Липовка»,<br>Богородский район.<br>От&nbsp;города 40&nbsp;минут.</p>
+        </li>
+        <li class="fact rise" style="--d:160ms">
+          <p class="fact__k">Одежда</p>
+          <p class="fact__v">Светлое и&nbsp;лёгкое.<br>Каблуки утонут в&nbsp;траве&nbsp;—<br>возьмите вторую пару.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 04 дорога ─────────────────────────── -->
+  <section class="road" id="road">
+    <figure class="shot shot--road">
+      <img src="assets/venue.webp" alt="Усадьба «Липовка»: белый деревянный дом среди деревьев" width="1800" height="1200" loading="lazy" decoding="async">
+    </figure>
+    <div class="wrap road__grid">
+      <p class="num">04</p>
+      <div class="road__text">
+        <h2 class="rise">Дорога</h2>
+        <p class="lead rise" style="--d:100ms">
+          По&nbsp;Казанскому шоссе до&nbsp;Богородска, за&nbsp;постом ДПС направо
+          и&nbsp;ещё семь километров вдоль поля. Последний поворот
+          под старой водокачкой&nbsp;— там будет наш указатель.
+        </p>
+        <p class="rise" style="--d:180ms">
+          Если едете без машины, напишите об&nbsp;этом в&nbsp;форме ниже:
+          в&nbsp;13:00 от&nbsp;площади Минина пойдёт автобус, места
+          в&nbsp;нём мы&nbsp;держим по&nbsp;ответам.
+        </p>
+        <a class="btn btn--line rise" style="--d:240ms" href="https://yandex.ru/maps/?text=Богородский+район+Нижегородская+область" target="_blank" rel="noopener">
+          <span class="btn__fill"></span>
+          <span class="btn__label">Открыть на карте</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 05 ответ ─────────────────────────── -->
+  <section class="answer" id="answer">
+    <div class="wrap answer__grid">
+      <p class="num">05</p>
+      <div class="answer__box">
+        <h2 class="rise" id="answer-title">Будете с&nbsp;нами?</h2>
+        <p class="lead rise" style="--d:100ms">
+          Ответьте до&nbsp;25&nbsp;апреля, чтобы мы&nbsp;успели посчитать
+          стулья и&nbsp;места в&nbsp;автобусе.
+        </p>
+
+        <form class="form rise" style="--d:180ms" id="rsvp" novalidate>
+          <div class="field">
+            <label for="guest">Как вас записать</label>
+            <input id="guest" name="guest" type="text" autocomplete="name"
+                   placeholder="Имя и фамилия" required>
+            <p class="field__err" id="guest-err" hidden>Напишите, пожалуйста, имя</p>
+          </div>
+
+          <fieldset class="choice">
+            <legend class="label">Придёте?</legend>
+            <label class="choice__opt">
+              <input type="radio" name="going" value="yes" checked>
+              <span>Приду</span>
+            </label>
+            <label class="choice__opt">
+              <input type="radio" name="going" value="no">
+              <span>Не смогу</span>
+            </label>
+          </fieldset>
+
+          <label class="check">
+            <input type="checkbox" name="bus" value="1">
+            <span>Мне нужно место в&nbsp;автобусе</span>
+          </label>
+
+          <button class="btn" type="submit">
+            <span class="btn__fill"></span>
+            <span class="btn__label">Передать ответ</span>
+          </button>
+          <p class="friction">Передумать можно&nbsp;— просто напишите нам</p>
+        </form>
+
+        <div class="thanks" id="thanks" hidden>
+          <p class="thanks__big">Записали.</p>
+          <p class="thanks__sub" id="thanks-sub"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <p class="foot__names">Ника и Глеб</p>
+    <p class="foot__meta">22&nbsp;мая 2027 / усадьба «Липовка»</p>
+    <p class="foot__note">Вопросы&nbsp;— в&nbsp;общий чат или прямо нам</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
