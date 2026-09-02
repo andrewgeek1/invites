@@ -631,7 +631,7 @@ function paintThanks() {
   const seats = 1 + answers.names.filter(Boolean).length;
   const no = answers.going === 'no';
   $('#thanks-h').textContent = no
-    ? (L ? 'Записали. Очень жаль.' : 'Noted. What a pity.')
+    ? (L ? 'Очень жаль.' : 'What a pity.')
     : (L ? 'Записали. Ждём вас.' : 'Noted. See you there.');
   $('#thanks-line').textContent = no
     ? (L ? 'Будем скучать. Фотографии всё равно пришлём, вы их увидите одними из первых.'
