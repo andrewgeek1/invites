@@ -535,6 +535,9 @@ figcaption{
 .bleed{ margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); }
 .bleed figcaption{ padding: 0 var(--pad); }
 
+/* Секция отдаёт нижний отступ фотографии: иначе между кадром
+   и следующим тёмным блоком остаётся песочная полоса. */
+.road{ padding-bottom: 0; }
 .road__shot{ margin-top: clamp(48px, 7vh, 104px); }
 .road__shot img{ aspect-ratio: 3 / 1; object-fit: cover; }
 
@@ -642,6 +645,7 @@ figcaption{
   margin-top: clamp(40px, 6vh, 88px);
   padding-top: clamp(24px, 3.4vh, 44px);
   border-top: 1px solid rgba(46,36,26,.22);
+  text-align: center;
 }
 .look__palTitle{
   font-size: .84rem;
@@ -652,7 +656,7 @@ figcaption{
 }
 /* Не кружки: полосы ткани, выложенные в ряд */
 .look__sw{
-  list-style: none; margin: 0 0 var(--s3); padding: 0;
+  list-style: none; margin: 0 auto var(--s3); padding: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(12px, 1.6vw, 26px);
@@ -884,6 +888,64 @@ textarea{ resize: vertical; }
 .foot__when{ margin-top: var(--s3); line-height: 1.55; opacity: .8; }
 .foot__act{ margin-top: var(--s4); }
 .foot__note{ margin-top: var(--s4); opacity: .56; }
+
+/* ═══════════ ЛЕПЕСТКИ ═══════════
+   Второй приём на странице, по прямой просьбе владельца. MOT-04
+   разрешает один — держим этот заведомо тише первого, чтобы они
+   не спорили: медленно, мелко, приглушённо.
+
+   Каждый лепесток — отдельный слой со своим transform. Внутри одного
+   SVG анимировать нельзя: на «Портале» одиннадцать голубей в общей
+   картинке роняли по семь кадров из 240, потому что такая анимация
+   не компонуется и браузер перерисовывает весь рисунок.
+
+   Падение и покачивание разведены на два элемента: складывать их
+   в один transform пришлось бы в JS каждый кадр, а так обе анимации
+   уезжают к композитору и стоят нуля. */
+
+.petals{
+  position: fixed; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 1200ms var(--e);
+}
+.petals.is-on{ opacity: 1; }
+
+.petal{
+  position: absolute;
+  top: -14vh;
+  left: var(--x);
+  will-change: transform;
+  animation: petal-fall var(--fall) linear infinite;
+  animation-delay: var(--dl);
+}
+.petal i{
+  display: block;
+  will-change: transform;
+  animation: petal-sway var(--sway) ease-in-out infinite alternate;
+  animation-delay: var(--dl);
+}
+.petal svg{
+  display: block;
+  width: var(--size);
+  height: auto;
+  fill: var(--tint);
+  opacity: var(--fade);
+}
+
+@keyframes petal-fall{
+  to{ transform: translate3d(var(--drift), 128vh, 0); }
+}
+@keyframes petal-sway{
+  from{ transform: translate3d(-13px, 0, 0) rotate(-26deg); }
+  to  { transform: translate3d(13px, 0, 0) rotate(30deg); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .petals{ display: none; }
+}
 
 /* ═══════════ ПОЯВЛЕНИЕ ═══════════ */
 

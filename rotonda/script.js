@@ -180,7 +180,11 @@
     }
 
     var showBar = y > G.vh * 0.9;
-    if (showBar !== last.bar) { bar.classList.toggle('is-on', showBar); last.bar = showBar; }
+    if (showBar !== last.bar) {
+      bar.classList.toggle('is-on', showBar);
+      if (petals) petals.classList.toggle('is-on', showBar);
+      last.bar = showBar;
+    }
 
     var dark = overDark(y);
     if (dark !== last.dark) { bar.classList.toggle('is-dark', dark); last.dark = dark; }
@@ -432,7 +436,7 @@
         /* «вас не будет 3 человека» по-русски звучит криво, поэтому
            до пятерых пишем словом, дальше обычным числом. */
         var TOGETHER = { 2: 'вдвоём', 3: 'втроём', 4: 'вчетвером', 5: 'впятером' };
-        thanksTitle.textContent = 'Записали. Очень жаль.';
+        thanksTitle.textContent = 'Очень жаль.';
         thanksText.textContent = (miss > 1
             ? (TOGETHER[miss]
                 ? 'Отметили, что не приедете ' + TOGETHER[miss] + '. '
@@ -567,6 +571,58 @@
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     });
   }
+
+  /* ─────────────────────────────────────────────────────────────────
+     ЛЕПЕСТКИ БУГЕНВИЛЛЕИ
+     Идут своим временем, а не за прокруткой: длительности взяты
+     простыми числами, чтобы лепестки не сходились в строй. Слой
+     появляется, когда обложка уходит за верхний край.
+
+     При prefers-reduced-motion и saveData слой не создаётся вовсе —
+     это не украшение, за которое стоит платить трафиком.
+     ───────────────────────────────────────────────────────────────── */
+
+  var petals = null;
+
+  function buildPetals() {
+    if (reduce || saveData) return;
+
+    /* Цвет взят с кадра перголы и поднят до читаемого: в тени соцветия
+       уходят в #62251A, на просвет это тёплая терракотовая роза. */
+    var TINTS = ['#A9603A', '#C0705A', '#8A4526'];
+    var SHAPE = '<svg viewBox="0 0 24 28" aria-hidden="true">' +
+      '<path d="M12.6 0C19 8.4 24 15 21.4 21.2 19.4 26 15 28 11.4 28 6 28 1 24.6.4 19.4-.6 12.4 5.6 6.4 12.6 0z"/>' +
+      '</svg>';
+
+    /* x, размер, падение, покачивание, задержка, снос вбок, прозрачность */
+    var CONF = [
+      [6,  16, 37, 6.5, -3,  '7vw',  .62],
+      [19, 22, 29, 7.5, -17, '-5vw', .54],
+      [34, 13, 43, 5.5, -8,  '9vw',  .48],
+      [51, 19, 31, 8.5, -24, '-8vw', .58],
+      [68, 15, 41, 6,   -12, '6vw',  .5],
+      [82, 21, 23, 7,   -31, '-4vw', .44],
+      [93, 14, 47, 9,   -6,  '5vw',  .52]
+    ];
+
+    petals = document.createElement('div');
+    petals.className = 'petals';
+    petals.setAttribute('aria-hidden', 'true');
+
+    var html = '';
+    for (var i = 0; i < CONF.length; i++) {
+      var c = CONF[i];
+      html += '<span class="petal" style="' +
+        '--x:' + c[0] + '%;--size:' + c[1] + 'px;--fall:' + c[2] + 's;' +
+        '--sway:' + c[3] + 's;--dl:' + c[4] + 's;--drift:' + c[5] + ';' +
+        '--fade:' + c[6] + ';--tint:' + TINTS[i % TINTS.length] + '">' +
+        '<i>' + SHAPE + '</i></span>';
+    }
+    petals.innerHTML = html;
+    document.body.appendChild(petals);
+  }
+
+  buildPetals();
 
   /* ─────────────────────────────────────────────────────────────────
      СТУПЕНЧАТОЕ ПОЯВЛЕНИЕ
