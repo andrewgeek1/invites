@@ -26,7 +26,7 @@ html{-webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"Golos Text",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-weight:400; font-size:clamp(15px,1.05vw,17px); line-height:1.6;
+  font-weight:400; font-size:clamp(1.06rem,1rem + .34vw,1.24rem); line-height:1.6;
   -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 img{display:block;max-width:100%}
@@ -48,14 +48,14 @@ h1{font-size:clamp(3.2rem,13.4vw,13.2rem);line-height:.82;letter-spacing:-.008em
 /* 1.12, а не 0.9–1.0 из TYP-04: у Oswald ascent 1.19em, и на капслоке
    точки «Ё» и бревис «Й» второй строки физически въезжают в первую.
    Ниже 1.06 заголовок ломается на любой правке текста заказчиком. */
-h2{font-size:clamp(2.1rem,5.6vw,4.9rem);line-height:1.12;letter-spacing:-.012em}
-h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
+h2{font-size:clamp(2.3rem,1.4rem + 3.6vw,4.5rem);line-height:1.12;letter-spacing:-.012em}
+h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.04;letter-spacing:-.01em}
 
-.label{font-family:"Golos Text",sans-serif;font-size:11.5px;line-height:1.85;
+.label{font-family:"Golos Text",sans-serif;font-size:.86rem;line-height:1.8;
   text-transform:uppercase;letter-spacing:.19em;opacity:.55}
-.lead{font-size:clamp(14.5px,1.15vw,17px);line-height:1.5;opacity:.78;max-width:40ch;text-wrap:balance}
-.body{font-size:clamp(15px,1.08vw,17.5px);line-height:1.62;opacity:.8;max-width:52ch;text-wrap:balance}
-.friction{font-size:12.5px;line-height:1.5;opacity:.52;max-width:36ch;text-wrap:balance}
+.lead{font-size:clamp(1.16rem,1.08rem + .46vw,1.46rem);line-height:1.45;opacity:.78;max-width:40ch;text-wrap:balance}
+.body{font-size:clamp(1.06rem,1rem + .34vw,1.24rem);line-height:1.6;opacity:.8;max-width:52ch;text-wrap:balance}
+.friction{font-size:.86rem;line-height:1.5;opacity:.52;max-width:36ch;text-wrap:balance}
 .sign{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
   font-size:clamp(17px,1.4vw,22px);letter-spacing:.01em;opacity:.72}
 
@@ -98,9 +98,9 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 }
 .hero__top{flex:0 0 auto;display:flex;justify-content:space-between;align-items:baseline;
   gap:var(--s4);padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
-.wordmark{font-family:"Golos Text",sans-serif;font-size:11.5px;text-transform:uppercase;
+.wordmark{font-family:"Golos Text",sans-serif;font-size:.86rem;text-transform:uppercase;
   letter-spacing:.19em;opacity:.6;white-space:nowrap}
-.hero__nav{display:flex;gap:clamp(16px,2vw,34px);font-size:13.5px}
+.hero__nav{display:flex;gap:clamp(16px,2vw,34px);font-size:.95rem}
 .hero__nav a{position:relative;padding-block:14px;opacity:.72;transition:opacity 320ms var(--e)}
 .hero__nav a::after{content:"";position:absolute;left:0;right:0;bottom:11px;height:1px;
   background:var(--seal);transform:scaleX(0);transform-origin:left;
@@ -126,7 +126,7 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 .hero__act{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
 
 /* ═══════════════════ общий заголовок секции ═══════════════════ */
-.tag{font-family:"Golos Text",sans-serif;font-size:11.5px;text-transform:uppercase;
+.tag{font-family:"Golos Text",sans-serif;font-size:.86rem;text-transform:uppercase;
   letter-spacing:.19em;opacity:.6;display:flex;align-items:baseline;gap:12px;
   padding-bottom:var(--s3);margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
 .tag__n{color:var(--seal);opacity:1;font-variant-numeric:tabular-nums}
@@ -146,7 +146,7 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s4)}
 .fact{border-top:1px solid var(--line);padding-top:var(--s3);
   display:flex;flex-direction:column;gap:12px}
-.fact__n{font-size:11.5px;letter-spacing:.19em;color:var(--seal);font-variant-numeric:tabular-nums}
+.fact__n{font-size:.86rem;letter-spacing:.19em;color:var(--seal);font-variant-numeric:tabular-nums}
 .fact .body{max-width:34ch;text-wrap:balance}
 
 /* ═══════════════════ 03 галерея — три кадра ═══════════════════ */
@@ -156,15 +156,18 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 .gal__i--1 img{height:clamp(300px,40vw,600px)}
 .gal__i--2 img{height:clamp(220px,29vw,440px)}
 .gal__i--3 img{height:clamp(250px,33vw,500px)}
-.gal__i figcaption{font-size:12.5px;line-height:1.5;opacity:.55;max-width:34ch;
+.gal__i figcaption{font-size:.86rem;line-height:1.5;opacity:.55;max-width:34ch;
   min-height:calc(2 * 1.5em);text-wrap:balance}
 
 /* ═══════════════════ 04 дорога ═══════════════════ */
 .road .bleed{margin:0 0 var(--s7)}
-.road__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s4);align-items:start}
-.road__grid h2{grid-column:1/7}
-.road__text{grid-column:8/13;display:flex;flex-direction:column;gap:var(--s4);padding-top:8px}
-.road__act{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.road__col{max-width:64ch;margin-inline:auto;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
+.road__col h2{margin-bottom:var(--s1)}
+.road__addr{margin-inline:auto}
+.road__col .body{max-width:52ch;margin-inline:auto}
+.road__act{display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:var(--s2)}
+.road .tag{justify-content:center}
 
 /* ═══════════════════ 05 ответ ═══════════════════ */
 .rsvp{background:var(--paper-deep)}
@@ -184,7 +187,7 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 .pick__row{display:flex;width:max-content;max-width:100%;box-shadow:inset 0 0 0 1px var(--ink)}
 .pick input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .pick label{position:relative;min-height:54px;padding:0 clamp(20px,3vw,38px);
-  display:flex;align-items:center;cursor:pointer;font-size:14.5px;
+  display:flex;align-items:center;cursor:pointer;font-size:.95rem;
   transition:background 380ms var(--e),color 300ms var(--e)}
 .pick label+input+label{box-shadow:inset 1px 0 0 var(--ink)}
 .pick input:checked+label{background:var(--ink);color:var(--paper)}
@@ -193,7 +196,7 @@ h3{font-size:clamp(21px,1.75vw,28px);line-height:1.04;letter-spacing:-.01em}
 /* ═══════════════════ футер ═══════════════════ */
 .foot{padding-block:var(--s4) var(--s5);border-top:1px solid var(--line)}
 .foot__row{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;
-  font-size:12.5px;opacity:.55;text-transform:uppercase;letter-spacing:.14em}
+  font-size:.86rem;opacity:.55;text-transform:uppercase;letter-spacing:.14em}
 
 /* ═══════════════════ моушен ═══════════════════ */
 .rise{opacity:0;transform:translateY(28px);filter:blur(14px)}

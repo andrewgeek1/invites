@@ -68,7 +68,7 @@
     <p class="kicker"><b>01</b> Приглашение</p>
     <h2 class="head">Мы&nbsp;женимся<br>и&nbsp;зовём вас</h2>
     <div class="prose">
-      <p>Мы долго думали, каким должен быть этот день, и&nbsp;поняли: главное&nbsp;— кто будет рядом. Список получился короткий, и&nbsp;вы&nbsp;в&nbsp;нём.</p>
+      <p>Мы долго думали, каким должен быть этот день, и&nbsp;поняли: главное&nbsp;это кто будет рядом. Список получился короткий, и&nbsp;вы&nbsp;в&nbsp;нём.</p>
       <p>Приезжайте. Будет зелено, тепло и&nbsp;без лишних церемоний.</p>
     </div>
     <p class="sign" aria-label="Даниил и Вера">
@@ -116,8 +116,8 @@
     <p class="kicker"><b>03</b> Где</p>
     <h2 class="head head--wide">Стеклянный сад</h2>
     <div class="prose">
-      <p>Оранжерея в&nbsp;Зелёном Городе, 18&nbsp;км от&nbsp;Нижнего Новгорода. Двадцать пять минут по&nbsp;Казанскому шоссе&nbsp;— и&nbsp;вы&nbsp;на&nbsp;месте.</p>
-      <p>Парковка своя, места хватит всем. Если поедете без машины, напишите&nbsp;в&nbsp;форме&nbsp;— посадим вас в&nbsp;автобус от&nbsp;площади Минина в&nbsp;14:40.</p>
+      <p>Оранжерея в&nbsp;Зелёном Городе, 18&nbsp;км от&nbsp;Нижнего Новгорода. Двадцать пять минут по&nbsp;Казанскому шоссе, и&nbsp;вы&nbsp;на&nbsp;месте.</p>
+      <p>Парковка своя, места хватит всем. Если поедете без машины, напишите в&nbsp;форме. Посадим вас в&nbsp;автобус от&nbsp;площади Минина в&nbsp;14:40.</p>
     </div>
     <a class="btn" href="https://yandex.ru/maps/?text=Зелёный%20Город%20Нижегородская%20область" target="_blank" rel="noreferrer">
       <span>Открыть карту</span>
@@ -142,8 +142,8 @@
         <span class="asks__n">01</span>
         <div>
           <b>Одежда</b>
-          <p>Мы всё задумали в&nbsp;зелени и&nbsp;тёплом золоте. Белое платье в&nbsp;этот день только у&nbsp;невесты&nbsp;— остальные цвета свободны.</p>
-          <p class="swatches__lead">Рекомендуем эти оттенки</p>
+          <p>Мы всё задумали в&nbsp;зелени и&nbsp;тёплом золоте. Белое платье в&nbsp;этот день только у&nbsp;невесты. Остальные цвета свободны.</p>
+          <p class="swatches__lead">Рекомендуем такие оттенки:</p>
           <span class="swatches">
             <i style="--c:#2E4A38"><b>зелёный</b></i>
             <i style="--c:#7E8C6A"><b>олива</b></i>
@@ -156,14 +156,14 @@
         <span class="asks__n">02</span>
         <div>
           <b>Обувь</b>
-          <p>В&nbsp;оранжерее старый каменный пол со&nbsp;швами. Тонкая шпилька на&nbsp;нём проваливается&nbsp;— возьмите устойчивую пару.</p>
+          <p>В&nbsp;оранжерее старый каменный пол со&nbsp;швами. Тонкая шпилька на&nbsp;нём проваливается, так что возьмите устойчивую пару.</p>
         </div>
       </li>
       <li>
         <span class="asks__n">03</span>
         <div>
           <b>Фотосъёмка</b>
-          <p>Первые полчаса церемонии снимает наш фотограф. Уберите, пожалуйста, телефоны&nbsp;— все кадры пришлём каждому сами.</p>
+          <p>Первые полчаса церемонии снимает наш фотограф. Уберите, пожалуйста, телефоны. Все кадры пришлём каждому сами.</p>
         </div>
       </li>
     </ul>
@@ -178,7 +178,7 @@
   <div class="card">
     <p class="kicker"><b>05</b> Ответ</p>
     <h2 class="head head--sm">Будете с&nbsp;нами?</h2>
-    <p class="card__note">Ответьте, пожалуйста, до&nbsp;1&nbsp;мая&nbsp;— нам нужно посчитать стулья и&nbsp;порции.</p>
+    <p class="card__note">Ответьте, пожалуйста, до&nbsp;1&nbsp;мая. Нам нужно посчитать стулья и&nbsp;порции.</p>
 
     <form class="form" id="rsvp" novalidate>
       <div class="field">
@@ -197,7 +197,7 @@
       </fieldset>
 
       <fieldset class="field field--choice" id="guests-wrap" hidden>
-        <legend>Со мной приедет</legend>
+        <legend id="guests-legend">Со мной приедет</legend>
         <div class="choice choice--five">
           <label><input type="radio" name="guests" value="0" checked><span>Никого</span></label>
           <label><input type="radio" name="guests" value="1"><span>+1</span></label>
@@ -206,7 +206,7 @@
           <label><input type="radio" name="guests" value="more"><span>Больше</span></label>
         </div>
         <div class="more" id="guests-more" hidden>
-          <label class="more__lab" for="f-guests-n">Сколько человек приедет с&nbsp;вами</label>
+          <label class="more__lab" id="more-lab" for="f-guests-n">Сколько человек приедет с&nbsp;вами</label>
           <div class="more__row">
             <input class="more__n" id="f-guests-n" type="number" inputmode="numeric"
                    min="1" max="20" step="1" value="4" aria-describedby="more-hint">

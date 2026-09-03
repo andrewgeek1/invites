@@ -156,6 +156,8 @@
   var namesWrap  = document.getElementById('names-wrap');
   var namesBox   = document.getElementById('names');
   var namesLabel = document.getElementById('names-label');
+  var guestsLeg  = document.getElementById('guests-legend');
+  var moreLab    = document.getElementById('more-lab');
   var status  = form.querySelector('.form__status');
   var STORE   = 'rsvp-garden';
 
@@ -229,12 +231,26 @@
     namesLabel.textContent = n === 1 ? 'Как его зовут' : 'Как их зовут';
   }
 
+  /* Люди отказываются парой и семьёй, поэтому спутников спрашиваем
+     и в отказе — меняется только формулировка. Автобус остаётся
+     только у тех, кто приедет. */
   function toggleExtras() {
-    var yes = form.querySelector('input[name=going][value=yes]').checked;
-    guests.hidden = !yes;
+    var going = form.querySelector('input[name=going]:checked');
+    var yes = !!going && going.value === 'yes';
+    guests.hidden = !going;
     bus.hidden = !yes;
-    if (!yes) { namesWrap.hidden = true; namesBox.textContent = ''; moreWrap.hidden = true; }
-    else { syncMore(); renderNameRows(); }
+    if (going) {
+      guestsLeg.textContent = yes
+        ? 'Со мной приедет'
+        : 'Кто-то не сможет приехать вместе с вами?';
+      moreLab.innerHTML = yes
+        ? 'Сколько человек приедет с&nbsp;вами'
+        : 'Сколько человек не&nbsp;сможет приехать';
+      syncMore();
+      renderNameRows();
+    } else {
+      namesWrap.hidden = true; namesBox.textContent = ''; moreWrap.hidden = true;
+    }
   }
 
   form.querySelectorAll('input[name=going]').forEach(function (r) {
@@ -281,7 +297,7 @@
       bad = true;
     }
     var companions = [];
-    if (going && going.value === 'yes') {
+    if (going) {
       var rows = namesBox.querySelectorAll('input');
       var blank = false;
       for (var i = 0; i < rows.length; i++) {
@@ -302,7 +318,7 @@
     var payload = {
       name: name,
       going: going.value,
-      guests: going.value === 'yes' ? guestCount() : 0,
+      guests: guestCount(),
       companions: companions,
       bus: going.value === 'yes' && form.querySelector('input[name=bus]').checked,
       note: form.querySelector('#f-note').value.trim(),
@@ -335,9 +351,14 @@
                                 : 'Место в автобусе от площади Минина забронировано. ') : '')
         + '19 июня, 15:30, оранжерея «Стеклянный сад».';
     } else {
-      tInk.textContent = 'Будем скучать';
+      tInk.textContent = 'Очень жаль.';
+      var n = (p.companions || []).length + 1;
+      var word = { 2: 'вдвоём', 3: 'втроём', 4: 'вчетвером', 5: 'впятером' }[n];
+      var miss = n === 1 ? ''
+        : word ? ' Не приедете ' + word + '.'
+               : ' Не приедете, всего ' + n + ' человек.';
       tBody.textContent = 'Спасибо, что дали знать, ' + p.name.split(' ')[0]
-        + '. Фотографии обязательно пришлём.';
+        + '.' + miss + ' Фотографии обязательно пришлём.';
     }
 
     form.hidden = true;

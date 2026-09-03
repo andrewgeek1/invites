@@ -74,7 +74,7 @@ a{ color:inherit; text-decoration:none }
   transition:width 700ms var(--e);
 }
 .hud__count{
-  font-size:12px; letter-spacing:.2em; color:rgba(232,226,212,.62);
+  font-size:13.2px; letter-spacing:.2em; color:rgba(232,226,212,.62);
   white-space:nowrap;
 }
 .hud__count b{ font-weight:400; color:var(--bone) }
@@ -132,7 +132,7 @@ a{ color:inherit; text-decoration:none }
 
 /* ─────────── общая типографика ─────────── */
 .kicker{
-  font-size:12px; font-weight:400; text-transform:uppercase; letter-spacing:.22em;
+  font-size:13.2px; font-weight:400; text-transform:uppercase; letter-spacing:.22em;
   color:rgba(232,226,212,.68);
 }
 .kicker b{ font-weight:400; color:var(--gold); margin-right:.85em }
@@ -208,7 +208,7 @@ a{ color:inherit; text-decoration:none }
   color:rgba(232,226,212,.9);
 }
 .cover__date{
-  font-size:12px; text-transform:uppercase; letter-spacing:.22em;
+  font-size:13.2px; text-transform:uppercase; letter-spacing:.22em;
   color:rgba(232,226,212,.7);
 }
 .cover__rule{
@@ -222,14 +222,14 @@ a{ color:inherit; text-decoration:none }
 }
 .cover__geo{
   margin-top:clamp(11px,1.4vh,16px);
-  font-size:12px; text-transform:uppercase; letter-spacing:.18em;
+  font-size:13.2px; text-transform:uppercase; letter-spacing:.18em;
   color:rgba(232,226,212,.74);
 }
 
 .nudge{
   position:absolute; z-index:4; right:var(--pad); bottom:clamp(26px,4.4vh,42px);
   display:flex; align-items:center; gap:12px;
-  font-size:10.5px; text-transform:uppercase; letter-spacing:.24em;
+  font-size:13.2px; text-transform:uppercase; letter-spacing:.24em;
   color:rgba(232,226,212,.6);
 }
 .nudge i{
@@ -332,7 +332,7 @@ a{ color:inherit; text-decoration:none }
 }
 .asks li:last-child{ border-bottom:1px solid rgba(232,226,212,.14) }
 .asks__n{
-  font-size:11.5px; letter-spacing:.2em; color:var(--gold); padding-top:.5em;
+  font-size:13.2px; letter-spacing:.2em; color:var(--gold); padding-top:.42em;
   font-variant-numeric:tabular-nums;
 }
 .asks b{
@@ -340,10 +340,13 @@ a{ color:inherit; text-decoration:none }
   font-size:clamp(1.32rem,1.78vw,1.8rem); letter-spacing:-.01em;
 }
 .asks p{ margin-top:.45em; font-size:clamp(16px,1.25vw,20px); line-height:1.6; color:rgba(232,226,212,.82) }
+/* Подводка к палитре идёт сразу за абзацем, поэтому набрана тем же
+   шрифтом и кеглем: скачок в мелкий капслок с разрядкой рвал текст.
+   Отличается только цветом. */
 .swatches__lead{
   margin-top:clamp(14px,1.9vh,20px);
-  font-size:12px; text-transform:uppercase; letter-spacing:.18em;
-  color:rgba(232,226,212,.66);
+  font-size:clamp(16px,1.25vw,20px); line-height:1.6;
+  color:var(--gold);
 }
 .swatches{ display:flex; flex-wrap:wrap; gap:clamp(14px,2vw,30px); margin-top:14px }
 /* образец — лист, а не квадрат: скругления по двум углам дают форму листа,
@@ -358,7 +361,7 @@ a{ color:inherit; text-decoration:none }
     rgba(13,23,18,.28) calc(50% + .5px), transparent calc(50% + .5px));
 }
 .swatches b{
-  font-weight:400; font-size:11.5px; text-transform:uppercase;
+  font-weight:400; font-size:13.2px; text-transform:uppercase;
   letter-spacing:.13em; color:rgba(232,226,212,.72); text-align:center;
 }
 
@@ -385,7 +388,7 @@ a{ color:inherit; text-decoration:none }
 
 .linkish{
   margin-top:clamp(20px,3vh,30px); background:none; border:0; cursor:pointer;
-  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  font-size:13.2px; letter-spacing:.14em; text-transform:uppercase;
   color:rgba(232,226,212,.6); border-bottom:1px solid rgba(232,226,212,.3);
   padding-bottom:3px; transition:color 320ms var(--e), border-color 320ms var(--e);
 }
@@ -415,7 +418,7 @@ a{ color:inherit; text-decoration:none }
 .form{ margin-top:clamp(14px,2.2vh,24px) }
 .field + .field{ margin-top:clamp(11px,1.6vh,17px) }
 .field label, .field legend, .field .grouplab{
-  display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:.2em;
+  display:block; font-size:13.2px; text-transform:uppercase; letter-spacing:.2em;
   color:rgba(232,226,212,.66); margin-bottom:8px;
 }
 .field label i{ font-style:normal; text-transform:none; letter-spacing:.02em; opacity:.72 }
@@ -436,7 +439,7 @@ input[type=text]:focus, input[type=number]:focus, textarea:focus{
 .choice--five{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px }
 .more{ margin-top:13px }
 .more__lab{ display:block; margin-bottom:8px;
-  font-size:12px; text-transform:uppercase; letter-spacing:.16em;
+  font-size:13.2px; text-transform:uppercase; letter-spacing:.16em;
   color:rgba(232,226,212,.66) }
 .more__row{ display:flex; align-items:center; gap:12px }
 /* Селектор с классом здесь проигрывает: input[type="number"] весит (0,1,1)
@@ -447,7 +450,7 @@ input[type=text]:focus, input[type=number]:focus, textarea:focus{
 }
 .more__n::-webkit-outer-spin-button,
 .more__n::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
-.more__hint{ font-size:12.5px; color:rgba(232,226,212,.58) }
+.more__hint{ font-size:13.2px; color:rgba(232,226,212,.58) }
 .choice label{ flex:1; margin:0; cursor:pointer }
 .guest-names{ display:grid; gap:9px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)) }
 .choice input{ position:absolute; opacity:0; pointer-events:none }
@@ -519,7 +522,7 @@ input[type=text]:focus, input[type=number]:focus, textarea:focus{
 .is-live .end__ink{ clip-path:inset(0 -8% -22% 0) }
 .end__date{
   margin-top:clamp(12px,2vh,20px);
-  font-size:12.5px; text-transform:uppercase; letter-spacing:.28em; color:rgba(232,226,212,.74);
+  font-size:13.2px; text-transform:uppercase; letter-spacing:.28em; color:rgba(232,226,212,.74);
 }
 .end__rule{ margin:clamp(20px,3.4vh,36px) auto 0; width:min(430px,72vw) }
 .end__rule svg{ width:100%; height:auto }
@@ -668,7 +671,7 @@ input[type=text]:focus, input[type=number]:focus, textarea:focus{
   .asks li{ padding:7px 0 }
   .asks b{ font-size:1.1rem }
   .asks p{ font-size:14.5px; line-height:1.48; margin-top:.3em }
-  .swatches__lead{ margin-top:8px; font-size:11px; letter-spacing:.14em }
+  .swatches__lead{ margin-top:8px; font-size:14.5px }
   .swatches{ gap:10px; margin-top:8px }
   .swatches i{ gap:6px }
   .swatches i::before{ width:22px; height:22px; margin:4px 0 0 }
