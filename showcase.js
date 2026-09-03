@@ -28,7 +28,9 @@
     sunset: { bg:'#2A0E15', ink:'#F2E3C8', acc:'#D08A22',
               font:'"Forum", serif', ital:'normal' },
     silver: { bg:'#08090C', ink:'#F2F5F8', acc:'#C6D6E6',
-              font:'"Jost", sans-serif', ital:'normal' }
+              font:'"Jost", sans-serif', ital:'normal' },
+    terra:  { bg:'#EFE6D2', ink:'#2E241A', acc:'#8A4526',
+              font:'"EB Garamond", serif', ital:'normal' }
   };
 
   var demo = document.getElementById('demo');

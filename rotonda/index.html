@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Марк и Лия — 5 июня, Которский залив</title>
+<meta name="description" content="Приглашение на свадьбу Марка и Лии. Вилла «Ротонда», Прчань, Которский залив, Черногория.">
+<meta name="theme-color" content="#1E150B">
+<meta property="og:title" content="Марк и Лия">
+<meta property="og:description" content="Вилла «Ротонда», Которский залив. Мы будем рады видеть вас.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Mulish:wght@400&family=Comforter&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/hero-poster.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#invite">К приглашению</a>
+
+<!-- ═══════════ ШАПКА ═══════════ -->
+<header class="bar" id="bar">
+  <a class="bar__mark" href="#top">Ротонда</a>
+  <nav class="bar__nav">
+    <a href="#road">Дорога</a>
+    <a href="#day">День</a>
+    <a href="#look">Одежда</a>
+  </nav>
+  <a class="bar__act" href="#rsvp">Ответить</a>
+</header>
+
+<!-- ═══════════ 01 ОБЛОЖКА + 02 ПРИГЛАШЕНИЕ ═══════════ -->
+<section class="hero" id="top">
+
+  <div class="hero__media">
+    <video class="hero__video" id="heroVideo"
+           poster="assets/hero-poster.webp"
+           muted loop playsinline preload="none"
+           aria-hidden="true" tabindex="-1"></video>
+    <div class="hero__foot" aria-hidden="true"></div>
+    <div class="hero__veil" id="heroVeil" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__flow">
+
+    <!-- первый экран -->
+    <div class="hero__scr hero__scr--cover">
+      <div class="cover" id="cover">
+        <p class="cover__where rise" style="--d:300ms">Черногория, Которский&nbsp;залив</p>
+
+        <div class="lintel rise" style="--d:520ms">
+          <h1 class="lintel__row">
+            <span class="lintel__name">Марк</span>
+            <span class="lintel__and">и</span>
+            <span class="lintel__name">Лия</span>
+          </h1>
+        </div>
+
+        <div class="cover__foot">
+          <p class="cover__when rise" style="--d:760ms">
+            <span data-dt="long">5 июня 2027</span><br>
+            вилла «Ротонда», Прчань
+          </p>
+          <div class="cover__act rise" style="--d:900ms">
+            <a class="btn btn--fill" href="#rsvp">
+              <span class="btn__fill"></span><span class="btn__label">Ответить</span>
+            </a>
+            <span class="note">Минута времени, ответ до&nbsp;<span data-dt="rsvp">24 апреля</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- второй экран: облёт сел, пара заговорила -->
+    <div class="hero__scr hero__scr--invite" id="invite">
+      <div class="invite" id="inviteBox">
+        <p class="kicker">Приглашение</p>
+        <p class="invite__lead">
+          Мы улетаем жениться к&nbsp;морю<br>
+          и&nbsp;очень хотим, чтобы вы<br>
+          были в&nbsp;этот день рядом.
+        </p>
+        <p class="invite__text">
+          Это старая вилла над Которским заливом: внизу вода, наверху горы,
+          а&nbsp;в&nbsp;саду стоит белая ротонда. Под ней мы и&nbsp;скажем друг другу
+          главное. Ниже всё, что нужно знать: куда лететь, где ночевать
+          и&nbsp;в&nbsp;чём будет нежарко.
+        </p>
+        <p class="invite__sign">Марк <span class="amp">и</span> Лия</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ 03 ОТСЧЁТ ═══════════ -->
+<section class="sec sec--sand tick" id="tick">
+  <div class="wrap">
+    <div class="tick__head">
+      <p class="kicker rise">Отсчёт</p>
+      <h2 class="rise" style="--d:100ms">До встречи<br>на&nbsp;террасе</h2>
+    </div>
+    <div class="tick__row rise" style="--d:200ms" id="tickRow">
+      <div class="tick__cell"><span class="tick__n" id="tickA">—</span><span class="tick__u" id="tickAU">месяцев</span></div>
+      <div class="tick__cell"><span class="tick__n" id="tickB">—</span><span class="tick__u" id="tickBU">дней</span></div>
+      <div class="tick__cell"><span class="tick__n" id="tickC">—</span><span class="tick__u" id="tickCU">часов</span></div>
+    </div>
+    <p class="tick__note rise" style="--d:300ms">
+      <span data-dt="long"></span>, суббота. Сбор в&nbsp;17:00, церемония в&nbsp;18:00.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 04 ДОРОГА ═══════════ -->
+<section class="sec sec--sand road" id="road">
+  <div class="wrap road__grid">
+    <div class="road__head">
+      <p class="kicker rise">Дорога</p>
+      <h2 class="rise" style="--d:100ms">Как до&nbsp;нас<br>добраться</h2>
+      <p class="road__lead rise" style="--d:200ms">
+        Свадьба за&nbsp;границей пугает только на&nbsp;словах. Ниже всё, что нужно
+        решить заранее, и&nbsp;больше ничего решать не&nbsp;придётся.
+      </p>
+    </div>
+
+    <ol class="road__list">
+      <li class="road__item rise">
+        <span class="road__n">01</span>
+        <div class="road__txt">
+          <h3>Перелёт</h3>
+          <p>Прилетать нужно в&nbsp;Тиват. Летом туда есть прямые рейсы, в&nbsp;воздухе
+             около трёх часов. Можно и&nbsp;в&nbsp;Подгорицу, но&nbsp;оттуда придётся ехать
+             ещё полтора часа.</p>
+        </div>
+      </li>
+      <li class="road__item rise" style="--d:60ms">
+        <span class="road__n">02</span>
+        <div class="road__txt">
+          <h3>От аэропорта</h3>
+          <p>До виллы двенадцать километров. В&nbsp;день свадьбы в&nbsp;16:00
+             от&nbsp;набережной Прчаня пойдёт автобус, обратно увезёт в&nbsp;час ночи.
+             Если прилетаете раньше, напишите, и&nbsp;мы вас встретим.</p>
+        </div>
+      </li>
+      <li class="road__item rise" style="--d:120ms">
+        <span class="road__n">03</span>
+        <div class="road__txt">
+          <h3>Где ночевать</h3>
+          <p>Мы держим комнаты в&nbsp;двух отелях в&nbsp;Прчани и&nbsp;Перасте, десять
+             минут пешком до&nbsp;виллы. Отметьте в&nbsp;форме ответа, что нужен
+             номер, и&nbsp;мы забронируем.</p>
+        </div>
+      </li>
+      <li class="road__item rise" style="--d:180ms">
+        <span class="road__n">04</span>
+        <div class="road__txt">
+          <h3>Документы и деньги</h3>
+          <p>Нужен только загранпаспорт: до&nbsp;тридцати дней виза не&nbsp;требуется.
+             Расплачиваться придётся в&nbsp;евро. Карты российских банков там
+             не&nbsp;работают, возьмите наличные.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <figure class="road__shot bleed rise">
+    <img src="assets/bay.webp" alt="Черепичный городок на берегу залива в вечернем свете"
+         width="1500" height="996" loading="lazy" decoding="async">
+    <figcaption>Залив вечером. От&nbsp;воды до&nbsp;виллы десять минут пешком в&nbsp;гору.</figcaption>
+  </figure>
+</section>
+
+<!-- ═══════════ 05 ДЕНЬ ═══════════ -->
+<section class="sec sec--ink day" id="day">
+  <div class="wrap">
+    <div class="day__head">
+      <p class="kicker rise">День</p>
+      <h2 class="rise" style="--d:100ms">Как всё<br>будет идти</h2>
+    </div>
+
+    <ol class="day__row">
+      <li class="day__cell rise">
+        <span class="day__t">17:00</span>
+        <h3>Сбор</h3>
+        <p>Автобус привезёт к&nbsp;воротам. На&nbsp;верхней террасе будет холодная
+           вода, вино и&nbsp;тень.</p>
+      </li>
+      <li class="day__cell rise" style="--d:60ms">
+        <span class="day__t">18:00</span>
+        <h3>Церемония</h3>
+        <p>У&nbsp;белой ротонды в&nbsp;саду. Она стоит на&nbsp;самом краю, за&nbsp;ней
+           открывается залив.</p>
+      </li>
+      <li class="day__cell rise" style="--d:120ms">
+        <span class="day__t">19:30</span>
+        <h3>Ужин</h3>
+        <p>Один длинный стол на&nbsp;нижней террасе. Местная кухня, рыба
+           и&nbsp;вино из&nbsp;Црмницы.</p>
+      </li>
+      <li class="day__cell rise" style="--d:180ms">
+        <span class="day__t">22:00</span>
+        <h3>Танцы</h3>
+        <p>Гирлянды над площадкой и&nbsp;музыка до&nbsp;часу ночи. Потом автобус
+           увезёт всех в&nbsp;город.</p>
+      </li>
+    </ol>
+  </div>
+
+  <figure class="day__shot bleed rise">
+    <img src="assets/dinner.webp" alt="Длинный стол при свечах на вечерней террасе"
+         width="1900" height="1267" loading="lazy" decoding="async">
+  </figure>
+</section>
+
+<!-- ═══════════ 06 ГАЛЕРЕЯ ═══════════ -->
+<section class="sec sec--ink gal" id="gal">
+  <div class="wrap gal__head">
+    <p class="kicker rise">Галерея</p>
+    <h2 class="rise" style="--d:100ms">Место, куда<br>мы вас зовём</h2>
+    <p class="gal__lead rise" style="--d:200ms">
+      Вилла стоит на&nbsp;склоне над водой. Сосны, кипарисы, старый камень
+      и&nbsp;свет, который к&nbsp;семи вечера становится золотым.
+    </p>
+  </div>
+
+  <figure class="gal__lead-shot bleed rise">
+    <img src="assets/villa.webp" alt="Вилла с башней среди сосен в золотом свете"
+         width="1200" height="675" loading="lazy" decoding="async">
+  </figure>
+
+  <div class="wrap gal__grid">
+    <figure class="gal__item rise">
+      <img src="assets/arch.webp" alt="Каменные арки в тёплом свете"
+           width="1400" height="934" loading="lazy" decoding="async">
+      <figcaption>Нижняя галерея, тень в&nbsp;самый жаркий час</figcaption>
+    </figure>
+    <figure class="gal__item rise" style="--d:60ms">
+      <img src="assets/rotunda.webp" alt="Белая ротонда в саду виллы"
+           width="1200" height="675" loading="lazy" decoding="async">
+      <figcaption>Ротонда. Здесь будет церемония</figcaption>
+    </figure>
+    <figure class="gal__item rise" style="--d:120ms">
+      <img src="assets/olive.webp" alt="Оливковая роща в золотом свете"
+           width="1100" height="734" loading="lazy" decoding="async">
+      <figcaption>Оливы за&nbsp;садом, им больше ста лет</figcaption>
+    </figure>
+    <figure class="gal__item rise" style="--d:180ms">
+      <img src="assets/cypress.webp" alt="Силуэты кипарисов на закатном небе"
+           width="1200" height="800" loading="lazy" decoding="async">
+      <figcaption>Кипарисы по&nbsp;дороге наверх</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════ 07 ОДЕЖДА ═══════════ -->
+<section class="sec sec--sand look" id="look">
+  <div class="wrap">
+    <div class="look__head">
+      <p class="kicker rise">Одежда</p>
+      <h2 class="rise" style="--d:100ms">В&nbsp;чём будет<br>удобно</h2>
+      <p class="look__lead rise" style="--d:200ms">
+        Мы женимся в&nbsp;июне у&nbsp;моря. Днём около тридцати, к&nbsp;вечеру
+        становится приятно, но&nbsp;камень до&nbsp;ночи держит тепло.
+        Строгого дресс-кода нет, есть три просьбы.
+      </p>
+    </div>
+
+    <ul class="look__asks">
+      <li class="rise">
+        <h3>Каблуки</h3>
+        <p>В&nbsp;саду гравий, а&nbsp;на&nbsp;террасах старый камень со&nbsp;швами.
+           Тонкая шпилька провалится. Возьмите устойчивую пару или
+           вторую обувь на&nbsp;вечер.</p>
+      </li>
+      <li class="rise" style="--d:60ms">
+        <h3>Лёгкие ткани</h3>
+        <p>Лён, хлопок, шёлк. Плотный костюм к&nbsp;семи вечера превратится
+           в&nbsp;наказание, а&nbsp;фотографии от&nbsp;этого лучше не&nbsp;станут.</p>
+      </li>
+      <li class="rise" style="--d:120ms">
+        <h3>Тёплые вещи</h3>
+        <p>После полуночи с&nbsp;залива тянет прохладой. Лёгкая накидка или
+           пиджак пригодятся, даже если днём в&nbsp;это не&nbsp;верится.</p>
+      </li>
+    </ul>
+
+    <div class="look__pal rise">
+      <p class="look__palTitle">Цвета, которые сойдутся с&nbsp;местом</p>
+      <ul class="look__sw">
+        <li><span style="--c:#E7D9BE"></span>Песок</li>
+        <li><span style="--c:#6B6B4A"></span>Олива</li>
+        <li><span style="--c:#A9603A"></span>Терракота</li>
+        <li><span style="--c:#4A3826"></span>Тёмный орех</li>
+      </ul>
+      <p class="note">Белый по&nbsp;традиции оставьте невесте.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 08 ОТВЕТ ═══════════ -->
+<section class="sec sec--stone rsvp" id="rsvp">
+  <div class="rsvp__box">
+    <div class="rsvp__head rise">
+      <p class="kicker">Ответ</p>
+      <h2>Придёте?</h2>
+      <p class="rsvp__lead">
+        Нам нужно знать заранее: билеты,<br>
+        комнаты и&nbsp;место за&nbsp;столом. Ждём<br>
+        вашего ответа до&nbsp;<span data-dt="rsvp"></span>.
+      </p>
+    </div>
+
+    <form class="form rise" id="rsvpForm" novalidate>
+      <div class="field">
+        <label for="fName">Как вас зовут</label>
+        <input id="fName" name="name" type="text" autocomplete="name" placeholder="Имя и фамилия">
+        <p class="err" id="errName" hidden>Без имени мы вас не&nbsp;найдём в&nbsp;списке</p>
+      </div>
+
+      <div class="field">
+        <span class="field__lbl">Вы приедете?</span>
+        <div class="choice" role="radiogroup" aria-label="Вы приедете?">
+          <button type="button" class="choice__b" data-go="yes" role="radio" aria-checked="false">Приеду</button>
+          <button type="button" class="choice__b" data-go="no"  role="radio" aria-checked="false">Не&nbsp;смогу</button>
+        </div>
+        <p class="err" id="errGo" hidden>Отметьте, пожалуйста, приедете вы&nbsp;или нет</p>
+      </div>
+
+      <div class="only-yes" id="onlyYes" hidden>
+        <div class="field">
+          <span class="field__lbl">Кто-то приедет с вами?</span>
+          <div class="step">
+            <button type="button" class="step__b" id="stepDown" aria-label="Убрать спутника">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/></svg>
+            </button>
+            <span class="step__n" id="stepN" aria-live="polite">0</span>
+            <button type="button" class="step__b" id="stepUp" aria-label="Добавить спутника">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/><line x1="10" y1="4" x2="10" y2="16"/></svg>
+            </button>
+            <span class="step__t note" id="stepT">никого, приеду один</span>
+          </div>
+          <div class="mates" id="mates"></div>
+        </div>
+
+        <div class="field">
+          <label for="fFood">Еда</label>
+          <input id="fFood" name="food" type="text" placeholder="Аллергия, вегетарианство, что-то ещё">
+          <p class="note">Оставьте пустым, если едите всё.</p>
+        </div>
+
+        <div class="field">
+          <label class="check"><input type="checkbox" id="fRoom" name="room"><span>Нужен номер в&nbsp;отеле, забронируйте на&nbsp;нас</span></label>
+          <label class="check"><input type="checkbox" id="fBus" name="bus" checked><span>Поеду свадебным автобусом от&nbsp;набережной</span></label>
+        </div>
+      </div>
+
+      <div class="only-no" id="onlyNo" hidden>
+        <div class="field">
+          <label for="fWord">Хотите что-то передать?</label>
+          <textarea id="fWord" name="word" rows="3" placeholder="Пара слов, если есть желание"></textarea>
+        </div>
+      </div>
+
+      <div class="form__act">
+        <button class="btn btn--fill btn--dark" type="submit">
+          <span class="btn__fill"></span><span class="btn__label">Отправить ответ</span>
+        </button>
+        <span class="note">Ответ можно поменять, просто заполните форму заново.</span>
+      </div>
+    </form>
+
+    <div class="thanks" id="thanks" hidden>
+      <h2 id="thanksTitle">Ждём вас</h2>
+      <p id="thanksText"></p>
+      <button type="button" class="link" id="again">Изменить ответ</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 09 ВОПРОСЫ ═══════════ -->
+<section class="sec sec--sand faq" id="faq">
+  <div class="wrap faq__grid">
+    <div class="faq__head">
+      <p class="kicker rise">Вопросы</p>
+      <h2 class="rise" style="--d:100ms">О&nbsp;чём обычно<br>спрашивают</h2>
+    </div>
+
+    <div class="faq__list rise">
+      <div class="qa">
+        <button type="button" class="qa__q" aria-expanded="false">Можно с детьми?</button>
+        <div class="qa__a"><p>Да, конечно. Напишите в&nbsp;форме, сколько их&nbsp;и&nbsp;какого возраста:
+          мы найдём няню на&nbsp;вечер и&nbsp;придумаем отдельную еду.</p></div>
+      </div>
+      <div class="qa">
+        <button type="button" class="qa__q" aria-expanded="false">Что подарить?</button>
+        <div class="qa__a"><p>Ничего везти через полстраны не&nbsp;нужно. Если очень хочется,
+          лучше конверт: чемоданы и&nbsp;так будут тяжёлые.</p></div>
+      </div>
+      <div class="qa">
+        <button type="button" class="qa__q" aria-expanded="false">Во сколько это обойдётся?</button>
+        <div class="qa__a"><p>Перелёт и&nbsp;жильё за&nbsp;вами, остальное на&nbsp;нас: трансфер,
+          ужин, напитки и&nbsp;всё, что будет на&nbsp;вилле. Комнату поможем найти
+          дешевле, чем на&nbsp;сайтах.</p></div>
+      </div>
+      <div class="qa">
+        <button type="button" class="qa__q" aria-expanded="false">Будет очень жарко?</button>
+        <div class="qa__a"><p>Днём около тридцати. Церемония в&nbsp;шесть вечера проходит уже
+          в&nbsp;тени, а&nbsp;к&nbsp;ужину с&nbsp;воды идёт прохлада. Самое пекло вы&nbsp;проведёте
+          в&nbsp;галерее под арками.</p></div>
+      </div>
+      <div class="qa">
+        <button type="button" class="qa__q" aria-expanded="false">Я не знаю языка</button>
+        <div class="qa__a"><p>И&nbsp;не&nbsp;нужно. В&nbsp;отелях и&nbsp;на&nbsp;вилле говорят по-русски
+          и&nbsp;по-английски, а&nbsp;мы всё время будем рядом.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ПОДВАЛ ═══════════ -->
+<footer class="foot">
+  <p class="foot__names">Марк <span class="amp">и</span> Лия</p>
+  <p class="foot__when">
+    <span data-dt="long"></span>, суббота<br>
+    вилла «Ротонда», Прчань, Черногория
+  </p>
+  <p class="foot__act">
+    <button type="button" class="link" id="ics">Добавить день в&nbsp;календарь</button>
+  </p>
+  <p class="foot__note note">Что-то непонятно, пишите: <a href="https://t.me/markilia" class="link" rel="noopener">@markilia</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

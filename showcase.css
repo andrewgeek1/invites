@@ -135,6 +135,8 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .sw[data-p=steel]  {--dot:#5E7A85}
 .sw[data-p=shade]  {--dot:#B07A2E}
 .sw[data-p=sunset] {--dot:#D08A22}
+.sw[data-p=silver] {--dot:#C6D6E6}
+.sw[data-p=terra]  {--dot:#A9603A}
 
 /* демо-блок: цвета и шрифт приходят переменными, меняются мгновенно */
 .demo{

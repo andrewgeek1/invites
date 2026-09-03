@@ -1,0 +1,890 @@
+/* ═══════════════════════════════════════════════════════════════════
+   «Ротонда» — свадебное приглашение, средний тариф.
+   Токены выведены из кадра обложки замером, а не подобраны на глаз:
+   тень #190C03 занимает 23% площади, камень фасада #C3B593 — 9.8%.
+   Подробности — plan/rotonda-strategy.md
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --ink:    #1E150B;   /* тень кадра, поднята до читаемой */
+  --ink-2:  #2A2013;   /* та же тень на тон светлее, для плашек */
+  --sand:   #EFE6D2;   /* камень фасада, осветлён */
+  --stone:  #DCCFB2;   /* он же, средний тон */
+  --text:   #2E241A;   /* тёплый оливково-коричневый вместо чёрного */
+  --terra:  #A9603A;   /* черепица на свету — единственный акцент */
+  /* Три оттенка одного акцента, потому что контраст измерен, а не
+     прикинут: #A9603A на песке даёт 3.83, крупному кеглю этого хватает,
+     мелкому нужно 4.5. Поэтому мелкий текст берёт тёмный на светлом
+     (5.72 на песке, 4.60 на камне) и светлый на тёмном (5.69 на туши). */
+  --terra-d: #8A4526;
+  --terra-l: #C6805A;
+
+  --f-disp: "EB Garamond", "Times New Roman", serif;
+  --f-text: "Mulish", -apple-system, "Segoe UI", sans-serif;
+  --f-hand: "Comforter", "EB Garamond", cursive;
+
+  --e: cubic-bezier(.22, 1, .36, 1);
+
+  --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 40px;
+  --s5: 64px; --s6: 104px; --s7: 168px;
+
+  --pad: clamp(20px, 5vw, 88px);
+  --maxw: 1560px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ background: var(--ink); }
+
+body{
+  margin: 0;
+  background: var(--sand);
+  color: var(--text);
+  font-family: var(--f-text);
+  font-size: clamp(1.06rem, 1rem + .34vw, 1.24rem);
+  line-height: 1.62;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3{
+  font-family: var(--f-disp);
+  font-weight: 400;
+  hyphens: none;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p{ margin: 0; text-wrap: pretty; }
+a{ color: inherit; }
+
+::selection{ background: var(--terra); color: var(--sand); }
+
+.skip{
+  position: absolute; left: -9999px; top: 0; z-index: 99;
+  background: var(--ink); color: var(--sand); padding: 14px 22px;
+}
+.skip:focus{ left: 0; }
+
+:focus-visible{ outline: 2px solid var(--terra); outline-offset: 3px; }
+
+/* ─────────── Мелкие роли ─────────── */
+
+.kicker{
+  font-size: .84rem;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  color: var(--terra-d);
+  margin: 0 0 var(--s3);
+}
+.sec--ink .kicker,
+.hero .kicker{ color: var(--terra-l); }   /* на тёмном нужен светлый оттенок акцента */
+
+.note{
+  font-size: .88rem;
+  line-height: 1.5;
+  opacity: .74;
+}
+
+/* ─────────── Кнопки: только два типа ─────────── */
+
+.btn{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 var(--s4);
+  border-radius: 999px;
+  border: 0;
+  font-family: var(--f-text);
+  font-size: 1rem;
+  letter-spacing: .02em;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  background: transparent;
+}
+
+.btn--fill{ color: var(--ink); }
+.btn--fill::before{
+  content: ""; position: absolute; inset: 0;
+  background: var(--sand);
+}
+.btn--line{
+  color: var(--sand);
+  box-shadow: inset 0 0 0 1px rgba(239,230,210,.45);
+}
+.btn--line .btn__fill{ background: var(--sand); }
+.btn--fill .btn__fill{ background: var(--terra); }
+
+.btn__fill{
+  position: absolute; inset: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--e);
+}
+.btn__label{
+  position: relative; z-index: 2;
+  transition: color 320ms var(--e);
+}
+.btn:hover .btn__fill{ transform: scaleX(1); }
+.btn--fill:hover .btn__label{ color: var(--sand); }
+.btn--line:hover .btn__label{ color: var(--ink); }
+
+/* ─────────── Шапка ─────────── */
+
+.bar{
+  position: fixed; inset: 0 0 auto 0; z-index: 40;
+  display: flex; align-items: center; gap: var(--s4);
+  padding: var(--s2) var(--pad);
+  color: var(--text);
+  transform: translateY(-102%);
+  transition: transform 620ms var(--e), color 420ms var(--e);
+}
+.bar.is-on{ transform: none; }
+
+/* Два состояния: над песком шапка светлая со сплошной заливкой,
+   над тёмными секциями — прозрачная с растворяющимся низом.
+   Состояние переключает наблюдатель, а не кадр прокрутки. */
+.bar::before{
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--sand);
+  box-shadow: 0 1px 0 rgba(46,36,26,.16);
+  transition: opacity 420ms var(--e);
+}
+.bar::after{
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: linear-gradient(to bottom, rgba(24,16,8,.94), rgba(24,16,8,.74) 58%, rgba(24,16,8,0));
+}
+.bar.is-dark{ color: var(--sand); }
+.bar.is-dark::before{ opacity: 0; }
+
+.bar__mark{
+  font-family: var(--f-disp);
+  font-size: 1.35rem;
+  letter-spacing: .04em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.bar__nav{
+  display: flex; gap: var(--s3);
+  margin-left: auto;
+  font-size: .95rem;
+}
+.bar__nav a{
+  text-decoration: none;
+  opacity: .78;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  transition: opacity 320ms var(--e);
+}
+.bar__nav a:hover{ opacity: 1; }
+
+.bar__act{
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 var(--s3);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(46,36,26,.32);
+  font-size: .95rem;
+  text-decoration: none;
+  transition: background 420ms var(--e), color 320ms var(--e), box-shadow 420ms var(--e);
+}
+.bar__act:hover{ background: var(--terra); color: var(--sand); box-shadow: none; }
+.bar.is-dark .bar__act{ box-shadow: inset 0 0 0 1px rgba(239,230,210,.4); }
+.bar.is-dark .bar__act:hover{ background: var(--sand); color: var(--ink); }
+
+@media (max-width: 760px){
+  .bar__nav{ display: none; }
+  .bar__act{ margin-left: auto; }
+}
+
+/* ═══════════ ОБЛОЖКА ═══════════
+   Закреплённый кадр на два экрана: на первом идёт облёт, на втором
+   он замирает и на него выходит приглашение. Один приём на страницу. */
+
+.hero{
+  position: relative;
+  background: var(--ink);
+}
+
+.hero__media{
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: hidden;
+  z-index: 0;
+  /* свой слой: фиксированный полноэкранный фон без него
+     перерисовывается каждый кадр прокрутки */
+  transform: translateZ(0);
+  will-change: transform;
+  background: var(--ink) url("assets/hero-poster.webp") center / cover no-repeat;
+}
+
+.hero__video{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Постоянная вуаль по низу — под перемычку имён.
+   Не backdrop-filter: блюр такой площади на липком слое
+   пересчитывается каждый кадр (проверено на сложном тарифе). */
+.hero__foot{
+  position: absolute; inset: auto 0 0 0; height: 62%;
+  background: linear-gradient(to top,
+    rgba(20,13,6,.86) 0%, rgba(20,13,6,.66) 26%,
+    rgba(20,13,6,.28) 58%, rgba(20,13,6,0) 100%);
+  pointer-events: none;
+}
+
+/* Вуаль второго экрана — глубину ведёт скрипт */
+.hero__veil{
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 50% 46%,
+    rgba(20,13,6,.62) 0%, rgba(20,13,6,.86) 62%, rgba(20,13,6,.94) 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero__flow{
+  position: relative; z-index: 1;
+  margin-top: -100svh;
+}
+
+.hero__scr{
+  height: 100svh;
+  display: flex;
+  padding: 0 var(--pad);
+  color: var(--sand);
+}
+
+/* ─── первый экран: перемычка ─── */
+
+.hero__scr--cover{ align-items: flex-end; padding-bottom: clamp(28px, 4vh, 56px); }
+
+.cover{ width: 100%; max-width: var(--maxw); margin: 0 auto; }
+
+.cover__where{
+  font-size: .84rem;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  opacity: .82;
+  margin-bottom: var(--s4);
+}
+
+/* Имена стоят по краям низа кадра, между ними рукописное «и»
+   на уровне низа букв, сверху волосяная линия во всю ширину.
+   Получается антаблемент — оптический центр остаётся пустым. */
+.lintel{
+  border-top: 1px solid rgba(239,230,210,.34);
+  padding-top: clamp(10px, 1.6vh, 22px);
+}
+.lintel__row{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3);
+  font-size: clamp(3.2rem, 1.1rem + 9.6vw, 9.8rem);
+  line-height: .92;
+  letter-spacing: -.03em;
+  margin: 0;
+}
+.lintel__and{
+  font-family: var(--f-hand);
+  font-size: .5em;
+  letter-spacing: 0;
+  color: var(--terra);
+  line-height: 1;
+}
+
+.cover__foot{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-top: var(--s4);
+}
+.cover__when{
+  font-size: clamp(1.02rem, .96rem + .3vw, 1.2rem);
+  line-height: 1.5;
+}
+.cover__act{
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.cover__act .note{ max-width: 22ch; }
+
+@media (max-width: 900px){
+  .cover__foot{ flex-direction: column; align-items: flex-start; gap: var(--s3); }
+  .cover__act{ justify-content: flex-start; }
+}
+
+/* На узком экране перемычка складывается: два коротких имени
+   по краям 375px оставляют посередине дыру, а не воздух. */
+@media (max-width: 640px){
+  .lintel__row{
+    display: block;
+    line-height: .98;
+  }
+  .lintel__and{
+    display: inline-block;
+    font-size: .62em;
+    margin-left: .16em;
+  }
+  .lintel__name + .lintel__and + .lintel__name{ display: block; }
+}
+
+/* ─── второй экран: приглашение на замершем кадре ─── */
+
+.hero__scr--invite{ align-items: center; }
+
+.invite{
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--s5) 0;
+}
+.invite__lead{
+  font-family: var(--f-disp);
+  font-size: clamp(1.62rem, 1.1rem + 2.4vw, 3.3rem);
+  line-height: 1.16;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  max-width: 22ch;
+  margin-bottom: var(--s4);
+}
+.invite__text{
+  max-width: 52ch;
+  opacity: .84;
+}
+.invite__sign{
+  font-family: var(--f-disp);
+  font-size: clamp(1.3rem, 1.1rem + .8vw, 1.9rem);
+  margin-top: var(--s4);
+}
+.invite__sign .amp{
+  font-family: var(--f-hand);
+  color: var(--terra);
+  font-size: 1.05em;
+}
+
+/* ═══════════ ОБЩЕЕ ДЛЯ СЕКЦИЙ ═══════════ */
+
+.sec{
+  position: relative;
+  padding: clamp(76px, 11vh, 168px) var(--pad);
+}
+.sec--sand{ background: var(--sand); color: var(--text); }
+.sec--ink { background: var(--ink);  color: var(--sand); }
+
+.wrap{ max-width: var(--maxw); margin: 0 auto; }
+
+.sec h2{
+  font-size: clamp(2.3rem, 1.4rem + 3.6vw, 4.5rem);
+  line-height: .95;
+  letter-spacing: -.03em;
+  margin: 0;
+}
+.sec h3{
+  font-size: clamp(1.35rem, 1.1rem + .9vw, 1.9rem);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  margin: 0 0 var(--s1);
+}
+.lead{
+  font-size: clamp(1.16rem, 1.08rem + .46vw, 1.46rem);
+  line-height: 1.5;
+  max-width: 42ch;
+}
+
+/* ═══════════ 03 ОТСЧЁТ ═══════════
+   Не три одинаковые карточки, а фриз: числа стоят на одной линии,
+   разделённые волосяными рулями во всю высоту. */
+
+.tick__head{ margin-bottom: clamp(40px, 6vh, 88px); }
+
+.tick__row{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(46,36,26,.22);
+  border-bottom: 1px solid rgba(46,36,26,.22);
+}
+.tick__cell{
+  padding: clamp(18px, 2.6vh, 34px) 0 clamp(14px, 2vh, 26px);
+}
+.tick__cell + .tick__cell{
+  border-left: 1px solid rgba(46,36,26,.22);
+  padding-left: clamp(18px, 3vw, 52px);
+}
+.tick__n{
+  display: block;
+  font-family: var(--f-disp);
+  font-size: clamp(3.6rem, 1.4rem + 8.4vw, 10rem);
+  line-height: .84;
+  letter-spacing: -.04em;
+  color: var(--terra);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.tick__u{
+  display: block;
+  margin-top: var(--s2);
+  font-size: .86rem;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+.tick__note{
+  margin-top: var(--s3);
+  max-width: 46ch;
+  opacity: .78;
+}
+
+@media (max-width: 700px){
+  .tick__cell + .tick__cell{ padding-left: var(--s2); }
+}
+
+/* ═══════════ 04 ДОРОГА ═══════════ */
+
+.road__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 120px);
+  align-items: start;
+}
+.road__head{ position: sticky; top: clamp(84px, 12vh, 128px); }
+.road__lead{
+  margin-top: var(--s3);
+  font-size: clamp(1.16rem, 1.08rem + .46vw, 1.46rem);
+  line-height: 1.5;
+  max-width: 34ch;
+  opacity: .82;
+}
+
+.road__list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.road__item{
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 48px);
+  padding: clamp(24px, 3.4vh, 44px) 0;
+  border-top: 1px solid rgba(46,36,26,.22);
+}
+.road__item:last-child{ border-bottom: 1px solid rgba(46,36,26,.22); }
+
+.road__n{
+  font-family: var(--f-disp);
+  font-size: 1.15rem;
+  letter-spacing: .06em;
+  color: var(--terra-d);
+  padding-top: .35em;
+  font-variant-numeric: lining-nums;
+}
+.road__txt p{ max-width: 48ch; opacity: .84; }
+
+@media (max-width: 860px){
+  .road__grid{ grid-template-columns: 1fr; }
+  .road__head{ position: static; }
+  .road__lead{ max-width: 46ch; }
+}
+
+/* ─────────── Фотографии ───────────
+   Всегда во всю ширину блока, впритык к краю окна: кадр в скруглённой
+   рамке посреди поля — самый явный маркер шаблона. */
+
+figure{ margin: 0; }
+figure img{ display: block; width: 100%; height: auto; }
+
+figcaption{
+  margin-top: var(--s2);
+  padding: 0 var(--pad);
+  font-size: .88rem;
+  line-height: 1.5;
+  opacity: .68;
+  max-width: 46ch;
+}
+
+/* Секция держит боковые поля, фотография их снимает: кадр должен
+   доходить до края окна, а не висеть в рамке из воздуха. */
+.bleed{ margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); }
+.bleed figcaption{ padding: 0 var(--pad); }
+
+.road__shot{ margin-top: clamp(48px, 7vh, 104px); }
+.road__shot img{ aspect-ratio: 3 / 1; object-fit: cover; }
+
+.day__shot{ margin-top: clamp(48px, 7vh, 104px); }
+.day__shot img{ aspect-ratio: 21 / 9; object-fit: cover; }
+
+/* ═══════════ 05 ДЕНЬ ═══════════ */
+
+.day{ padding-bottom: 0; }
+.day__head{ margin-bottom: clamp(40px, 6vh, 88px); }
+
+.day__row{
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(239,230,210,.24);
+}
+.day__cell{
+  padding: clamp(22px, 3vh, 40px) clamp(16px, 2vw, 34px) clamp(22px, 3vh, 40px) 0;
+}
+.day__cell + .day__cell{
+  border-left: 1px solid rgba(239,230,210,.24);
+  padding-left: clamp(18px, 2.4vw, 40px);
+}
+.day__t{
+  display: block;
+  font-family: var(--f-disp);
+  font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.4rem);
+  letter-spacing: -.01em;
+  color: var(--terra);
+  margin-bottom: var(--s2);
+  font-variant-numeric: lining-nums;
+}
+.day__cell p{ opacity: .78; font-size: .98rem; }
+
+@media (max-width: 980px){
+  .day__row{ grid-template-columns: repeat(2, 1fr); }
+  .day__cell:nth-child(3){ border-left: 0; padding-left: 0; }
+  .day__cell:nth-child(n+3){ border-top: 1px solid rgba(239,230,210,.24); }
+}
+@media (max-width: 600px){
+  .day__row{ grid-template-columns: 1fr; }
+  .day__cell{ padding-right: 0; }
+  .day__cell + .day__cell{
+    border-left: 0; padding-left: 0;
+    border-top: 1px solid rgba(239,230,210,.24);
+  }
+}
+
+/* ═══════════ 06 ГАЛЕРЕЯ ═══════════ */
+
+.gal{ padding-top: clamp(76px, 11vh, 168px); }
+.gal__head{ margin-bottom: clamp(40px, 6vh, 80px); max-width: 100%; }
+.gal__lead{
+  margin-top: var(--s3);
+  font-size: clamp(1.16rem, 1.08rem + .46vw, 1.46rem);
+  line-height: 1.5;
+  max-width: 40ch;
+  opacity: .8;
+}
+.gal__lead-shot img{ aspect-ratio: 2 / 1; object-fit: cover; }
+
+.gal__grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 3vw, 56px);
+  margin-top: clamp(20px, 3vw, 56px);
+}
+.gal__item img{ aspect-ratio: 4 / 3; object-fit: cover; }
+.gal__item figcaption{ padding: 0; }
+
+@media (max-width: 700px){
+  .gal__grid{ grid-template-columns: 1fr; }
+}
+
+/* ═══════════ 07 ОДЕЖДА ═══════════ */
+
+.look__head{ max-width: 46ch; margin-bottom: clamp(40px, 6vh, 80px); }
+.look__lead{
+  margin-top: var(--s3);
+  font-size: clamp(1.16rem, 1.08rem + .46vw, 1.46rem);
+  line-height: 1.5;
+  opacity: .84;
+}
+
+.look__asks{
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+  border-top: 1px solid rgba(46,36,26,.22);
+  padding-top: clamp(24px, 3.4vh, 44px);
+}
+.look__asks p{ opacity: .82; max-width: 34ch; }
+
+@media (max-width: 860px){
+  .look__asks{ grid-template-columns: 1fr; gap: var(--s4); }
+}
+
+.look__pal{
+  margin-top: clamp(40px, 6vh, 88px);
+  padding-top: clamp(24px, 3.4vh, 44px);
+  border-top: 1px solid rgba(46,36,26,.22);
+}
+.look__palTitle{
+  font-size: .84rem;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  opacity: .62;
+  margin-bottom: var(--s3);
+}
+/* Не кружки: полосы ткани, выложенные в ряд */
+.look__sw{
+  list-style: none; margin: 0 0 var(--s3); padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 26px);
+  max-width: 760px;
+}
+.look__sw li{
+  font-size: .9rem;
+  opacity: .82;
+}
+.look__sw span{
+  display: block;
+  height: clamp(64px, 9vw, 112px);
+  background: var(--c);
+  margin-bottom: var(--s1);
+}
+
+@media (max-width: 520px){
+  .look__sw{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════ 08 ОТВЕТ ═══════════
+   Единственный блок по центру: это форма, её читают сверху вниз. */
+
+.sec--stone{ background: var(--stone); color: var(--text); }
+
+.rsvp__box{ max-width: 660px; margin: 0 auto; }
+.rsvp__head{ text-align: center; margin-bottom: clamp(36px, 5vh, 64px); }
+.rsvp__head .kicker{ margin-bottom: var(--s2); }
+.rsvp__lead{
+  margin: var(--s3) auto 0;
+  font-size: clamp(1.08rem, 1rem + .36vw, 1.28rem);
+  line-height: 1.5;
+  max-width: 40ch;
+  opacity: .84;
+}
+
+.field{ margin-bottom: var(--s4); }
+.field > label,
+.field__lbl{
+  display: block;
+  margin-bottom: var(--s2);
+  font-size: .84rem;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  opacity: .66;
+}
+
+input[type="text"], textarea{
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(46,36,26,.34);
+  border-radius: 0;
+  padding: 12px 2px;
+  min-height: 48px;
+  transition: border-color 320ms var(--e);
+}
+input[type="text"]:focus, textarea:focus{
+  outline: none;
+  border-bottom-color: var(--terra);
+}
+/* Общее правило :focus-visible проигрывало по весу правилу выше,
+   и поле с клавиатуры оставалось без обводки. */
+input[type="text"]:focus-visible, textarea:focus-visible{
+  outline: 2px solid var(--terra-d);
+  outline-offset: 3px;
+}
+input::placeholder, textarea::placeholder{ color: var(--text); opacity: .42; }
+textarea{ resize: vertical; }
+
+.err{
+  margin-top: var(--s1);
+  font-size: .9rem;
+  color: var(--terra-d);
+}
+
+/* Приеду / не смогу */
+.choice{ display: flex; gap: var(--s2); flex-wrap: wrap; }
+.choice__b{
+  flex: 1 1 0;
+  min-height: 56px;
+  padding: 0 var(--s3);
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(46,36,26,.32);
+  cursor: pointer;
+  transition: background 420ms var(--e), color 320ms var(--e), box-shadow 320ms var(--e);
+}
+.choice__b:hover{ box-shadow: inset 0 0 0 1px rgba(46,36,26,.6); }
+.choice__b[aria-checked="true"]{
+  background: var(--ink); color: var(--sand); box-shadow: none;
+}
+
+/* Число спутников задаёт гость, готовых кнопок «+1 / +2» нет */
+.step{ display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+.step__b{
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  background: transparent; border: 0; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(46,36,26,.32);
+  cursor: pointer;
+  transition: background 420ms var(--e), box-shadow 320ms var(--e);
+}
+.step__b:hover:not(:disabled){ background: rgba(46,36,26,.07); }
+.step__b:disabled{ opacity: .32; cursor: default; }
+.step__b svg{ width: 20px; height: 20px; stroke: var(--text); stroke-width: 1.4; }
+.step__n{
+  font-family: var(--f-disp);
+  font-size: 1.9rem;
+  min-width: 1.4ch;
+  text-align: center;
+  font-variant-numeric: lining-nums;
+}
+.step__t{ margin-left: var(--s1); }
+
+.mates{ margin-top: var(--s3); display: grid; gap: var(--s2); }
+.mates input{ margin: 0; }
+
+/* Метка чекбокса не должна получить капслок от .field label */
+.field label.check{
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+  margin: 0 0 var(--s2);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 1;
+  cursor: pointer;
+  min-height: 44px;
+  align-items: center;
+}
+.check input{
+  width: 22px; height: 22px;
+  accent-color: var(--terra);
+  flex: none;
+}
+
+.form__act{
+  display: flex; align-items: center; gap: var(--s3);
+  flex-wrap: wrap;
+  margin-top: var(--s5);
+}
+.btn--dark{ color: var(--sand); }
+.btn--dark::before{ background: var(--ink); }
+.btn--dark .btn__fill{ background: var(--terra); }
+.btn--dark:hover .btn__label{ color: var(--sand); }
+.form__act .note{ max-width: 26ch; }
+
+.thanks{ text-align: center; }
+.thanks p{ margin: var(--s3) auto 0; max-width: 40ch; opacity: .84; }
+
+.link{
+  background: none; border: 0; padding: 0;
+  font: inherit; color: inherit; cursor: pointer;
+  text-decoration: none;
+  box-shadow: inset 0 -1px 0 var(--terra);
+  transition: box-shadow 320ms var(--e), color 320ms var(--e);
+}
+.link:hover{ color: var(--terra); box-shadow: inset 0 -1px 0 currentColor; }
+.thanks .link{ margin-top: var(--s4); display: inline-block; }
+
+/* ═══════════ 09 ВОПРОСЫ ═══════════ */
+
+.faq__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(32px, 6vw, 120px);
+  align-items: start;
+}
+.faq__head{ position: sticky; top: clamp(84px, 12vh, 128px); }
+
+.qa{ border-top: 1px solid rgba(46,36,26,.22); }
+.qa:last-child{ border-bottom: 1px solid rgba(46,36,26,.22); }
+.qa__q{
+  width: 100%;
+  display: block;
+  text-align: left;
+  background: none; border: 0;
+  padding: clamp(20px, 2.6vh, 30px) 0;
+  font-family: var(--f-disp);
+  font-size: clamp(1.24rem, 1.06rem + .7vw, 1.72rem);
+  line-height: 1.15;
+  color: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+.qa__q:hover{ color: var(--terra-d); }
+.qa__a{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 520ms var(--e);
+}
+.qa__a > p{
+  overflow: hidden;
+  max-width: 52ch;
+  opacity: .84;
+}
+.qa.is-open .qa__a{ grid-template-rows: 1fr; }
+.qa.is-open .qa__a > p{ padding-bottom: clamp(20px, 2.6vh, 30px); }
+
+@media (max-width: 860px){
+  .faq__grid{ grid-template-columns: 1fr; }
+  .faq__head{ position: static; }
+}
+
+/* ═══════════ ПОДВАЛ ═══════════ */
+
+.foot{
+  background: var(--ink);
+  color: var(--sand);
+  text-align: center;
+  padding: clamp(64px, 9vh, 128px) var(--pad);
+}
+.foot__names{
+  font-family: var(--f-disp);
+  font-size: clamp(2.2rem, 1.4rem + 3vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+.foot__names .amp,
+.invite__sign .amp,
+.foot .amp{ font-family: var(--f-hand); color: var(--terra); }
+.foot__when{ margin-top: var(--s3); line-height: 1.55; opacity: .8; }
+.foot__act{ margin-top: var(--s4); }
+.foot__note{ margin-top: var(--s4); opacity: .56; }
+
+/* ═══════════ ПОЯВЛЕНИЕ ═══════════ */
+
+.rise{
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(14px);
+}
+.is-in .rise,
+.rise.is-in{
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  transition: opacity 900ms var(--e) var(--d, 0ms),
+              transform 900ms var(--e) var(--d, 0ms),
+              filter 900ms var(--e) var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .rise{ opacity: 1; transform: none; filter: none; }
+  .is-in .rise, .rise.is-in{ transition: none; }
+  *{ scroll-behavior: auto !important; }
+}
