@@ -31,7 +31,7 @@
               font:'"Jost", sans-serif', ital:'normal' },
     terra:  { bg:'#EFE6D2', ink:'#2E241A', acc:'#8A4526',
               font:'"EB Garamond", serif', ital:'normal' },
-    moss:   { bg:'#1B2A20', ink:'#F0EADE', acc:'#B9A3D8',
+    sky:    { bg:'#DCEBF9', ink:'#24344A', acc:'#B4526F',
               font:'"Alice", serif', ital:'normal' }
   };
 

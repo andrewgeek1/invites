@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   «Сквозь арку» — Марк и Ева
+   «Цветочная арка» — Марк и Ева
 
    Правило номер один: на движущихся слоях только transform и opacity.
    Ни filter, ни backdrop-filter, ни mix-blend-mode, ни mask-composite —
@@ -8,37 +8,34 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* три мира по вертикали: небо → парк → вечер */
-  --moss-deep: #101A14;
-  --moss: #1B2A20;
-  --stone: #2C3B31;
-  --paper: #F0EADE;
-  --paper-2: #E9E3F0;
-  --ink: #1E2B21;
-  --ink-2: #3E4C40;
-  --lilac: #B9A3D8;
-  --lilac-deep: #6F569A;
-  --lilac-pale: #D9CEEA;
+  --sky-pale: #DCEBF9;
+  --sky: #A8CBEC;
+  --sky-deep: #4E86C4;
+  --paper: #F7FAFE;
+  --ink: #24344A;
+  --ink-2: #55698A;
+  --rose: #D9819C;
+  --rose-deep: #B4526F;
+  --rose-pale: #F0CBD6;
+  --leaf: #6E8F63;
 
   --f-display: 'Alice', Georgia, 'Times New Roman', serif;
   --f-text: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
-  /* Рукописных с кириллицей на Google Fonts наперечёт. Marck Script
-     занят «Стеклянным садом», Cormorant Italic — «Утром в саду»,
-     Great Vibes — «Золотым порталом», Comforter — «Ротондой».
-     Остаётся перьевой Bad Script, и он этому лесу как раз к лицу. */
   --f-hand: 'Bad Script', 'Alice', cursive;
 
   --t-base: clamp(1.06rem, 1rem + .34vw, 1.24rem);
   --t-lead: clamp(1.16rem, 1.08rem + .46vw, 1.46rem);
   --t-kick: clamp(.84rem, .8rem + .12vw, .95rem);
   --t-h2: clamp(2.3rem, 1.4rem + 3.6vw, 4.5rem);
-  --t-names: clamp(3.2rem, 1.1rem + 9.6vw, 9.8rem);
+  --t-names: clamp(3rem, 1.1rem + 7.9vw, 8.1rem);
 
   --gut: clamp(1.2rem, .6rem + 2.6vw, 3rem);
+  /* Ширина боковой гирлянды. Ею же ужимается колонка с текстом, поэтому
+     цветы физически не могут оказаться под строкой ни на какой ширине. */
+  --frame-w: clamp(34px, 7.6vw, 118px);
   --sec-y: clamp(5rem, 3rem + 9vw, 11rem);
-  --eye: 52%;
-
-  color-scheme: light dark;
+  --eye: 46%;
+  --frame-op: 0;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -51,8 +48,8 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--moss);
-  color: var(--paper);
+  background: var(--sky-pale);
+  color: var(--ink);
   font-family: var(--f-text);
   font-weight: 300;
   font-size: var(--t-base);
@@ -70,23 +67,224 @@ img { max-width: 100%; display: block; }
 }
 .skip:focus { left: 1rem; top: 1rem; }
 
-:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
 
-/* ── общие блоки ──────────────────────────────────────────────────────── */
+/* ═══ НЕБО ЗА ВСЕЙ СТРАНИЦЕЙ ═══════════════════════════════════════════
+   Фиксированный полноэкранный фон без своего слоя перерисовывается
+   каждый кадр прокрутки. translateZ и will-change отдают его композитору.
+   ═══════════════════════════════════════════════════════════════════ */
 
-.wrap { width: min(1180px, 100% - var(--gut) * 2); margin-inline: auto; }
-.wrap--narrow { width: min(760px, 100% - var(--gut) * 2); }
+.sky {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  pointer-events: none;
+}
+.sky img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+
+/* Небо на сайте одно и то же — и в обложке, и дальше. Раньше их было два:
+   отдельный слой в сцене пролёта и фиксированный фон под страницей. Замер
+   показал, что лишний полноэкранный слой стоит заметной доли кадров. */
+.veil {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: var(--veil-op, 1);
+  background: linear-gradient(to bottom,
+              rgba(247,250,254,.60), rgba(247,250,254,.76) 42%, rgba(247,250,254,.84));
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+/* ═══ ПРОЛЁТ ═══════════════════════════════════════════════════════════ */
+
+.pass { position: relative; z-index: 2; height: 230svh; }
+
+.stage {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.lyr {
+  position: absolute; inset: 0;
+  transform-origin: var(--eyeX, 50%) var(--eye);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Дальние облака лежат полосой по горизонту, ближние наплывают снизу.
+   Высота задаётся картинкой (height:auto): при object-fit:cover браузер
+   срезал бы верх вместе с началом прозрачности, и по экрану шла бы
+   прямая линия. */
+.lyr--far {
+  top: auto; bottom: 4%; height: auto;
+  left: -14%; right: -14%;
+  opacity: .78;
+}
+.lyr--far img { width: 100%; height: auto; }
+
+.lyr--near {
+  top: auto; bottom: -34%; height: auto;
+  left: -20%; right: -20%;
+  opacity: .95;
+}
+.lyr--near img { width: 100%; height: auto; }
+
+/* Пара стоит внутри проёма, чуть ниже его середины: так она читается
+   стоящей под аркой, а не парящей в ней. */
+.lyr--couple {
+  top: calc(var(--eye) - 50% + 22%);
+  bottom: calc(50% - var(--eye) - 22%);
+  display: grid; place-items: center;
+}
+.lyr--couple img { width: auto; height: clamp(96px, 15svh, 190px); opacity: .95; }
+
+/* Арка собрана так, что её проём приходится ровно на центр файла.
+   Поэтому картинка кладётся центром в точку схода — и на любом экране
+   камера идёт в проём, а не в кладку. Ширина берётся от большего
+   из двух: ширины экрана и его высоты, иначе на узком экране арка
+   съёживается в полоску у верхнего края. */
+.lyr--arch img {
+  position: absolute;
+  left: 50%; top: var(--eye);
+  width: min(126%, 132svh);
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* Имена стоят под аркой, а не в проёме: в проёме уже пара, и вдвоём
+   им там тесно. Арка всё равно проходит поверх них — слой с именами
+   лежит под слоем с цветами. */
+.lyr--title {
+  top: calc(var(--eye) - 50%);
+  bottom: calc(50% - var(--eye));
+  display: grid; place-items: center;
+  padding-inline: var(--gut);
+  text-align: center;
+}
+
+/* ── обложка ──────────────────────────────────────────────────────────── */
+
+.hero { position: relative; max-width: min(94vw, 1120px); }
+
+/* Светлое небо в проёме съедает белый текст. Вуаль эллиптическая и мягкая:
+   пять остановок вместо двух, иначе на ровном небе виден край эллипса. */
+.hero::before {
+  content: "";
+  position: absolute; inset: -58% -40%;
+  background: radial-gradient(closest-side,
+              rgba(30,48,72,.60) 0%, rgba(30,48,72,.46) 26%, rgba(30,48,72,.28) 50%,
+              rgba(30,48,72,.13) 70%, rgba(30,48,72,.04) 87%, rgba(30,48,72,0) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero__kick {
+  font-size: var(--t-kick);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 .9em;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(24,40,62,.55);
+}
+
+.names {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: var(--t-names);
+  line-height: .92;
+  margin: 0;
+  letter-spacing: .012em;
+  color: #fff;
+  text-shadow: 0 4px 34px rgba(24,40,62,.5);
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: .12em; flex-wrap: wrap;
+}
+
+/* Рукописное «и» садится на низ имён, а не по центру строки. */
+.names__and {
+  font-family: var(--f-hand);
+  font-size: .46em;
+  color: var(--rose-pale);
+  line-height: 1;
+  padding-bottom: .06em;
+  text-shadow: 0 2px 16px rgba(24,40,62,.5);
+}
+
+.hero__date {
+  margin: 1.1em 0 0;
+  font-size: clamp(.95rem, .88rem + .3vw, 1.14rem);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(24,40,62,.55);
+  display: flex; align-items: center; justify-content: center; gap: .9em;
+  flex-wrap: wrap;
+}
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rose-pale); display: inline-block; }
+
+.hint {
+  position: absolute; left: 50%; bottom: clamp(1.2rem, 3vh, 2.6rem);
+  transform: translateX(-50%);
+  margin: 0;
+  display: flex; flex-direction: column; align-items: center; gap: .55rem;
+  font-size: .84rem; letter-spacing: .22em; text-transform: uppercase;
+  color: #fff; opacity: .8;
+  text-shadow: 0 2px 12px rgba(24,40,62,.7);
+}
+.hint i { width: 1px; height: 34px; background: linear-gradient(to bottom, #fff, transparent); }
+
+/* ═══ НЕПОДВИЖНАЯ РАМКА ════════════════════════════════════════════════
+   Та же арка после пролёта. Лежит НАД небом, но ПОД контентом: так цветы
+   не закрывают ни строчки текста и ни одной фотографии, что бы ни было
+   на странице.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.frame {
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+  opacity: var(--frame-op);
+  transform: translateZ(0);
+  will-change: opacity;
+}
+/* Ширина гирлянды меньше поля вокруг колонки с текстом на любой ширине
+   экрана — это проверяется замером, а не на глаз. */
+.frame__side {
+  position: absolute; top: 0; bottom: 0;
+  width: var(--frame-w);
+  overflow: hidden;
+}
+.frame__side--l { left: 0; }
+.frame__side--r { right: 0; transform: scaleX(-1); }
+.frame__side img {
+  width: 100%; height: 100%;
+  max-width: none;
+  /* Прижимаем к внутренней кромке: при обрезке пропадает внешний край,
+     который и так уходит за границу экрана, а распущенная кромка
+     со стороны текста остаётся целой. */
+  object-fit: cover; object-position: 100% 0;
+}
+
+/* ═══ СТРАНИЦА ═════════════════════════════════════════════════════════ */
+
+.page { position: relative; z-index: 2; }
+
+.wrap { width: min(1120px, 100% - (var(--gut) + var(--frame-w)) * 2); margin-inline: auto; }
+.wrap--narrow { width: min(720px, 100% - (var(--gut) + var(--frame-w)) * 2); }
 
 .sec { padding-block: var(--sec-y); }
 
 .kick {
-  font-family: var(--f-text);
   font-weight: 500;
   font-size: var(--t-kick);
   letter-spacing: .26em;
   text-transform: uppercase;
   margin: 0 0 1.1em;
-  color: var(--lilac-deep);
+  color: var(--rose-deep);
   text-align: center;
 }
 
@@ -95,19 +293,13 @@ img { max-width: 100%; display: block; }
   font-weight: 400;
   font-size: var(--t-h2);
   line-height: 1.04;
-  letter-spacing: .005em;
   margin: 0 0 .6em;
   text-align: center;
   text-wrap: balance;
 }
 
-.lead {
-  font-size: var(--t-lead);
-  line-height: 1.6;
-  margin: 0 0 1.1em;
-  text-wrap: pretty;
-}
-.lead--c { text-align: center; margin-inline: auto; max-width: 46ch; }
+.lead { font-size: var(--t-lead); line-height: 1.6; margin: 0 0 1.1em; text-wrap: pretty; text-align: center; }
+.lead--c { margin-inline: auto; max-width: 46ch; }
 
 .under { text-align: center; margin: 2.4rem 0 0; }
 
@@ -120,9 +312,8 @@ img { max-width: 100%; display: block; }
   padding-bottom: .18em;
   transition: color .25s;
 }
-.lnk:hover { color: var(--lilac); }
+.lnk:hover { color: var(--rose-deep); }
 
-/* появление по прокрутке */
 .rise { opacity: 0; transform: translate3d(0, 22px, 0); }
 .rise.is-in {
   opacity: 1; transform: none;
@@ -130,210 +321,11 @@ img { max-width: 100%; display: block; }
   transition-delay: var(--d, 0s);
 }
 
-/* ═══ ПРОХОД ═══════════════════════════════════════════════════════════
-   Секция высокая, внутри липкая сцена во весь экран. Все слои считаются
-   от одной переменной прокрутки и расходятся из одной точки — той,
-   куда «летит камера». Точку задаёт скрипт: она должна попасть в проём,
-   иначе гость пройдёт сквозь кладку.
-   ═══════════════════════════════════════════════════════════════════ */
-
-.pass { position: relative; height: 220svh; }
-.pass--2, .pass--3 { height: 200svh; }
-
-.stage {
-  position: sticky; top: 0;
-  height: 100svh;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.lyr {
-  position: absolute; inset: 0;
-  transform-origin: var(--eyeX, 50%) var(--eye);
-  backface-visibility: hidden;
-}
-/* will-change вешается скриптом только на тот проход, который сейчас на
-   экране. Постоянно висящий на пятнадцати слоях, он держит в памяти
-   пятнадцать растров разом. */
-.is-live .lyr {
-  will-change: transform;
-}
-
-.lyr--sky img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-
-/* Высота слоя задаётся самой картинкой (height:auto). При object-fit:cover
-   браузер срезал верх кадра вместе с началом градиента, и по экрану шла
-   прямая линия — граница прозрачности. */
-.lyr--fog {
-  top: auto; bottom: -4%; height: auto;
-  left: -14%; right: -14%;
-  opacity: .55;
-}
-.lyr--fog img { width: 100%; height: auto; }
-
-.lyr--arch img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
-
-.lyr--fern {
-  top: auto; bottom: -20%; height: auto;
-  left: -8%; right: -8%;
-  opacity: .55;
-}
-.lyr--fern img { width: 100%; height: auto; }
-
-/* Цвет мира, в который ведёт проход. К концу прохода все слои уходят
-   в прозрачность, и остаётся ровно он — стык со следующей секцией
-   получается бесшовным сам собой, без единого кадра анимации цвета. */
-.pass--cover .stage { background: var(--paper-2); }
-.pass--2 { --from: var(--paper-2); }
-.pass--3 { --from: var(--moss); }
-.pass--2 .stage { background: var(--moss); }
-.pass--3 .stage { background: var(--moss-deep); }
-
-/* Мягкий вход в кадр: цвет мира, из которого гость приехал. Уходит вместе
-   с остальными слоями, иначе к концу прохода светлая полоса остаётся
-   висеть поперёк тёмного экрана. */
-.lyr--blend {
-  inset: 0 0 auto 0; height: 18svh;
-  background: linear-gradient(to bottom, var(--from, transparent), transparent);
-  pointer-events: none;
-  transform: none !important;
-}
-
-/* Блок с текстом центрируется не по экрану, а по точке схода: он лежит
-   внутри проёма, поэтому арка проходит поверх имён, а не под ними. */
-.lyr--title, .lyr--word {
-  position: absolute;
-  top: calc(var(--eye) - 50%);
-  bottom: calc(50% - var(--eye));
-  display: grid; place-items: center;
-  padding-inline: var(--gut);
-  text-align: center;
-}
-
-/* Светлое облако в проёме съедает кремовый текст. Вуаль мягкая и
-   эллиптическая, а не плашка: плотность подобрана замером яркости
-   под самими буквами, а не на глаз. Лежит внутри слоя с текстом,
-   поэтому уезжает и гаснет вместе с ним и не стоит ни кадра. */
-.hero::before, .password::before {
-  content: "";
-  position: absolute; inset: -54% -38%;
-  /* Пять остановок вместо двух: у радиального градиента с одной парой
-     виден край эллипса, и на ровном светлом небе он читается пятном.
-     Ступени приближают гауссов спад, и кромка пропадает. */
-  background: radial-gradient(closest-side,
-              rgba(18,27,21,.74) 0%, rgba(18,27,21,.60) 26%, rgba(18,27,21,.38) 50%,
-              rgba(18,27,21,.18) 70%, rgba(18,27,21,.05) 87%, rgba(18,27,21,0) 100%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* ── обложка ──────────────────────────────────────────────────────────── */
-
-.hero, .password { position: relative; }
-.hero { max-width: min(94vw, 1120px); }
-
-.hero__kick {
-  font-size: var(--t-kick);
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin: 0 0 .9em;
-  color: var(--paper);
-  text-shadow: 0 2px 18px rgba(16,26,20,.6);
-}
-
-.names {
-  font-family: var(--f-display);
-  font-weight: 400;
-  font-size: var(--t-names);
-  line-height: .92;
-  margin: 0;
-  letter-spacing: .012em;
-  color: var(--paper);
-  text-shadow: 0 4px 34px rgba(16,26,20,.55);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: .12em;
-  flex-wrap: wrap;
-}
-
-/* Рукописное «и» садится на низ имён, а не по центру строки. */
-.names__and {
-  font-family: var(--f-hand);
-  font-size: .54em;
-  color: var(--lilac-pale);
-  line-height: 1;
-  padding-bottom: .06em;
-  text-shadow: 0 2px 16px rgba(16,26,20,.5);
-}
-
-.hero__date {
-  margin: 1.1em 0 0;
-  font-size: clamp(.95rem, .88rem + .3vw, 1.14rem);
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: var(--paper);
-  text-shadow: 0 2px 16px rgba(16,26,20,.6);
-  display: flex; align-items: center; justify-content: center; gap: .9em;
-  flex-wrap: wrap;
-}
-.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lilac-pale); display: inline-block; }
-
-.password {
-  font-family: var(--f-display);
-  font-size: clamp(1.5rem, 1rem + 2.4vw, 2.9rem);
-  letter-spacing: .02em;
-  margin: 0 auto;
-  max-width: 90vw;
-  text-wrap: balance;
-  color: var(--paper);
-  /* Подпись прохода ложится и на светлое небо, и на тёмную кладку —
-     одной тени мало, нужна ближняя плотная и дальняя мягкая. */
-  text-shadow: 0 2px 10px rgba(16,26,20,.9), 0 8px 44px rgba(16,26,20,.65);
-}
-
-.hint {
-  position: absolute; left: 50%; bottom: clamp(1.2rem, 3vh, 2.6rem);
-  transform: translateX(-50%);
-  margin: 0;
-  display: flex; flex-direction: column; align-items: center; gap: .55rem;
-  font-size: .84rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--paper);
-  opacity: .75;
-  text-shadow: 0 2px 12px rgba(16,26,20,.7);
-}
-.hint i {
-  width: 1px; height: 34px;
-  background: linear-gradient(to bottom, var(--paper), transparent);
-}
-
-/* ═══ МИРЫ ═════════════════════════════════════════════════════════════ */
-
-.world--1 {
-  background: var(--paper-2);
-  color: var(--ink);
-  position: relative;
-}
-.world--1 .kick { color: var(--lilac-deep); }
-.world--1 .lnk:hover { color: var(--lilac-deep); }
-
-.world--2 { background: var(--moss); color: var(--paper); }
-.world--2 .kick { color: var(--lilac); }
-
-.world--3 { background: var(--moss-deep); color: var(--paper); }
-.world--3 .kick { color: var(--lilac); }
-
-/* ── приглашение ──────────────────────────────────────────────────────── */
-
-.sec--invite .lead { text-align: center; }
-
 .sign { text-align: center; margin: 2.2rem 0 0; }
 .sign__hand {
   font-family: var(--f-hand);
   font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
-  color: var(--lilac-deep);
+  color: var(--rose-deep);
   line-height: 1.1;
   display: inline-block;
 }
@@ -345,60 +337,54 @@ img { max-width: 100%; display: block; }
   font-size: clamp(3.4rem, 1.4rem + 8.4vw, 8.4rem);
   line-height: .9;
   margin: 0;
-  text-align: center;
   display: flex; align-items: baseline; justify-content: center;
-  gap: .16em;
-  flex-wrap: wrap;
+  gap: .16em; flex-wrap: wrap;
 }
 .bigdate__m { font-size: .5em; }
-.bigdate__y { font-size: .5em; color: var(--lilac-deep); }
+.bigdate__y { font-size: .5em; color: var(--rose-deep); }
 
 /* «суббота» разогнана ровно по ширине даты: обёртка max-content,
    внутри буквы разложены флексом. */
 .dow {
-  width: max-content;
-  max-width: 100%;
+  width: max-content; max-width: 100%;
   margin: .55em auto 0;
   display: flex; justify-content: space-between;
   font-size: clamp(.84rem, .78rem + .3vw, 1.05rem);
-  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--ink-2);
 }
 
 .count {
-  list-style: none; margin: clamp(2.6rem, 5vw, 4.4rem) 0 0; padding: 0;
+  list-style: none; padding: 0;
+  margin: clamp(2.6rem, 5vw, 4.4rem) auto 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(.6rem, 2vw, 1.6rem);
-  max-width: 700px; margin-inline: auto;
+  max-width: 700px;
 }
 .count li {
   display: grid; justify-items: center; gap: .35rem;
   padding: clamp(1.1rem, 2.4vw, 1.9rem) .5rem clamp(.9rem, 2vw, 1.4rem);
   /* арка вместо плоского прямоугольника — форма всего сайта */
-  border: 1px solid rgba(111,86,154,.34);
+  border: 1px solid rgba(180,82,111,.28);
   border-radius: 46% 46% 8px 8px / 30% 30% 6px 6px;
-  background: linear-gradient(to bottom, rgba(185,163,216,.16), rgba(185,163,216,.03));
+  background: linear-gradient(to bottom, rgba(255,255,255,.62), rgba(255,255,255,.3));
 }
 .count b {
-  font-family: var(--f-display);
-  font-weight: 400;
-  font-size: clamp(2.2rem, 1.2rem + 3.6vw, 3.9rem);
-  line-height: 1;
+  font-family: var(--f-display); font-weight: 400;
+  font-size: clamp(2.2rem, 1.2rem + 3.6vw, 3.9rem); line-height: 1;
 }
 .count span {
   font-size: clamp(.84rem, .8rem + .2vw, .96rem);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2);
 }
 
 /* ── программа дня ────────────────────────────────────────────────────── */
 
 .day {
-  list-style: none; margin: clamp(2rem, 4vw, 3.4rem) 0 0; padding: 0;
+  list-style: none; padding: 0;
+  margin: clamp(2rem, 4vw, 3.4rem) auto 0;
   display: grid; gap: clamp(1.4rem, 3vw, 2.4rem);
-  max-width: 720px; margin-inline: auto;
+  max-width: 700px;
 }
 .day__i {
   display: grid;
@@ -406,75 +392,68 @@ img { max-width: 100%; display: block; }
   column-gap: clamp(1rem, 3vw, 2.2rem);
   align-items: baseline;
   padding-bottom: clamp(1.2rem, 2.6vw, 2rem);
-  border-bottom: 1px solid rgba(30,43,33,.16);
+  border-bottom: 1px solid rgba(36,52,74,.14);
 }
 .day__i:last-child { border-bottom: 0; padding-bottom: 0; }
 .day__t {
-  font-family: var(--f-display);
-  font-weight: 400;
+  font-family: var(--f-display); font-weight: 400;
   font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem);
-  color: var(--lilac-deep);
+  color: var(--rose-deep);
   grid-row: 1 / span 2;
 }
-.day__n {
-  font-size: clamp(1.14rem, 1.04rem + .4vw, 1.4rem);
-  font-weight: 500;
-}
-.day__d { color: var(--ink-2); font-size: var(--t-base); }
+.day__n { font-size: clamp(1.14rem, 1.04rem + .4vw, 1.4rem); font-weight: 500; }
+.day__d { color: var(--ink-2); }
 
 /* ── галерея: колоннада арочных окон ──────────────────────────────────── */
 
 .cols {
   margin-top: clamp(2rem, 4vw, 3.4rem);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(.7rem, 1.8vw, 1.5rem);
   align-items: end;
 }
-.col { margin: 0; overflow: hidden; border-radius: 50% 50% 10px 10px / 22% 22% 8px 8px; }
-.col img {
-  width: 100%; height: clamp(230px, 32vw, 430px);
-  object-fit: cover;
+.col {
+  margin: 0; overflow: hidden;
+  border-radius: 50% 50% 10px 10px / 22% 22% 8px 8px;
+  box-shadow: 0 14px 40px rgba(36,52,74,.14);
 }
+.col img { width: 100%; height: clamp(230px, 32vw, 430px); object-fit: cover; }
 .col--tall img { height: clamp(290px, 40vw, 540px); }
 
-/* ── одежда ───────────────────────────────────────────────────────────── */
+/* ── одежда: лепестки, не кружки и не квадраты ────────────────────────── */
 
-.swatches {
-  list-style: none; margin: clamp(2rem, 4vw, 3.2rem) auto 0; padding: 0;
+.petals {
+  list-style: none; padding: 0;
+  margin: clamp(2.4rem, 4vw, 3.4rem) auto 0;
   display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: clamp(.6rem, 1.6vw, 1.2rem);
-  max-width: 760px;
+  gap: clamp(.6rem, 1.6vw, 1.3rem);
+  max-width: 800px;
 }
-.sw { display: grid; justify-items: center; gap: .6rem; }
-/* образец цвета — маленькая арка, не кружок и не квадрат */
-.sw::before {
+.pt { display: grid; justify-items: center; gap: .7rem; }
+.pt::before {
   content: ""; display: block;
   width: 100%; aspect-ratio: 3 / 4;
   background: var(--c);
-  border-radius: 50% 50% 4px 4px / 34% 34% 3px 3px;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.18), 0 6px 18px rgba(0,0,0,.22);
+  border-radius: 52% 4% 52% 52% / 60% 4% 60% 60%;
+  box-shadow: inset 0 -2px 6px rgba(0,0,0,.10), 0 8px 20px rgba(36,52,74,.16);
 }
-.sw span {
+.pt:nth-child(odd)::before { transform: rotate(-16deg); }
+.pt:nth-child(even)::before { transform: rotate(-11deg); }
+.pt span {
   font-size: clamp(.82rem, .78rem + .2vw, .94rem);
-  letter-spacing: .04em;
-  color: rgba(240,234,222,.78);
+  letter-spacing: .04em; color: var(--ink-2); text-align: center;
 }
 
 .asks {
-  list-style: none; margin: clamp(2.6rem, 5vw, 4rem) auto 0; padding: 0;
+  list-style: none; padding: 0;
+  margin: clamp(2.6rem, 5vw, 4rem) auto 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(1.4rem, 3vw, 2.6rem);
-  max-width: 940px;
-  text-align: center;
+  max-width: 940px; text-align: center;
 }
 .ask { display: grid; gap: .4rem; }
-.ask b {
-  font-family: var(--f-display);
-  font-weight: 400;
-  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.75rem);
-}
-.ask span { color: rgba(240,234,222,.76); }
+.ask b { font-family: var(--f-display); font-weight: 400; font-size: clamp(1.3rem, 1.1rem + 1vw, 1.75rem); }
+.ask span { color: var(--ink-2); }
 
 /* ── место ────────────────────────────────────────────────────────────── */
 
@@ -482,47 +461,44 @@ img { max-width: 100%; display: block; }
   margin: clamp(2rem, 4vw, 3.2rem) 0 0;
   overflow: hidden;
   border-radius: 46% 46% 12px 12px / 20% 20% 10px 10px;
+  box-shadow: 0 18px 50px rgba(36,52,74,.18);
 }
 .venue img { width: 100%; height: clamp(280px, 44vw, 620px); object-fit: cover; }
 
 .facts {
-  list-style: none; margin: clamp(2.4rem, 4vw, 3.4rem) auto 0; padding: 0;
+  list-style: none; padding: 0;
+  margin: clamp(2.4rem, 4vw, 3.4rem) auto 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(1.4rem, 3vw, 2.6rem);
   max-width: 940px; text-align: center;
 }
 .fact { display: grid; gap: .4rem; }
 .fact b {
-  font-family: var(--f-text); font-weight: 500;
-  font-size: var(--t-kick); letter-spacing: .2em; text-transform: uppercase;
-  color: var(--lilac);
+  font-weight: 500; font-size: var(--t-kick);
+  letter-spacing: .2em; text-transform: uppercase; color: var(--rose-deep);
 }
-.fact span { color: rgba(240,234,222,.8); }
+.fact span { color: var(--ink-2); }
 
 /* ── форма ────────────────────────────────────────────────────────────── */
 
 .form { margin: clamp(2.2rem, 4vw, 3.2rem) 0 0; display: grid; gap: clamp(1.4rem, 3vw, 2.1rem); }
-
 .field { display: grid; gap: .55rem; border: 0; padding: 0; margin: 0; min-width: 0; }
-
 .field > label, .field legend {
   font-size: clamp(.9rem, .86rem + .2vw, 1.02rem);
-  letter-spacing: .06em;
-  color: rgba(240,234,222,.82);
-  padding: 0;
+  letter-spacing: .06em; color: var(--ink-2); padding: 0;
 }
 
 input[type="text"], textarea {
   width: 100%;
   font: inherit; font-size: var(--t-base);
-  color: var(--paper);
-  background: rgba(240,234,222,.05);
-  border: 1px solid rgba(240,234,222,.22);
+  color: var(--ink);
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(36,52,74,.22);
   border-radius: 10px 10px 4px 4px;
   padding: .8em .95em;
 }
-input[type="text"]::placeholder, textarea::placeholder { color: rgba(240,234,222,.38); }
-input[type="text"]:focus, textarea:focus { border-color: var(--lilac); outline: none; }
+input[type="text"]::placeholder, textarea::placeholder { color: rgba(36,52,74,.42); }
+input[type="text"]:focus, textarea:focus { border-color: var(--rose); outline: none; background: #fff; }
 textarea { resize: vertical; }
 
 .choice { display: flex; gap: .8rem; flex-wrap: wrap; }
@@ -531,62 +507,54 @@ textarea { resize: vertical; }
 .pick span {
   display: block; text-align: center;
   padding: .85em 1.2em;
-  border: 1px solid rgba(240,234,222,.24);
+  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(36,52,74,.2);
   border-radius: 40% 40% 8px 8px / 26% 26% 6px 6px;
-  font-size: var(--t-base);
   transition: background .2s, border-color .2s, color .2s;
 }
-.pick input:checked + span {
-  background: var(--lilac);
-  border-color: var(--lilac);
-  color: var(--moss-deep);
-}
-.pick input:focus-visible + span { outline: 2px solid var(--lilac); outline-offset: 3px; }
+.pick input:checked + span { background: var(--rose); border-color: var(--rose); color: #fff; }
+.pick input:focus-visible + span { outline: 2px solid var(--rose); outline-offset: 3px; }
 
 .stepper { display: flex; align-items: center; gap: .6rem; }
 .step {
   width: 2.9rem; height: 2.9rem; flex: none;
   font: inherit; font-size: 1.4rem; line-height: 1;
-  color: var(--paper);
-  background: rgba(240,234,222,.06);
-  border: 1px solid rgba(240,234,222,.24);
+  color: var(--ink);
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(36,52,74,.2);
   border-radius: 50% 50% 8px 8px / 34% 34% 6px 6px;
   cursor: pointer;
   transition: background .2s, border-color .2s;
 }
-.step:hover { background: rgba(185,163,216,.2); border-color: var(--lilac); }
+.step:hover { background: var(--rose-pale); border-color: var(--rose); }
 #fWith { width: 4.6rem; text-align: center; }
 
-.hintline { margin: 0; font-size: .86rem; color: rgba(240,234,222,.55); }
-
+.hintline { margin: 0; font-size: .86rem; color: rgba(36,52,74,.6); }
 .guests { display: grid; gap: .6rem; }
 .guests:not(:empty) { margin-top: .5rem; }
-
-.err { margin: 0; font-size: .9rem; color: #E7A9A0; }
+.err { margin: 0; font-size: .9rem; color: #A63B4E; }
 
 .btn {
   justify-self: center;
   font: inherit; font-size: clamp(1.02rem, .96rem + .3vw, 1.16rem);
   letter-spacing: .12em; text-transform: uppercase;
-  color: var(--moss-deep);
-  background: var(--paper);
+  color: #fff; background: var(--rose-deep);
   border: 0;
   border-radius: 34% 34% 10px 10px / 22% 22% 8px 8px;
   padding: 1em 2.6em;
   cursor: pointer;
-  transition: background .25s, color .25s;
+  transition: background .25s;
 }
-.btn:hover { background: var(--lilac); }
+.btn:hover { background: var(--rose); }
 
 .thanks { text-align: center; padding-top: 1rem; }
 .thanks__hand {
   font-family: var(--f-hand);
   font-size: clamp(2.6rem, 1.6rem + 4vw, 4.6rem);
-  color: var(--lilac);
-  margin: 0 0 .3em;
-  line-height: 1.05;
+  color: var(--rose-deep);
+  margin: 0 0 .3em; line-height: 1.05;
 }
-.thanks__p { margin: 0 auto; max-width: 42ch; color: rgba(240,234,222,.84); }
+.thanks__p { margin: 0 auto; max-width: 42ch; color: var(--ink-2); }
 
 /* ── финал и подвал ───────────────────────────────────────────────────── */
 
@@ -594,54 +562,47 @@ textarea { resize: vertical; }
 .final__hand {
   font-family: var(--f-hand);
   font-size: clamp(1.8rem, 1.2rem + 2.6vw, 3rem);
-  color: var(--lilac);
-  margin: 0 0 .3em;
+  color: var(--rose-deep); margin: 0 0 .3em;
 }
 .final__names {
   font-family: var(--f-display);
   font-size: clamp(2.6rem, 1.2rem + 6vw, 6.4rem);
-  line-height: .95;
-  margin: 0;
-  display: flex; align-items: flex-end; justify-content: center; gap: .14em;
-  flex-wrap: wrap;
+  line-height: .95; margin: 0;
+  display: flex; align-items: flex-end; justify-content: center; gap: .14em; flex-wrap: wrap;
 }
 .final__and {
-  font-family: var(--f-hand);
-  font-size: .52em;
-  color: var(--lilac);
-  padding-bottom: .06em;
-  line-height: 1;
+  font-family: var(--f-hand); font-size: .44em;
+  color: var(--rose-deep); padding-bottom: .06em; line-height: 1;
 }
 .final__dt {
   margin: 1.2em 0 0;
   letter-spacing: .24em; text-transform: uppercase;
   font-size: clamp(.86rem, .82rem + .2vw, .98rem);
-  color: rgba(240,234,222,.66);
+  color: var(--ink-2);
 }
 
 .foot {
   text-align: center;
   padding: clamp(2.4rem, 5vw, 4rem) var(--gut) clamp(3rem, 6vw, 4.6rem);
-  border-top: 1px solid rgba(240,234,222,.12);
+  border-top: 1px solid rgba(36,52,74,.14);
 }
-.foot__line { margin: 0 0 .5em; font-size: .92rem; color: rgba(240,234,222,.72); }
-.foot__line--dim { color: rgba(240,234,222,.42); font-size: .86rem; margin-bottom: 0; }
+.foot__line { margin: 0 0 .5em; font-size: .92rem; color: var(--ink-2); }
+.foot__line--dim { color: rgba(36,52,74,.5); font-size: .86rem; margin-bottom: 0; }
 
 /* ═══ адаптив ══════════════════════════════════════════════════════════ */
 
 @media (max-width: 860px) {
   .cols { grid-template-columns: repeat(2, 1fr); }
-  .swatches { grid-template-columns: repeat(3, 1fr); }
+  .petals { grid-template-columns: repeat(3, 1fr); }
   .asks, .facts { grid-template-columns: 1fr; max-width: 30rem; }
   .count { max-width: 30rem; }
 }
 
 @media (max-width: 520px) {
-  .pass { height: 190svh; }
-  .pass--2, .pass--3 { height: 175svh; }
+  .pass { height: 200svh; }
   .cols { grid-template-columns: 1fr; }
   .col img, .col--tall img { height: clamp(260px, 62vw, 380px); }
-  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .petals { grid-template-columns: repeat(2, 1fr); }
   .day__i { grid-template-columns: 1fr; row-gap: .25rem; }
   .day__t { grid-row: auto; }
   .count { grid-template-columns: 1fr; gap: .8rem; }
@@ -657,8 +618,7 @@ textarea { resize: vertical; }
   .rise { opacity: 1; transform: none; }
   .lyr { will-change: auto; }
   .hint { display: none; }
-  /* Проход — это и есть движение. Гостю, который его отключил, незачем
-     проматывать двести экранов ради эффекта, которого не будет:
-     арка остаётся одним неподвижным кадром. */
-  .pass, .pass--2, .pass--3 { height: 100svh; }
+  /* Пролёт — это и есть движение. Гостю, который его отключил, незачем
+     проматывать два экрана ради эффекта, которого не будет. */
+  .pass { height: 100svh; }
 }

@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   «Сквозь арку» — Марк и Ева
+   «Цветочная арка» — Марк и Ева
 
    Один цикл rAF на весь сайт. Геометрия считается только при изменении
-   размера окна и лежит вне горячего пути; в кадре остаётся арифметика
-   и запись строки transform, и та — только если она изменилась.
+   размера окна и лежит вне горячего пути: любое обращение к offsetHeight
+   из кадра форсирует пересчёт вёрстки всего документа.
    ═══════════════════════════════════════════════════════════════════════ */
 (() => {
   'use strict';
@@ -17,7 +17,7 @@
 
   /* ─── дата ───────────────────────────────────────────────────────────
      Первая суббота июля не раньше чем через 90 дней. Фиксированная дата
-     протухает, а мох, папоротник и трава в кадре требуют лета.
+     протухает, а цветущая арка и трава в кадре требуют лета.
      Под настоящую пару — заменить тело функции одной строкой.          */
 
   function demoDate() {
@@ -62,7 +62,7 @@
       if (key === 'dowspread') {
         // «суббота» разгоняется ровно по ширине даты: каждая буква — свой
         // элемент, между ними space-between. Разрядкой через letter-spacing
-        // так не получится: последний интервал висел бы справа.
+        // так не выйдет: последний интервал висел бы справа.
         el.textContent = '';
         [...DOW[DAY.getDay()]].forEach(ch => {
           const s = document.createElement('span');
@@ -82,23 +82,21 @@
   function tick() {
     const box = $('#count');
     if (!box) return;
-    let left = DAY - new Date();
-    if (left < 0) left = 0;
+    const left = Math.max(0, DAY - new Date());
     const totalDays = Math.floor(left / 864e5);
+    const hours = Math.floor(left / 36e5) % 24;
     let units;
     if (totalDays >= 21) {
       const w = Math.floor(totalDays / 7);
-      units = [
-        [w, plural(w, 'неделя', 'недели', 'недель')],
-        [totalDays - w * 7, plural(totalDays - w * 7, 'день', 'дня', 'дней')],
-        [Math.floor(left / 36e5) % 24, plural(Math.floor(left / 36e5) % 24, 'час', 'часа', 'часов')]
-      ];
+      const d = totalDays - w * 7;
+      units = [[w, plural(w, 'неделя', 'недели', 'недель')],
+               [d, plural(d, 'день', 'дня', 'дней')],
+               [hours, plural(hours, 'час', 'часа', 'часов')]];
     } else {
-      units = [
-        [totalDays, plural(totalDays, 'день', 'дня', 'дней')],
-        [Math.floor(left / 36e5) % 24, plural(Math.floor(left / 36e5) % 24, 'час', 'часа', 'часов')],
-        [Math.floor(left / 6e4) % 60, plural(Math.floor(left / 6e4) % 60, 'минута', 'минуты', 'минут')]
-      ];
+      const m = Math.floor(left / 6e4) % 60;
+      units = [[totalDays, plural(totalDays, 'день', 'дня', 'дней')],
+               [hours, plural(hours, 'час', 'часа', 'часов')],
+               [m, plural(m, 'минута', 'минуты', 'минут')]];
     }
     ['a', 'b', 'c'].forEach((k, i) => {
       const n = $(`[data-c="${k}"]`, box), l = $(`[data-cl="${k}"]`, box);
@@ -117,7 +115,7 @@
                        `${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
     const start = new Date(DAY.getTime() - 30 * 6e4);        // сбор в 15:30
     const end = new Date(DAY.getTime() + 7.5 * 36e5);
-    const ics = [
+    a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent([
       'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//arka//RU',
       'BEGIN:VEVENT',
       `UID:arka-${DAY.getTime()}@invites`,
@@ -126,137 +124,92 @@
       `DTEND:${stamp(end)}`,
       'SUMMARY:Свадьба Марка и Евы',
       'LOCATION:Усадьба «Заовражье»\\, село Каменки\\, Нижегородская область',
-      'DESCRIPTION:Сбор у ворот в 15:30. Церемония у арки в 16:00.',
+      'DESCRIPTION:Сбор у ворот в 15:30. Церемония под аркой в 16:00.',
       'END:VEVENT', 'END:VCALENDAR'
-    ].join('\r\n');
-    a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    ].join('\r\n'));
   }
 
-  /* ─── проходы сквозь арку ────────────────────────────────────────────
-     Точка схода одна на все слои сцены. Она обязана попасть в проём:
-     если она придётся на кладку, гость пройдёт сквозь камень. Поэтому
-     скрипт не берёт её «на глаз», а вычисляет из положения проёма
-     в самом файле (числа снизу — центр дыры в долях кадра, измерены
-     по альфа-каналу в assets/build.py).                                 */
+  /* ─── пролёт под аркой ───────────────────────────────────────────────
+     Все слои сцены расходятся из одной точки — той, куда идёт камера.
+     Точка лежит в проёме арки: арка симметрична и собрана так, что её
+     проём приходится ровно на центр файла, поэтому здесь хватает
+     середины экрана без вычислений по альфа-каналу.                     */
 
-  const AIM = {
-    '1': { ar: 1500 / 2000, x: 0.512, y: 0.660 },   // выше центра дыры: иначе перемычка уходит за кадр
-    '2': { ar: 1500 / 2100, x: 0.484, y: 0.489 },
-    '3': { ar: 1500 / 2100, x: 0.544, y: 0.437 }
+  const FADE = {
+    'lyr--title':  [0.26, 0.60],
+    'lyr--couple': [0.30, 0.64],
+    'lyr--far':    [0.70, 0.95],
+    'lyr--arch':   [0.72, 0.94],
+    'lyr--near':   [0.90, 1.00],
+    'lyr--hint':   [0.04, 0.22]
   };
 
-  const passes = $$('.pass').map(el => ({
-    el,
-    stage: $('.stage', el),
-    arch: $('.lyr--arch img', el),
-    aim: AIM[el.dataset.pass],
-    eyeWant: (+el.dataset.eye || 50) / 100,
-    layers: $$('.lyr[data-k]', el).map(l => ({
-      el: l,
-      k: +l.dataset.k,
-      fade: l.classList.contains('lyr--title') || l.classList.contains('lyr--word')
-        ? [0.24, 0.58]
-        : l.classList.contains('lyr--arch') ? [0.74, 0.93]
-        : l.classList.contains('lyr--fern') ? [0.30, 0.66]
-        : l.classList.contains('lyr--fog') ? [0.62, 0.90]
-        : l.classList.contains('lyr--blend') ? [0.04, 0.26]
-        : [0.64, 0.92],
-      last: '', lastO: '', gone: false
-    })),
-    hint: $('.hint', el),
-    top: 0, span: 1, h: 1, full: 1, near: null, lastHint: ''
-  }));
+  const pass = (() => {
+    const el = $('.pass');
+    if (!el) return null;
+    return {
+      el,
+      stage: $('.stage', el),
+      layers: $$('.lyr[data-k]', el).map(l => {
+        const key = [...l.classList].find(c => FADE[c]);
+        return { el: l, k: +l.dataset.k, fade: FADE[key] || [0.7, 1], last: '', lastO: '' };
+      }),
+      top: 0, span: 1, full: 1
+    };
+  })();
 
-  /* Куда именно смотреть — считается из того, как object-fit: cover
-     обрежет кадр на текущем экране. На узком экране вертикального
-     запаса нет вовсе, и тогда не картинка едет к точке схода,
-     а точка схода едет к картинке. */
-  function placeArch(p) {
-    const W = p.stage.clientWidth, H = p.stage.clientHeight;
-    if (!W || !H || !p.arch) return;
-    const boxAr = W / H, imgAr = p.aim.ar;
-    let posX = 0.5, posY = 0.5, eyeX = 0.5, eyeY = p.eyeWant;
-
-    if (boxAr > imgAr) {                       // масштаб по ширине: запас по высоте
-      const rh = W / imgAr, over = rh - H;
-      const off = clamp(p.aim.y * rh - p.eyeWant * H, 0, Math.max(over, 0));
-      posY = over > 0 ? off / over : 0;
-      eyeY = (p.aim.y * rh - off) / H;
-      posX = 0.5; eyeX = p.aim.x;
-    } else {                                   // масштаб по высоте: запас по ширине
-      const rw = H * imgAr, over = rw - W;
-      const off = clamp(p.aim.x * rw - 0.5 * W, 0, Math.max(over, 0));
-      posX = over > 0 ? off / over : 0;
-      eyeX = (p.aim.x * rw - off) / W;
-      posY = 0.5; eyeY = p.aim.y;
-    }
-    p.arch.style.objectPosition = `${(posX * 100).toFixed(1)}% ${(posY * 100).toFixed(1)}%`;
-    p.stage.style.setProperty('--eye', `${(clamp(eyeY, 0.16, 0.86) * 100).toFixed(1)}%`);
-    p.stage.style.setProperty('--eyeX', `${(clamp(eyeX, 0.2, 0.8) * 100).toFixed(1)}%`);
-  }
+  const frame = $('#frame');
+  const veil = $('#veil');
+  let lastFrame = '', lastVeil = '';
 
   function measure() {
-    passes.forEach(p => {
-      const r = p.el.getBoundingClientRect();
-      p.top = r.top + window.scrollY;
-      p.h = p.stage.offsetHeight;
-      p.full = p.el.offsetHeight;
-      p.span = Math.max(1, p.full - p.h);
-      placeArch(p);
-    });
+    if (!pass) return;
+    const r = pass.el.getBoundingClientRect();
+    pass.top = r.top + window.scrollY;
+    pass.full = pass.el.offsetHeight;
+    pass.span = Math.max(1, pass.full - pass.stage.offsetHeight);
   }
 
-  /* второй источник движения: у девяти соседних сайтов всё двигает
-     прокрутка, здесь слои ещё и дышат от курсора и наклона телефона */
+  /* второй источник движения: у всех соседних сайтов движение идёт только
+     от прокрутки, здесь слои ещё и дышат от курсора и наклона телефона */
   let driftX = 0, driftY = 0, aimX = 0, aimY = 0;
 
-  function frame() {
+  function render() {
     driftX += (aimX - driftX) * 0.06;
     driftY += (aimY - driftY) * 0.06;
-    const y = window.scrollY, vh = window.innerHeight;
+    const y = window.scrollY;
+    const raw = pass ? clamp((y - pass.top) / pass.span, 0, 1) : 1;
 
-    for (const p of passes) {
-      // offsetHeight здесь читать нельзя: любое обращение к геометрии
-      // из кадра форсирует пересчёт вёрстки всего документа.
-      const near = y + vh >= p.top - vh && y <= p.top + p.full + vh;
-      // Проходов три, а на экране всегда один. Спрятанную сцену браузер
-      // не рисует и может выбросить её растр: двенадцать больших слоёв
-      // в памяти разом — как раз то, за что платили кадрами.
-      if (near !== p.near) {
-        p.stage.style.visibility = near ? '' : 'hidden';
-        p.stage.classList.toggle('is-live', near);
-        p.near = near;
-      }
-      if (y + vh < p.top || y > p.top + p.full) continue;
-      const raw = clamp((y - p.top) / p.span, 0, 1);
+    if (pass && y + window.innerHeight >= pass.top && y <= pass.top + pass.full) {
       const e = Math.pow(raw, 1.28);
-      if (p.hint) {                       // «Прокрутите» уходит с первым же жестом
-        const ho = (0.75 * (1 - smooth(raw, 0.02, 0.14))).toFixed(2);
-        if (ho !== p.lastHint) { p.hint.style.opacity = ho; p.lastHint = ho; }
-      }
-      for (const L of p.layers) {
-        const op = 1 - smooth(raw, L.fade[0], L.fade[1]);
-        // Прозрачное не считаем и не держим слоем. Замер, впрочем, прироста
-        // кадров на этом не показал: платит не раздувание невидимых слоёв,
-        // а отрисовка растра картинок. Оставлено как разумное, а не как
-        // подтверждённая оптимизация.
-        const gone = op <= 0.004;
-        if (gone !== L.gone) {
-          L.el.style.visibility = gone ? 'hidden' : '';
-          L.gone = gone;
-        }
-        if (gone) continue;
+      for (const L of pass.layers) {
         const s = 1 + L.k * e;
         const d = 0.35 + L.k * 0.55;
-        const tx = Math.round(driftX * d * 10) / 10;
-        const ty = Math.round(driftY * d * 5) / 10;
-        const t = `translate3d(${tx}px,${ty}px,0) scale(${s.toFixed(4)})`;
+        const t = `translate3d(${Math.round(driftX * d * 10) / 10}px,` +
+                  `${Math.round(driftY * d * 5) / 10}px,0) scale(${s.toFixed(4)})`;
         if (t !== L.last) { L.el.style.transform = t; L.last = t; }
-        const o = op.toFixed(3);
+        const o = (1 - smooth(raw, L.fade[0], L.fade[1])).toFixed(3);
         if (o !== L.lastO) { L.el.style.opacity = o; L.lastO = o; }
       }
     }
-    requestAnimationFrame(frame);
+
+    // Рамка появляется ровно тогда, когда арка прошла мимо: гость вышел
+    // из-под неё и остался внутри.
+    if (frame) {
+      const o = smooth(raw, 0.78, 0.97).toFixed(3);
+      if (o !== lastFrame) {
+        frame.style.setProperty('--frame-op', o);
+        lastFrame = o;
+      }
+    }
+    if (veil) {
+      const v = smooth(raw, 0.55, 0.95).toFixed(3);
+      if (v !== lastVeil) {
+        veil.style.setProperty('--veil-op', v);
+        lastVeil = v;
+      }
+    }
+    requestAnimationFrame(render);
   }
 
   function bindDrift() {
@@ -268,7 +221,7 @@
       }, { passive: true });
     }
     // На iOS доступ к гироскопу требует разрешения по жесту. Просить его
-    // ради дрейфа слоёв — грубо, поэтому там источник просто выключен.
+    // ради дрейфа слоёв грубо, поэтому там источник просто выключен.
     if (typeof DeviceOrientationEvent !== 'undefined' &&
         typeof DeviceOrientationEvent.requestPermission !== 'function') {
       addEventListener('deviceorientation', ev => {
@@ -325,11 +278,10 @@
     const withInput = $('#fWith'), guests = $('#guests');
     const nameInput = $('#fName'), errName = $('#errName'), errGo = $('#errGo');
 
-    function count() { return clamp(parseInt(withInput.value, 10) || 0, 0, MAX_GUESTS); }
+    const count = () => clamp(parseInt(withInput.value, 10) || 0, 0, MAX_GUESTS);
 
     function drawGuests() {
-      const n = count();
-      const have = guests.children.length;
+      const n = count(), have = guests.children.length;
       for (let i = have; i < n; i++) {
         const row = document.createElement('div');
         row.className = 'field';
@@ -341,7 +293,7 @@
       for (let i = have; i > n; i--) guests.lastElementChild.remove();
     }
 
-    withInput.addEventListener('input', () => { drawGuests(); });
+    withInput.addEventListener('input', drawGuests);
     withInput.addEventListener('blur', () => { withInput.value = count(); drawGuests(); });
 
     $$('.step').forEach(b => b.addEventListener('click', () => {
@@ -351,9 +303,8 @@
 
     // Отказ не спрашивает про спутников.
     $$('input[name="go"]').forEach(r => r.addEventListener('change', () => {
-      const box = $('#withBox');
       const no = r.value === 'no' && r.checked;
-      box.hidden = no;
+      $('#withBox').hidden = no;
       if (no) { withInput.value = 0; drawGuests(); }
       errGo.hidden = true;
     }));
@@ -364,18 +315,15 @@
       ev.preventDefault();
       const name = nameInput.value.trim();
       const go = $('input[name="go"]:checked');
-      let bad = null;
       errName.hidden = !!name;
       errGo.hidden = !!go;
-      if (!name) bad = nameInput;
-      else if (!go) bad = $('input[name="go"]');
+      const bad = !name ? nameInput : (!go ? $('input[name="go"]') : null);
       if (bad) { bad.focus({ preventScroll: true }); bad.scrollIntoView({ block: 'center' }); return; }
 
-      const companions = $$('.guest').map(i => i.value.trim()).filter(Boolean);
       sendRsvp({
         name,
         going: go.value === 'yes',
-        companions,
+        companions: $$('.guest').map(i => i.value.trim()).filter(Boolean),
         withCount: go.value === 'yes' ? count() : 0,
         note: $('#fNote').value.trim(),
         at: new Date().toISOString()
@@ -383,7 +331,7 @@
 
       form.hidden = true;
       $('#rsvpTitle').hidden = true;
-      $('.sec--rsvp .lead').hidden = true;
+      $('#rsvpLead').hidden = true;
       // Отказ и согласие говорят разное: «ждём вас» человеку, который
       // написал «не смогу», — грубо.
       $(go.value === 'yes' ? '#thanksYes' : '#thanksNo').hidden = false;
@@ -400,12 +348,15 @@
   reveal();
   rsvp();
   measure();
+
   if (reduced) {
-    // Кадр остаётся тем, что видно в начале прохода: без масштаба и сдвига.
-    passes.forEach(p => p.layers.forEach(L => { L.el.style.opacity = '1'; }));
+    // Кадр остаётся тем, что видно в начале пролёта, рамка стоит сразу.
+    if (pass) pass.layers.forEach(L => { L.el.style.opacity = '1'; });
+    if (frame) frame.style.setProperty('--frame-op', '1');
+    if (veil) veil.style.setProperty('--veil-op', '1');
   } else {
     bindDrift();
-    requestAnimationFrame(frame);
+    requestAnimationFrame(render);
   }
 
   let rt;

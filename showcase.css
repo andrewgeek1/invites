@@ -142,6 +142,7 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .sw[data-p=sunset] {--dot:#D08A22}
 .sw[data-p=silver] {--dot:#C6D6E6}
 .sw[data-p=terra]  {--dot:#A9603A}
+.sw[data-p=sky]    {--dot:#B4526F}
 
 /* демо-блок: цвета и шрифт приходят переменными, меняются мгновенно */
 .demo{
