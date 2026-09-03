@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Марк и Ева · приглашение на свадьбу</title>
+<meta name="description" content="Приглашение на свадьбу Марка и Евы. Усадьба «Заовражье», село Каменки, 31 км от Нижнего Новгорода.">
+<meta name="theme-color" content="#17281F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Alegreya+Sans:wght@300;400;500&family=Bad+Script&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/sky.webp">
+<link rel="preload" as="image" href="assets/arch1.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#invite">Перейти к приглашению</a>
+
+<!-- ══ ПРОХОД 1 · обложка ══════════════════════════════════════════════ -->
+<section class="pass pass--cover" id="cover" data-pass="1" data-eye="52">
+  <div class="stage">
+    <div class="lyr lyr--sky"  data-k="0.16"><img decoding="async" src="assets/sky.webp" alt="" width="1400" height="980" fetchpriority="high"></div>
+    <div class="lyr lyr--fog"  data-k="0.55"><img decoding="async" src="assets/fog.webp" alt="" width="1700" height="540"></div>
+
+    <div class="lyr lyr--title" data-k="1.35">
+      <div class="hero">
+        <p class="hero__kick">Мы женимся</p>
+        <h1 class="names">
+          <span class="names__a">Марк</span><span class="names__and">и</span><span class="names__b">Ева</span>
+        </h1>
+        <p class="hero__date"><span data-dt="d"></span><i class="dot"></i><span data-dt="dow"></span></p>
+      </div>
+    </div>
+
+    <div class="lyr lyr--arch" data-k="3.9"><img decoding="async" src="assets/arch1.webp" alt="Каменная арка, сквозь которую видно небо" width="1500" height="2000" fetchpriority="high"></div>
+    <div class="lyr lyr--fern" data-k="6.0"><img decoding="async" src="assets/fern.webp" alt="" width="1400" height="408"></div>
+
+    <p class="hint" aria-hidden="true"><span>Прокрутите</span><i></i></p>
+  </div>
+</section>
+
+<!-- ══ МИР 1 · за аркой ════════════════════════════════════════════════ -->
+<main class="world world--1">
+
+  <section class="sec sec--invite" id="invite">
+    <div class="wrap wrap--narrow">
+      <p class="kick rise">Приглашение</p>
+      <h2 class="h2 rise">Приходите, мы будем ждать</h2>
+      <p class="lead rise">В старом парке усадьбы «Заовражье» стоит каменная арка. Сквозь неё видно поле, и в июле там пахнет липой. Мы решили, что начнём именно оттуда.</p>
+      <p class="lead rise">Это будет один длинный летний день. Нам важно, чтобы вы были рядом.</p>
+      <p class="sign rise"><span class="sign__hand">Марк и Ева</span></p>
+    </div>
+  </section>
+
+  <section class="sec sec--when" id="when">
+    <div class="wrap">
+      <p class="kick rise">Когда</p>
+      <p class="bigdate rise">
+        <span class="bigdate__d" data-dt="dnum"></span>
+        <span class="bigdate__m" data-dt="month"></span>
+        <span class="bigdate__y" data-dt="year"></span>
+      </p>
+      <p class="dow rise" data-dt="dowspread" aria-label="суббота"></p>
+
+      <ul class="count rise" id="count" aria-live="polite">
+        <li><b data-c="a">—</b><span data-cl="a">дней</span></li>
+        <li><b data-c="b">—</b><span data-cl="b">часов</span></li>
+        <li><b data-c="c">—</b><span data-cl="c">минут</span></li>
+      </ul>
+      <p class="under rise"><a class="lnk" id="ics" href="#" download="mark-eva.ics">Положить дату в календарь</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--day" id="day">
+    <div class="wrap">
+      <p class="kick rise">Как пройдёт день</p>
+      <h2 class="h2 rise">Программа</h2>
+      <ol class="day">
+        <li class="day__i rise"><b class="day__t">15:30</b><span class="day__n">Сбор у ворот</span><span class="day__d">Встретим, покажем дорогу, нальём холодного морса</span></li>
+        <li class="day__i rise"><b class="day__t">16:00</b><span class="day__n">Церемония у арки</span><span class="day__d">Пятнадцать минут, стоя на траве</span></li>
+        <li class="day__i rise"><b class="day__t">17:00</b><span class="day__n">Ужин под липами</span><span class="day__d">Длинный стол, тосты и много зелени вокруг</span></li>
+        <li class="day__i rise"><b class="day__t">20:00</b><span class="day__n">Танцы</span><span class="day__d">Живая музыка, гирлянды над площадкой</span></li>
+        <li class="day__i rise"><b class="day__t">23:00</b><span class="day__n">Автобус домой</span><span class="day__d">Отвезём всех до Нижнего Новгорода</span></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ══ ПРОХОД 2 · в лес ════════════════════════════════════════════════ -->
+<section class="pass pass--2" data-pass="2" data-eye="46" aria-hidden="true">
+  <div class="stage">
+    <div class="lyr lyr--sky"  data-k="0.14"><img decoding="async" src="assets/sky.webp" alt="" width="1400" height="980" loading="lazy"></div>
+    <div class="lyr lyr--fog"  data-k="0.5"><img decoding="async" src="assets/fog.webp" alt="" width="1700" height="540" loading="lazy"></div>
+    <div class="lyr lyr--arch" data-k="4.4"><img decoding="async" src="assets/arch2.webp" alt="" width="1150" height="1610" loading="lazy"></div>
+    <div class="lyr lyr--word" data-k="2.6"><p class="password">Дальше в парк</p></div>
+    <div class="lyr lyr--fern" data-k="6.4"><img decoding="async" src="assets/fern.webp" alt="" width="1400" height="408" loading="lazy"></div>
+    <div class="lyr lyr--blend" data-k="0"></div>
+  </div>
+</section>
+
+<!-- ══ МИР 2 · парк ════════════════════════════════════════════════════ -->
+<div class="world world--2">
+
+  <section class="sec sec--photos" id="photos">
+    <div class="wrap">
+      <p class="kick rise">Мы</p>
+      <h2 class="h2 rise">Шесть окон</h2>
+      <div class="cols">
+        <figure class="col col--tall rise"><img decoding="async" src="assets/ph-1.webp" alt="Пара на тропе среди мшистых деревьев" width="1200" height="750" loading="lazy"></figure>
+        <figure class="col rise"><img decoding="async" src="assets/ph-2.webp" alt="Невеста кружится на лесной тропе" width="780" height="1040" loading="lazy"></figure>
+        <figure class="col col--tall rise"><img decoding="async" src="assets/ph-3.webp" alt="Пара прячется за шляпой" width="780" height="1040" loading="lazy"></figure>
+        <figure class="col rise"><img decoding="async" src="assets/ph-4.webp" alt="Жених и невеста обнимаются среди деревьев" width="780" height="1040" loading="lazy"></figure>
+        <figure class="col col--tall rise"><img decoding="async" src="assets/ph-5.webp" alt="Поляна лиловых цветов" width="1040" height="780" loading="lazy"></figure>
+        <figure class="col rise"><img decoding="async" src="assets/ph-6.webp" alt="Кроны деревьев, снятые снизу" width="1040" height="780" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--dress" id="dress">
+    <div class="wrap">
+      <p class="kick rise">Одежда</p>
+      <h2 class="h2 rise">В чём приехать</h2>
+      <p class="lead lead--c rise">Ничего строгого. Мы будем на траве, под липами, весь день на воздухе.</p>
+
+      <ul class="swatches rise" aria-label="Цвета, которые хорошо лягут в кадр">
+        <li class="sw" style="--c:#3F5140"><span>Мох</span></li>
+        <li class="sw" style="--c:#6E7F5B"><span>Папоротник</span></li>
+        <li class="sw" style="--c:#B8A6D2"><span>Сирень</span></li>
+        <li class="sw" style="--c:#C9C7C0"><span>Туман</span></li>
+        <li class="sw" style="--c:#7C6248"><span>Кора</span></li>
+        <li class="sw" style="--c:#E4DCC8"><span>Лён</span></li>
+      </ul>
+
+      <ul class="asks">
+        <li class="ask rise"><b>Белый цвет</b><span>Оставьте его невесте. В остальном мы за любые оттенки</span></li>
+        <li class="ask rise"><b>Каблуки</b><span>Тонкий каблук уйдёт в траву. Возьмите обувь поустойчивее</span></li>
+        <li class="ask rise"><b>Тёплые вещи</b><span>После заката в парке прохладно. Пиджак или шаль пригодятся</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--where" id="where">
+    <div class="wrap">
+      <p class="kick rise">Место</p>
+      <h2 class="h2 rise">Усадьба «Заовражье»</h2>
+      <figure class="venue rise">
+        <img decoding="async" src="assets/venue.webp" alt="Старые ворота усадьбы, за ними аллея" width="1300" height="866" loading="lazy">
+      </figure>
+      <ul class="facts">
+        <li class="fact rise"><b>Адрес</b><span>Нижегородская область, село Каменки, парк усадьбы «Заовражье»</span></li>
+        <li class="fact rise"><b>Дорога</b><span>31 км от Нижнего Новгорода, около сорока минут по трассе</span></li>
+        <li class="fact rise"><b>Парковка</b><span>Бесплатная, прямо у ворот. Место есть для всех</span></li>
+      </ul>
+      <p class="under rise"><a class="lnk" href="https://yandex.ru/maps/?text=Нижегородская область Каменки" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- ══ ПРОХОД 3 · к вечеру ═════════════════════════════════════════════ -->
+<section class="pass pass--3" data-pass="3" data-eye="44" aria-hidden="true">
+  <div class="stage">
+    <div class="lyr lyr--sky"  data-k="0.12"><img decoding="async" src="assets/sky-deep.webp" alt="" width="1400" height="980" loading="lazy"></div>
+    <div class="lyr lyr--fog"  data-k="0.46"><img decoding="async" src="assets/fog.webp" alt="" width="1700" height="540" loading="lazy"></div>
+    <div class="lyr lyr--arch" data-k="4.8"><img decoding="async" src="assets/arch3.webp" alt="" width="1150" height="1610" loading="lazy"></div>
+    <div class="lyr lyr--word" data-k="2.6"><p class="password">И остаётся сказать одно</p></div>
+    <div class="lyr lyr--fern" data-k="6.8"><img decoding="async" src="assets/fern.webp" alt="" width="1400" height="408" loading="lazy"></div>
+    <div class="lyr lyr--blend" data-k="0"></div>
+  </div>
+</section>
+
+<!-- ══ МИР 3 · ответ ═══════════════════════════════════════════════════ -->
+<div class="world world--3">
+
+  <section class="sec sec--rsvp" id="rsvp">
+    <div class="wrap wrap--narrow">
+      <p class="kick rise">Ответ</p>
+      <h2 class="h2 rise" id="rsvpTitle">Будете с нами?</h2>
+      <p class="lead lead--c rise">Ответьте до <b data-dt="deadline"></b>, чтобы мы успели посчитать места за столом.</p>
+
+      <form class="form rise" id="form" novalidate>
+        <div class="field">
+          <label for="fName">Как вас зовут</label>
+          <input id="fName" name="name" type="text" autocomplete="name" placeholder="Имя и фамилия">
+          <p class="err" id="errName" hidden>Без имени мы вас не найдём в списке</p>
+        </div>
+
+        <fieldset class="field field--choice">
+          <legend>Придёте?</legend>
+          <div class="choice">
+            <label class="pick"><input type="radio" name="go" value="yes"><span>Приду</span></label>
+            <label class="pick"><input type="radio" name="go" value="no"><span>Не смогу</span></label>
+          </div>
+          <p class="err" id="errGo" hidden>Отметьте, пожалуйста, один из двух ответов</p>
+        </fieldset>
+
+        <div class="field" id="withBox">
+          <label for="fWith">Сколько человек приедет с вами</label>
+          <div class="stepper">
+            <button type="button" class="step" data-step="-1" aria-label="Меньше на одного">−</button>
+            <input id="fWith" name="with" type="text" inputmode="numeric" value="0" size="3" aria-describedby="withHint">
+            <button type="button" class="step" data-step="1" aria-label="Больше на одного">+</button>
+          </div>
+          <p class="hintline" id="withHint">Считайте только тех, кто приедет вместе с вами</p>
+          <div class="guests" id="guests"></div>
+        </div>
+
+        <div class="field">
+          <label for="fNote">Хотите что-то добавить</label>
+          <textarea id="fNote" name="note" rows="3" placeholder="Аллергия, песня для танцев, вопрос про дорогу"></textarea>
+        </div>
+
+        <button class="btn" type="submit">Отправить ответ</button>
+      </form>
+
+      <div class="thanks" id="thanksYes" hidden>
+        <p class="thanks__hand">Ждём вас</p>
+        <p class="thanks__p">Записали. <b data-dt="short"></b>, в половине четвёртого, у ворот усадьбы. Если планы поменяются, просто напишите нам.</p>
+      </div>
+      <div class="thanks" id="thanksNo" hidden>
+        <p class="thanks__hand">Записали</p>
+        <p class="thanks__p">Очень жаль, что не получится. Спасибо, что ответили: так нам проще собрать стол. Обнимем при следующей встрече.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--final" id="final">
+    <div class="wrap">
+      <p class="final__hand">до встречи</p>
+      <p class="final__names">
+        <span>Марк</span><span class="final__and">и</span><span>Ева</span>
+      </p>
+      <p class="final__dt"><span data-dt="d"></span></p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="foot__line">Усадьба «Заовражье» · село Каменки · 31 км от Нижнего Новгорода</p>
+    <p class="foot__line foot__line--dim">Фотографии: Unsplash. Сайт сделан как приглашение, а не как открытка</p>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

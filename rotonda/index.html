@@ -97,19 +97,21 @@
 
 <!-- ═══════════ 03 ОТСЧЁТ ═══════════ -->
 <section class="sec sec--sand tick" id="tick">
-  <div class="wrap">
-    <div class="tick__head">
-      <p class="kicker rise">Отсчёт</p>
-      <h2 class="rise" style="--d:100ms">До встречи<br>на&nbsp;террасе</h2>
+  <div class="wrap tick__mid">
+    <p class="kicker rise">Отсчёт</p>
+    <h2 class="rise" style="--d:100ms">До встречи на&nbsp;террасе</h2>
+
+    <div class="tick__row rise" style="--d:200ms">
+      <span class="tick__unit"><b class="tick__n" id="tickA">—</b><i class="tick__u" id="tickAU">месяцев</i></span>
+      <span class="tick__unit"><b class="tick__n" id="tickB">—</b><i class="tick__u" id="tickBU">дней</i></span>
+      <span class="tick__unit"><b class="tick__n" id="tickC">—</b><i class="tick__u" id="tickCU">часов</i></span>
+      <span class="tick__unit"><b class="tick__n" id="tickD">—</b><i class="tick__u" id="tickDU">минут</i></span>
     </div>
-    <div class="tick__row rise" style="--d:200ms" id="tickRow">
-      <div class="tick__cell"><span class="tick__n" id="tickA">—</span><span class="tick__u" id="tickAU">месяцев</span></div>
-      <div class="tick__cell"><span class="tick__n" id="tickB">—</span><span class="tick__u" id="tickBU">дней</span></div>
-      <div class="tick__cell"><span class="tick__n" id="tickC">—</span><span class="tick__u" id="tickCU">часов</span></div>
+
+    <div class="tick__when rise" style="--d:300ms">
+      <p class="tick__date"><span data-dt="long"></span>, суббота</p>
+      <p class="tick__time">Сбор гостей в&nbsp;17:00, церемония в&nbsp;18:00</p>
     </div>
-    <p class="tick__note rise" style="--d:300ms">
-      <span data-dt="long"></span>, суббота. Сбор в&nbsp;17:00, церемония в&nbsp;18:00.
-    </p>
   </div>
 </section>
 
@@ -168,14 +170,13 @@
   <figure class="road__shot bleed rise">
     <img src="assets/bay.webp" alt="Черепичный городок на берегу залива в вечернем свете"
          width="1500" height="996" loading="lazy" decoding="async">
-    <figcaption>Залив вечером. От&nbsp;воды до&nbsp;виллы десять минут пешком в&nbsp;гору.</figcaption>
   </figure>
 </section>
 
 <!-- ═══════════ 05 ДЕНЬ ═══════════ -->
 <section class="sec sec--ink day" id="day">
   <div class="wrap">
-    <div class="day__head">
+    <div class="day__head mid">
       <p class="kicker rise">День</p>
       <h2 class="rise" style="--d:100ms">Как всё<br>будет идти</h2>
     </div>
@@ -216,7 +217,7 @@
 
 <!-- ═══════════ 06 ГАЛЕРЕЯ ═══════════ -->
 <section class="sec sec--ink gal" id="gal">
-  <div class="wrap gal__head">
+  <div class="wrap gal__head mid">
     <p class="kicker rise">Галерея</p>
     <h2 class="rise" style="--d:100ms">Место, куда<br>мы вас зовём</h2>
     <p class="gal__lead rise" style="--d:200ms">
@@ -257,7 +258,7 @@
 <!-- ═══════════ 07 ОДЕЖДА ═══════════ -->
 <section class="sec sec--sand look" id="look">
   <div class="wrap">
-    <div class="look__head">
+    <div class="look__head mid">
       <p class="kicker rise">Одежда</p>
       <h2 class="rise" style="--d:100ms">В&nbsp;чём будет<br>удобно</h2>
       <p class="look__lead rise" style="--d:200ms">
@@ -357,6 +358,21 @@
       </div>
 
       <div class="only-no" id="onlyNo" hidden>
+        <div class="field">
+          <span class="field__lbl">Кто-то не сможет приехать вместе с вами?</span>
+          <div class="step">
+            <button type="button" class="step__b" id="stepDownNo" aria-label="Убрать человека">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/></svg>
+            </button>
+            <span class="step__n" id="stepNNo" aria-live="polite">0</span>
+            <button type="button" class="step__b" id="stepUpNo" aria-label="Добавить человека">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><line x1="4" y1="10" x2="16" y2="10"/><line x1="10" y1="4" x2="10" y2="16"/></svg>
+            </button>
+            <span class="step__t note" id="stepTNo">только я</span>
+          </div>
+          <div class="mates" id="matesNo"></div>
+        </div>
+
         <div class="field">
           <label for="fWord">Хотите что-то передать?</label>
           <textarea id="fWord" name="word" rows="3" placeholder="Пара слов, если есть желание"></textarea>

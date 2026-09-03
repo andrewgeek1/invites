@@ -233,27 +233,37 @@
   var tickEls = {
     a: document.getElementById('tickA'), au: document.getElementById('tickAU'),
     b: document.getElementById('tickB'), bu: document.getElementById('tickBU'),
-    c: document.getElementById('tickC'), cu: document.getElementById('tickCU')
+    c: document.getElementById('tickC'), cu: document.getElementById('tickCU'),
+    d: document.getElementById('tickD'), du: document.getElementById('tickDU')
   };
 
   function put(el, v) { if (el && el.textContent !== v) el.textContent = v; }
 
+  function setTick(vals) {
+    var k = ['a', 'b', 'c', 'd'];
+    for (var i = 0; i < 4; i++) {
+      put(tickEls[k[i]], String(vals[i][0]));
+      put(tickEls[k[i] + 'u'], vals[i][1]);
+    }
+  }
+
   function renderTick() {
     if (!tickEls.a) return;
-    var now = new Date();
-    var ms = WEDDING.getTime() - now.getTime();
-
+    var ms = WEDDING.getTime() - new Date().getTime();
     if (ms <= 0) {
-      put(tickEls.a, '0'); put(tickEls.au, 'дней');
-      put(tickEls.b, '0'); put(tickEls.bu, 'часов');
-      put(tickEls.c, '0'); put(tickEls.cu, 'минут');
+      setTick([[0, 'дней'], [0, 'часов'], [0, 'минут'], [0, 'секунд']]);
       return;
     }
 
     var days = Math.floor(ms / 86400000);
+    var h = Math.floor((ms % 86400000) / 3600000);
+    var mi = Math.floor((ms % 3600000) / 60000);
 
     if (days > 120) {
-      var probe = new Date(now.getTime()), months = 0;
+      /* Дальше 120 дней месяцы вместо трёхзначного числа дней.
+         Минуты владелец попросил оставить «для антуража»: они уходят
+         в самый мелкий разряд и живут своей жизнью. */
+      var probe = new Date(), months = 0;
       for (var i = 0; i < 200; i++) {
         var next = new Date(probe.getTime());
         next.setMonth(next.getMonth() + 1);
@@ -262,20 +272,26 @@
       var rest = WEDDING.getTime() - probe.getTime();
       var rd = Math.floor(rest / 86400000);
       var rh = Math.floor((rest % 86400000) / 3600000);
-      put(tickEls.a, String(months)); put(tickEls.au, plural(months, 'месяц', 'месяца', 'месяцев'));
-      put(tickEls.b, String(rd));     put(tickEls.bu, plural(rd, 'день', 'дня', 'дней'));
-      put(tickEls.c, String(rh));     put(tickEls.cu, plural(rh, 'час', 'часа', 'часов'));
+      var rm = Math.floor((rest % 3600000) / 60000);
+      setTick([
+        [months, plural(months, 'месяц', 'месяца', 'месяцев')],
+        [rd, plural(rd, 'день', 'дня', 'дней')],
+        [rh, plural(rh, 'час', 'часа', 'часов')],
+        [rm, plural(rm, 'минута', 'минуты', 'минут')]
+      ]);
     } else {
-      var h = Math.floor((ms % 86400000) / 3600000);
-      var mi = Math.floor((ms % 3600000) / 60000);
-      put(tickEls.a, String(days)); put(tickEls.au, plural(days, 'день', 'дня', 'дней'));
-      put(tickEls.b, String(h));    put(tickEls.bu, plural(h, 'час', 'часа', 'часов'));
-      put(tickEls.c, String(mi));   put(tickEls.cu, plural(mi, 'минута', 'минуты', 'минут'));
+      var sec = Math.floor((ms % 60000) / 1000);
+      setTick([
+        [days, plural(days, 'день', 'дня', 'дней')],
+        [h, plural(h, 'час', 'часа', 'часов')],
+        [mi, plural(mi, 'минута', 'минуты', 'минут')],
+        [sec, plural(sec, 'секунда', 'секунды', 'секунд')]
+      ]);
     }
   }
 
   renderTick();
-  setInterval(renderTick, 30000);
+  setInterval(renderTick, 1000);
 
   /* ─────────────────────────────────────────────────────────────────
      ОТВЕТ ГОСТЯ
@@ -293,11 +309,6 @@
     var errGo = document.getElementById('errGo');
     var onlyYes = document.getElementById('onlyYes');
     var onlyNo = document.getElementById('onlyNo');
-    var stepN = document.getElementById('stepN');
-    var stepT = document.getElementById('stepT');
-    var stepUp = document.getElementById('stepUp');
-    var stepDown = document.getElementById('stepDown');
-    var mates = document.getElementById('mates');
     var thanks = document.getElementById('thanks');
     var thanksTitle = document.getElementById('thanksTitle');
     var thanksText = document.getElementById('thanksText');
@@ -306,7 +317,72 @@
 
     var MAX_MATES = 20;
     var going = null;
-    var count = 0;
+
+    /* Один и тот же узел нужен дважды: и когда гость приезжает с кем-то,
+       и когда не может приехать парой. Готовых кнопок «+1 / +2 / +3»
+       здесь нет намеренно — число задаёт сам гость. */
+    function makeStepper(cfg) {
+      var down = document.getElementById(cfg.down);
+      var up = document.getElementById(cfg.up);
+      var num = document.getElementById(cfg.num);
+      var text = document.getElementById(cfg.text);
+      var box = document.getElementById(cfg.box);
+      var api = { count: 0 };
+
+      function render() {
+        num.textContent = String(api.count);
+        text.textContent = api.count === 0 ? cfg.zero
+          : api.count === 1 ? cfg.one
+          : api.count + ' ' + plural(api.count, 'человек', 'человека', 'человек') + cfg.tail;
+        down.disabled = api.count === 0;
+        up.disabled = api.count >= MAX_MATES;
+
+        var have = box.querySelectorAll('.mate').length;
+        while (have < api.count) {
+          have++;
+          var wrap = document.createElement('div');
+          wrap.className = 'mate';
+          var inp = document.createElement('input');
+          inp.type = 'text';
+          inp.placeholder = cfg.placeholder;
+          inp.setAttribute('aria-label', cfg.placeholder + ' ' + have);
+          wrap.appendChild(inp);
+          box.appendChild(wrap);
+        }
+        while (have > api.count) { box.removeChild(box.lastChild); have--; }
+      }
+
+      up.addEventListener('click', function () { if (api.count < MAX_MATES) { api.count++; render(); } });
+      down.addEventListener('click', function () { if (api.count > 0) { api.count--; render(); } });
+
+      api.render = render;
+      api.set = function (n) { api.count = Math.max(0, Math.min(MAX_MATES, n | 0)); render(); };
+      api.names = function () {
+        var out = [], f = box.querySelectorAll('input');
+        for (var i = 0; i < f.length; i++) out.push(f[i].value.trim() || 'без имени');
+        return out;
+      };
+      api.fill = function (list) {
+        var f = box.querySelectorAll('input');
+        for (var i = 0; i < f.length; i++) {
+          if (list[i] && list[i] !== 'без имени') f[i].value = list[i];
+        }
+      };
+      render();
+      return api;
+    }
+
+    var withMe = makeStepper({
+      down: 'stepDown', up: 'stepUp', num: 'stepN', text: 'stepT', box: 'mates',
+      zero: 'никого, приеду один', one: 'ещё один человек', tail: ' вместе со мной',
+      placeholder: 'Имя и фамилия спутника'
+    });
+
+    var withoutMe = makeStepper({
+      down: 'stepDownNo', up: 'stepUpNo', num: 'stepNNo', text: 'stepTNo', box: 'matesNo',
+      zero: 'только я', one: 'ещё один человек', tail: ' вместе со мной',
+      placeholder: 'Имя и фамилия'
+    });
 
     function setGoing(v) {
       going = v;
@@ -319,41 +395,11 @@
       errGo.hidden = true;
     }
 
-    function mateWord(n) {
-      if (n === 0) return 'никого, приеду один';
-      if (n === 1) return 'ещё один человек';
-      return 'ещё ' + n + ' ' + plural(n, 'человек', 'человека', 'человек');
-    }
-
-    function renderMates() {
-      stepN.textContent = String(count);
-      stepT.textContent = mateWord(count);
-      stepDown.disabled = count === 0;
-      stepUp.disabled = count >= MAX_MATES;
-
-      var have = mates.querySelectorAll('.mate').length;
-      while (have < count) {
-        have++;
-        var wrap = document.createElement('div');
-        wrap.className = 'mate';
-        var inp = document.createElement('input');
-        inp.type = 'text';
-        inp.placeholder = 'Имя и фамилия спутника';
-        inp.setAttribute('aria-label', 'Имя спутника ' + have);
-        wrap.appendChild(inp);
-        mates.appendChild(wrap);
-      }
-      while (have > count) { mates.removeChild(mates.lastChild); have--; }
-    }
-
     for (var c = 0; c < choiceBtns.length; c++) {
       choiceBtns[c].addEventListener('click', function () {
         setGoing(this.getAttribute('data-go'));
       });
     }
-    stepUp.addEventListener('click', function () { if (count < MAX_MATES) { count++; renderMates(); } });
-    stepDown.addEventListener('click', function () { if (count > 0) { count--; renderMates(); } });
-    renderMates();
 
     /* Единственная точка отправки. Сейчас пишет в localStorage;
        чтобы ответы уходили в телеграм, раскомментировать fetch
@@ -382,9 +428,18 @@
           (payload.room ? 'Комнату забронируем и напишем, куда заселяться. ' : '') +
           'До встречи ' + fmt('long') + '.';
       } else {
-        thanksTitle.textContent = 'Записали. Очень жаль';
-        thanksText.textContent = 'Будем скучать. Если планы вдруг поменяются, ' +
-          'откройте эту страницу снова и поменяйте ответ.';
+        var miss = 1 + payload.absent.length;
+        /* «вас не будет 3 человека» по-русски звучит криво, поэтому
+           до пятерых пишем словом, дальше обычным числом. */
+        var TOGETHER = { 2: 'вдвоём', 3: 'втроём', 4: 'вчетвером', 5: 'впятером' };
+        thanksTitle.textContent = 'Записали. Очень жаль.';
+        thanksText.textContent = (miss > 1
+            ? (TOGETHER[miss]
+                ? 'Отметили, что не приедете ' + TOGETHER[miss] + '. '
+                : 'Отметили, что не приедет ' + miss + ' ' + plural(miss, 'человек', 'человека', 'человек') + '. ')
+            : '') +
+          'Будем скучать. Если планы вдруг поменяются, откройте эту страницу ' +
+          'снова и поменяйте ответ.';
       }
     }
 
@@ -404,16 +459,11 @@
         return;
       }
 
-      var companions = [];
-      var mateInputs = mates.querySelectorAll('input');
-      for (var i = 0; i < mateInputs.length; i++) {
-        companions.push(mateInputs[i].value.trim() || 'без имени');
-      }
-
       var payload = {
         name: elName.value.trim(),
         going: going === 'yes',
-        companions: going === 'yes' ? companions : [],
+        companions: going === 'yes' ? withMe.names() : [],
+        absent: going === 'no' ? withoutMe.names() : [],
         food: going === 'yes' ? document.getElementById('fFood').value.trim() : '',
         room: going === 'yes' && document.getElementById('fRoom').checked,
         bus: going === 'yes' && document.getElementById('fBus').checked,
@@ -438,12 +488,10 @@
       if (saved && saved.name) {
         elName.value = saved.name;
         setGoing(saved.going ? 'yes' : 'no');
-        count = (saved.companions || []).length;
-        renderMates();
-        var mi = mates.querySelectorAll('input');
-        for (var k = 0; k < mi.length; k++) {
-          if (saved.companions[k] && saved.companions[k] !== 'без имени') mi[k].value = saved.companions[k];
-        }
+        withMe.set((saved.companions || []).length);
+        withMe.fill(saved.companions || []);
+        withoutMe.set((saved.absent || []).length);
+        withoutMe.fill(saved.absent || []);
         if (saved.food) document.getElementById('fFood').value = saved.food;
         document.getElementById('fRoom').checked = !!saved.room;
         document.getElementById('fBus').checked = !!saved.bus;

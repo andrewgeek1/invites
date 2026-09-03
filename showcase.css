@@ -88,6 +88,11 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .works{padding-block:0 var(--sec)}
 .grid{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(30px,4vw,64px)}
 .work:first-child{grid-column:1/-1}
+/* Первая карточка занимает обе колонки, поэтому при чётном общем числе
+   последняя остаётся одна в ряду. Правило самонастраивается: растягиваем
+   её ровно тогда, когда она чётная по счёту. Добавится одиннадцатая
+   работа — растяжка снимется сама. */
+.work:last-child:nth-child(even){grid-column:1/-1}
 .work__shot{
   display:block;position:relative;overflow:hidden;border-radius:6px;
   background:var(--paper-2);box-shadow:0 1px 0 var(--line);
@@ -230,7 +235,8 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 /* ─────────── планшет и телефон ─────────── */
 @media (max-width:900px){
   .grid{grid-template-columns:1fr}
-  .work:first-child{grid-column:auto}
+  .work:first-child,
+  .work:last-child:nth-child(even){grid-column:auto}
   .cards{grid-template-columns:repeat(2,1fr)}
   .tiers{grid-template-columns:1fr}
   .need__list{grid-template-columns:1fr}
