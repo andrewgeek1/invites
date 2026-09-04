@@ -3,7 +3,7 @@
    Обложка: кадр на весь экран, весь текст внизу по оси.
    Вся страница симметрична — канон правок владельца, §2.
    Токены: крем / чернила / сургуч. Oswald 300 + Golos Text 400
-   + Comforter на один глиф «и» между именами (канон §5).
+   + Caveat на один глиф «и» между именами (канон §5; Comforter занят «Ротондой»).
    Радиусы нулевые везде, включая кнопки — почерк третьего сайта линейки.
    ========================================================= */
 
@@ -62,7 +62,7 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
   margin-inline:auto;text-wrap:balance}
 
 /* рукописное «и» между именами — на уровне низа букв, не по центру строки */
-.names i,.sign i{font-family:"Comforter",cursive;font-style:normal;
+.names i,.sign i{font-family:"Caveat",cursive;font-style:normal;
   text-transform:lowercase;letter-spacing:0;color:var(--seal);
   font-size:.62em;padding:0 .16em;position:relative;top:.05em}
 .sign i{font-size:.95em;padding:0 .22em;top:.08em}
@@ -139,7 +139,7 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 /* кегль ниже опорной шкалы канона: строка «Артём и Ксения» в nowrap
    иначе вылезает за поля — то же решение, что на «Ротонде» */
 .names{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
-  font-size:clamp(2.5rem,.5rem + 7.2vw,7.4rem);line-height:.94;letter-spacing:-.01em;
+  font-size:clamp(2.8rem,.5rem + 7.2vw,7.4rem);line-height:.94;letter-spacing:-.01em;
   white-space:nowrap;text-shadow:0 2px 34px rgba(25,23,20,.32)}
 .hero .names i{color:var(--seal-lite)}
 
@@ -256,7 +256,8 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
   .hero__nav{display:none}
   .hero__txt{gap:var(--s2);bottom:clamp(28px,4.6svh,56px)}
   /* при .5em от 40px росчерк перестаёт читаться — канон «Ротонды» */
-  .names i,.sign i{font-size:.6em}
+  .names i{font-size:.72em}
+  .sign i{font-size:1.05em}
   .hero__cta .btn{width:100%}
 
   .tag{margin-bottom:var(--s4)}
