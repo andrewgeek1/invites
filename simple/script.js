@@ -31,17 +31,15 @@
     });
   }
 
-  /* ---------- фирменное взаимодействие: слои hero расходятся ----------
-     Параллакс идёт через свойство translate, а не transform, чтобы не
-     затирать transform, которым работает появление .rise.                */
+  /* ---------- фирменное взаимодействие: приглашение отрывается от кадра ----------
+     Кадр отстаёт от прокрутки, текстовый блок уходит вверх и гаснет.
+     Идёт через свойство translate, а не transform, чтобы не затирать
+     transform, которым работает появление .rise.                        */
   var hero = document.querySelector('.hero');
-  var layers = [
-    { el: document.querySelector('.names__a'),  x: -0.075, y: -0.16 },
-    { el: document.querySelector('.stage__ph'), x: 0,      y: 0.05  },
-    { el: document.querySelector('.names__b'),  x: 0.075,  y: 0.11  }
-  ].filter(function (l) { return l.el; });
+  var ph   = document.querySelector('.hero__ph');
+  var txt  = document.querySelector('.hero__txt');
 
-  if (hero && layers.length && !calm) {
+  if (hero && ph && txt && !calm) {
     var ticking = false;
 
     var draw = function () {
@@ -50,9 +48,9 @@
       var h = hero.offsetHeight;
       if (y > h) return;                       /* за пределами первого экрана не считаем */
       var k = Math.min(y, h);
-      layers.forEach(function (l) {
-        l.el.style.translate = (k * l.x).toFixed(1) + 'px ' + (k * l.y).toFixed(1) + 'px';
-      });
+      ph.style.translate  = '0 ' + (k * 0.22).toFixed(1) + 'px';
+      txt.style.translate = '0 ' + (k * -0.06).toFixed(1) + 'px';
+      txt.style.opacity   = Math.max(0, 1 - k / (h * 0.7)).toFixed(3);
     };
 
     window.addEventListener('scroll', function () {

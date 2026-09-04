@@ -175,32 +175,20 @@ a{ color:inherit; text-decoration:none }
   padding:0 var(--pad) clamp(56px,8.5vh,96px);
   width:min(100%, 900px);
 }
+/* Имена стоят вместе одной строкой, союз рукописный и сидит на общей
+   базовой линии — как требует канон правок. На узком экране строка
+   переносится сама, союз остаётся при первом имени. */
 .names{
   font-family:var(--f-disp); font-weight:300;
-  font-size:clamp(3.3rem, 11.5vw, 10rem); line-height:.86; letter-spacing:-.03em;
+  font-size:clamp(3.2rem, 9.6vw, 8.2rem); line-height:.9; letter-spacing:-.03em;
   margin:clamp(10px,1.6vh,20px) 0 0;
-  display:grid; justify-items:start;
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:0 .22em;
 }
-/* Союз — не отдельно висящая буква, а звено цепи: золотая нить спускается
-   от верхнего имени, на ней сидит «и», нить продолжается ко второму имени.
-   Ось звена — по центру короткого имени, чтобы нить шла внутри обоих. */
-.names__link{
-  display:flex; flex-direction:column; align-items:center;
-  margin-left:var(--link-x, .8em);
-  padding:.06em 0;
+.names__amp{
+  font-family:var(--f-ink); font-style:normal; font-size:.42em; color:var(--gold);
+  line-height:1; opacity:0;
 }
-.names__link i{
-  width:1px; height:var(--wire, .34em); background:var(--gold); opacity:.85;
-  transform:scaleY(0);
-}
-.names__link i:first-child{ transform-origin:bottom }
-.names__link i:last-child{ transform-origin:top }
-.names__link em{
-  font-family:var(--f-ink); font-style:normal; font-size:.34em; color:var(--gold);
-  line-height:1; padding:.16em 0; opacity:0;
-}
-.is-live .names__link i{ transform:scaleY(1); transition:transform 700ms var(--e-soft) 520ms }
-.is-live .names__link em{ opacity:1; transition:opacity 600ms var(--e) 420ms }
+.is-live .names__amp{ opacity:1; transition:opacity 700ms var(--e) 460ms }
 
 /* ─── подпись под именами ─── */
 .cover__meta{
@@ -648,7 +636,7 @@ input[type=text]:focus, input[type=number]:focus, textarea:focus{
   .guest-names{ grid-template-columns:1fr }
   .choice{ flex-direction:column }
   .hud__mark{ font-size:13px }
-  .names{ font-size:clamp(3rem,15vw,4.6rem) }
+  .names{ font-size:clamp(3.2rem,13vw,4.2rem) }
 }
 
 /* коротко по высоте — ужимаем вертикальный ритм */

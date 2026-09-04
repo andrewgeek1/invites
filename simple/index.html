@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Артём и Ксения — 12 сентября 2026</title>
+<title>Артём и Ксения / 12 сентября 2026</title>
 <meta name="description" content="Приглашение на свадьбу Артёма и Ксении. 12 сентября 2026, усадьба «Осинки», село Богородицкое, 24 км от Нижнего Новгорода.">
 <meta name="theme-color" content="#F0EBE3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Golos+Text:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comforter&family=Golos+Text:wght@400&family=Oswald:wght@300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,8 +16,12 @@
 <div class="grain" aria-hidden="true"></div>
 <a class="skip" href="#rsvp">Перейти к форме ответа</a>
 
-<!-- ═══════════════════ HERO — схема B ═══════════════════ -->
+<!-- ═══════════════════ ОБЛОЖКА ═══════════════════ -->
 <header class="hero" id="top">
+  <figure class="hero__ph">
+    <img src="assets/hero.jpg" alt="Артём и Ксения целуются на закате, у Ксении в руках букет" fetchpriority="high" width="1900" height="2100">
+  </figure>
+  <div class="hero__veil" aria-hidden="true"></div>
 
   <div class="hero__top">
     <p class="wordmark">Артём&nbsp;и&nbsp;Ксения</p>
@@ -28,30 +32,17 @@
     </nav>
   </div>
 
-  <div class="stage">
-    <h1 class="names">
-      <span class="names__a rise">Артём</span>
-      <span class="names__b rise">Ксения</span>
-    </h1>
-
-    <figure class="stage__ph rise">
-      <img src="assets/hero.jpg" alt="Артём и Ксения целуются на закате, у Ксении в руках букет" fetchpriority="high" width="1400" height="2100">
-    </figure>
-  </div>
-
-  <div class="hero__foot">
-    <div class="hero__meta rise">
-      <p class="label">12&nbsp;сентября 2026 / суббота</p>
-      <p class="lead">Усадьба «Осинки», село Богородицкое<br>в&nbsp;24&nbsp;километрах от&nbsp;Нижнего&nbsp;Новгорода</p>
-    </div>
-    <div class="hero__act rise">
+  <div class="hero__txt">
+    <p class="label rise">12 сентября 2026, суббота</p>
+    <h1 class="names rise">Артём<i>и</i>Ксения</h1>
+    <p class="lead rise">Усадьба «Осинки», село Богородицкое</p>
+    <p class="hero__cta rise">
       <a class="btn btn--fill" href="#rsvp">
         <span class="btn__fill"></span><span class="btn__label">Подтвердить, что&nbsp;приду</span>
       </a>
-      <p class="friction">Ответ нужен до&nbsp;28&nbsp;августа</p>
-    </div>
+    </p>
+    <p class="friction rise">Ответ нужен до&nbsp;28&nbsp;августа</p>
   </div>
-
 </header>
 
 
@@ -59,15 +50,13 @@
 <section class="sect invite" id="invite">
   <div class="wrap">
     <p class="tag"><span class="tag__n">01</span> Приглашение</p>
-    <div class="invite__grid">
+    <div class="mid">
       <h2 class="rise">Мы женимся.<br>Приезжайте.</h2>
-      <div class="invite__text">
-        <p class="body rise">Расписываемся двенадцатого сентября в&nbsp;усадьбе «Осинки»
-          и&nbsp;остаёмся там до&nbsp;поздней ночи.</p>
-        <p class="body rise">Позвали только тех, кого правда хотим видеть рядом.
-          Список вышел коротким, и&nbsp;вы&nbsp;в&nbsp;нём есть.</p>
-        <p class="sign rise">Артём и&nbsp;Ксения</p>
-      </div>
+      <p class="body rise">Расписываемся двенадцатого сентября в&nbsp;усадьбе «Осинки»
+        и&nbsp;остаёмся там до&nbsp;поздней ночи.</p>
+      <p class="body rise">Позвали только тех, кого правда хотим видеть рядом.
+        Список вышел коротким, и&nbsp;вы&nbsp;в&nbsp;нём есть.</p>
+      <p class="sign rise">Артём<i>и</i>Ксения</p>
     </div>
   </div>
   <figure class="bleed rise">
@@ -94,7 +83,7 @@
       <li class="fact rise">
         <p class="fact__n">03</p>
         <h3>Как одеться</h3>
-        <p class="body">Празднично и&nbsp;по&nbsp;погоде: после заката в&nbsp;саду прохладно. Шпилька на&nbsp;газоне не&nbsp;выживет, возьмите каблук пошире.</p>
+        <p class="body">Празднично и&nbsp;по&nbsp;погоде: после заката в&nbsp;саду прохладно. Каблук лучше пошире, под ногами газон.</p>
       </li>
     </ul>
   </div>
@@ -106,15 +95,15 @@
   <div class="wrap">
     <p class="tag"><span class="tag__n">03</span> Три кадра</p>
     <div class="gal">
-      <figure class="gal__i gal__i--1 rise">
-        <img src="assets/gal-1.jpg" alt="Ксения держит букет из сухоцветов" loading="lazy" width="1100" height="1500">
-        <figcaption>Букет собрали сами, из&nbsp;сухоцветов</figcaption>
-      </figure>
-      <figure class="gal__i gal__i--2 rise">
+      <figure class="gal__i gal__i--side rise">
         <img src="assets/gal-2.jpg" alt="Гости за столами на террасе на фоне закатных холмов" loading="lazy" width="1300" height="950">
         <figcaption>Ради этого заката и&nbsp;выбрали сентябрь</figcaption>
       </figure>
-      <figure class="gal__i gal__i--3 rise">
+      <figure class="gal__i gal__i--mid rise">
+        <img src="assets/gal-1.jpg" alt="Ксения держит букет из сухоцветов" loading="lazy" width="1100" height="1500">
+        <figcaption>Букет собрали сами, из&nbsp;сухоцветов</figcaption>
+      </figure>
+      <figure class="gal__i gal__i--side rise">
         <img src="assets/gal-3.jpg" alt="Просёлочная дорога между золотыми полями на закате" loading="lazy" width="1300" height="950">
         <figcaption>Последние два&nbsp;километра до&nbsp;усадьбы</figcaption>
       </figure>
@@ -126,24 +115,22 @@
 <!-- ═══════════════════ 04 ДОРОГА ═══════════════════ -->
 <section class="sect road" id="road">
   <figure class="bleed rise">
-    <img src="assets/venue.jpg" alt="Усадьба «Осинки»: длинный дом с терракотовым фасадом среди осенних деревьев" loading="lazy" width="1800" height="1050">
+    <img src="assets/venue.jpg" alt="Длинный накрытый стол под деревьями в вечернем свете" loading="lazy" width="1900" height="1100">
   </figure>
   <div class="wrap">
     <p class="tag"><span class="tag__n">04</span> Дорога</p>
-    <div class="road__col">
+    <div class="mid">
       <h2 class="rise">Усадьба «Осинки»</h2>
-      <p class="lead road__addr rise">Нижегородская область, село Богородицкое,<br>Полевая улица, 12</p>
-      <div class="road__text">
-        <p class="body rise">По&nbsp;трассе М-7 до&nbsp;указателя на&nbsp;Богородицкое,
-          дальше два километра просёлочной дороги.</p>
-        <p class="body rise">Парковка у&nbsp;ворот, места хватит всем.</p>
-        <div class="road__act rise">
-          <a class="btn btn--line" href="https://yandex.ru/maps/?text=%D1%81%D0%B5%D0%BB%D0%BE%20%D0%91%D0%BE%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D1%86%D0%BA%D0%BE%D0%B5%20%D0%9D%D0%B8%D0%B6%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C" target="_blank" rel="noopener">
-            <span class="btn__fill"></span><span class="btn__label">Открыть карту с&nbsp;маршрутом</span>
-          </a>
-          <p class="friction">Откроется в&nbsp;новой вкладке</p>
-        </div>
-      </div>
+      <p class="lead rise">Нижегородская область, село Богородицкое, Полевая улица, 12</p>
+      <p class="body rise">По&nbsp;трассе М-7 до&nbsp;указателя на&nbsp;Богородицкое,
+        дальше два километра просёлочной дороги.</p>
+      <p class="body rise">Парковка у&nbsp;ворот, места хватит всем.</p>
+      <p class="mid__cta rise">
+        <a class="btn btn--line" href="https://yandex.ru/maps/?text=%D1%81%D0%B5%D0%BB%D0%BE%20%D0%91%D0%BE%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D1%86%D0%BA%D0%BE%D0%B5%20%D0%9D%D0%B8%D0%B6%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C" target="_blank" rel="noopener">
+          <span class="btn__fill"></span><span class="btn__label">Открыть карту с&nbsp;маршрутом</span>
+        </a>
+      </p>
+      <p class="friction rise">Откроется в&nbsp;новой вкладке</p>
     </div>
   </div>
 </section>
@@ -153,12 +140,10 @@
 <section class="sect rsvp" id="rsvp">
   <div class="wrap">
     <p class="tag"><span class="tag__n">05</span> Ответ</p>
-
-    <div class="rsvp__grid">
-      <div class="rsvp__side rise">
-        <h2>Скажите нам,<br>ждать&nbsp;ли&nbsp;вас</h2>
-        <p class="body">Нам нужно посчитать стулья и&nbsp;порции, поэтому ответ важнее вежливости. Честное «не&nbsp;смогу» никого не&nbsp;обидит.</p>
-      </div>
+    <div class="mid">
+      <h2 class="rise">Скажите нам,<br>ждать&nbsp;ли&nbsp;вас</h2>
+      <p class="body rise">Нам нужно посчитать стулья и&nbsp;порции, поэтому ответ важнее вежливости.
+        Честное «не&nbsp;смогу» никого не&nbsp;обидит.</p>
 
       <form class="form rise" id="form">
         <div class="field">
@@ -183,7 +168,6 @@
       </form>
 
       <div class="done" id="done" hidden>
-        <p class="tag"><span class="tag__n">06</span> Готово</p>
         <h2 id="doneTitle">Спасибо</h2>
         <p class="body" id="doneText"></p>
       </div>
@@ -193,10 +177,9 @@
 
 
 <footer class="foot">
-  <div class="wrap foot__row">
-    <p>Артём и&nbsp;Ксения</p>
-    <p>12 сентября 2026</p>
-    <p>Усадьба «Осинки»</p>
+  <div class="wrap foot__col">
+    <p class="sign">Артём<i>и</i>Ксения</p>
+    <p class="label">12 сентября 2026 / усадьба «Осинки»</p>
   </div>
 </footer>
 

@@ -1,7 +1,10 @@
 /* =========================================================
    Артём и Ксения — простой тариф. Направление «Афиша».
-   Токены: крем / чернила / сургуч. Одна кривая. Oswald 300 + Golos Text 400.
-   Радиусы нулевые везде, включая кнопки — это третий почерк линейки.
+   Обложка: кадр на весь экран, весь текст внизу по оси.
+   Вся страница симметрична — канон правок владельца, §2.
+   Токены: крем / чернила / сургуч. Oswald 300 + Golos Text 400
+   + Comforter на один глиф «и» между именами (канон §5).
+   Радиусы нулевые везде, включая кнопки — почерк третьего сайта линейки.
    ========================================================= */
 
 :root{
@@ -9,6 +12,7 @@
   --paper-deep:#E5DCCC;
   --ink:#191714;
   --seal:#9E3B2E;
+  --seal-lite:#C6805A;          /* сургуч на тёмном: контраст замерен, 5.69 */
 
   --line:rgba(25,23,20,.20);
   --line-soft:rgba(25,23,20,.10);
@@ -18,7 +22,6 @@
   --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:96px; --s7:144px;
   --pad:clamp(20px,4.6vw,88px);
   --sec:clamp(80px,10vw,160px);
-
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -27,6 +30,7 @@ body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"Golos Text",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-weight:400; font-size:clamp(1.06rem,1rem + .34vw,1.24rem); line-height:1.6;
+  font-variant-numeric:lining-nums;      /* канон §5: цифры маюскульные */
   -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 img{display:block;max-width:100%}
@@ -43,24 +47,37 @@ h1,h2,h3{
   margin:0; font-family:"Oswald",Impact,"Haettenschweiler",sans-serif;
   font-weight:300; text-transform:uppercase; hyphens:none; text-wrap:balance;
 }
-h1{font-size:clamp(3.2rem,13.4vw,13.2rem);line-height:.82;letter-spacing:-.008em}
-.names{font-size:1em}
-/* 1.12, а не 0.9–1.0 из TYP-04: у Oswald ascent 1.19em, и на капслоке
-   точки «Ё» и бревис «Й» второй строки физически въезжают в первую.
-   Ниже 1.06 заголовок ломается на любой правке текста заказчиком. */
+/* 1.12, а не 0.9–1.0 из TYP-04: у Oswald ascent 1.19em, и на капслоке точки «Ё»
+   и бревис «Й» второй строки физически въезжают в первую. */
 h2{font-size:clamp(2.3rem,1.4rem + 3.6vw,4.5rem);line-height:1.12;letter-spacing:-.012em}
-h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.04;letter-spacing:-.01em}
+h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing:-.01em}
 
 .label{font-family:"Golos Text",sans-serif;font-size:.86rem;line-height:1.8;
-  text-transform:uppercase;letter-spacing:.19em;opacity:.55}
-.lead{font-size:clamp(1.16rem,1.08rem + .46vw,1.46rem);line-height:1.45;opacity:.78;max-width:40ch;text-wrap:balance}
-.body{font-size:clamp(1.06rem,1rem + .34vw,1.24rem);line-height:1.6;opacity:.8;max-width:52ch;text-wrap:balance}
-.friction{font-size:.86rem;line-height:1.5;opacity:.52;max-width:36ch;text-wrap:balance}
+  text-transform:uppercase;letter-spacing:.19em;opacity:.6;text-wrap:balance}
+.lead{font-size:clamp(1.16rem,1.08rem + .46vw,1.46rem);line-height:1.45;opacity:.8;
+  max-width:44ch;margin-inline:auto;text-wrap:balance}
+.body{font-size:clamp(1.06rem,1rem + .34vw,1.24rem);line-height:1.6;opacity:.82;
+  max-width:52ch;margin-inline:auto;text-wrap:balance}
+.friction{font-size:.86rem;line-height:1.5;opacity:.55;max-width:40ch;
+  margin-inline:auto;text-wrap:balance}
+
+/* рукописное «и» между именами — на уровне низа букв, не по центру строки */
+.names i,.sign i{font-family:"Comforter",cursive;font-style:normal;
+  text-transform:lowercase;letter-spacing:0;color:var(--seal);
+  font-size:.62em;padding:0 .16em;position:relative;top:.05em}
+.sign i{font-size:.95em;padding:0 .22em;top:.08em}
+
 .sign{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
-  font-size:clamp(17px,1.4vw,22px);letter-spacing:.01em;opacity:.72}
+  font-size:clamp(1.5rem,1.2rem + 1.1vw,2.1rem);letter-spacing:.01em;opacity:.85}
 
 .wrap{width:100%;max-width:1360px;margin:0 auto;padding-inline:var(--pad)}
 .sect{padding-block:var(--sec)}
+
+/* центральная колонка — канон §2: центрировать не только текстом, но и коробкой */
+.mid{max-width:66ch;margin-inline:auto;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
+.mid h2{margin-bottom:var(--s1)}
+.mid__cta{margin:var(--s2) 0 0}
 
 .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
@@ -72,8 +89,8 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.04;letter-spacing
 
 /* ---------------- кнопки: два типа, радиус ноль ---------------- */
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;
-  min-height:54px;padding:0 32px;border:0;border-radius:0;background:transparent;
-  font-family:"Golos Text",sans-serif;font-size:14.5px;line-height:1.2;
+  min-height:56px;padding:0 34px;border:0;border-radius:0;background:transparent;
+  font-family:"Golos Text",sans-serif;font-size:.98rem;line-height:1.2;
   cursor:pointer;overflow:hidden;text-align:center}
 .btn__fill{position:absolute;inset:0;transform:scaleX(0);transform-origin:left;
   transition:transform 500ms var(--e)}
@@ -89,114 +106,112 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.04;letter-spacing
 
 .btn--wide{width:100%}
 
-/* ═══════════════════ HERO — схема B ═══════════════════ */
-.hero{
-  position:relative; height:100svh;
-  display:flex; flex-direction:column;
-  padding-inline:var(--pad);
-  padding-block:clamp(16px,2.2vh,28px) clamp(24px,3.4vh,48px);
-}
-.hero__top{flex:0 0 auto;display:flex;justify-content:space-between;align-items:baseline;
-  gap:var(--s4);padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+/* ═══════════════════ ОБЛОЖКА ═══════════════════ */
+.hero{position:relative;height:100svh;overflow:hidden;color:var(--paper)}
+.hero__ph{position:absolute;inset:0;margin:0}
+.hero__ph img{width:100%;height:100%;object-fit:cover;object-position:50% 47%}
+
+/* читаемость без тёмного оверлея (IMG-06): подложка размывается, а не темнеет */
+.hero__veil{position:absolute;left:0;right:0;bottom:0;height:46%;z-index:2;pointer-events:none;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  mask-image:linear-gradient(to top,#000 0%,#000 16%,transparent 94%);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,#000 16%,transparent 94%)}
+
+.hero__top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
+  justify-content:space-between;align-items:baseline;gap:var(--s4);
+  padding:clamp(16px,2.2vh,28px) var(--pad) 0}
 .wordmark{font-family:"Golos Text",sans-serif;font-size:.86rem;text-transform:uppercase;
-  letter-spacing:.19em;opacity:.6;white-space:nowrap}
+  letter-spacing:.19em;opacity:.75;white-space:nowrap}
 .hero__nav{display:flex;gap:clamp(16px,2vw,34px);font-size:.95rem}
-.hero__nav a{position:relative;padding-block:14px;opacity:.72;transition:opacity 320ms var(--e)}
+.hero__nav a{position:relative;padding-block:14px;opacity:.85;transition:opacity 320ms var(--e)}
 .hero__nav a::after{content:"";position:absolute;left:0;right:0;bottom:11px;height:1px;
-  background:var(--seal);transform:scaleX(0);transform-origin:left;
+  background:var(--paper);transform:scaleX(0);transform-origin:left;
   transition:transform 420ms var(--e)}
 .hero__nav a:hover{opacity:1}
 .hero__nav a:hover::after{transform:scaleX(1)}
 
-.stage{position:relative;flex:1 1 auto;min-height:0;font-size:min(13.4vw,36svh)}
-.names{position:absolute;inset:0}
-.names__a,.names__b{position:absolute;display:block;white-space:nowrap}
-.names__a{left:0;top:.24em}
-.names__b{right:0;bottom:.02em}
+.hero__txt{position:absolute;z-index:4;left:0;right:0;bottom:clamp(34px,6svh,80px);
+  padding-inline:var(--pad);display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:var(--s2)}
+.hero__txt .label,.hero__txt .lead,.hero__txt .friction{opacity:.92}
+.hero__cta{margin:var(--s1) 0 0}
 
-.stage__ph{position:absolute;z-index:2;margin:0;overflow:hidden;
-  left:2.06em;width:2.07em;top:.26em;bottom:-.08em;
-  max-height:3.3em;margin-block:auto;   /* иначе на портретном планшете кадр вытягивается в щель */
-  box-shadow:0 30px 60px -34px rgba(25,23,20,.5)}
-.stage__ph img{width:100%;height:100%;object-fit:cover}
+/* кегль ниже опорной шкалы канона: строка «Артём и Ксения» в nowrap
+   иначе вылезает за поля — то же решение, что на «Ротонде» */
+.names{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
+  font-size:clamp(2.5rem,.5rem + 7.2vw,7.4rem);line-height:.94;letter-spacing:-.01em;
+  white-space:nowrap;text-shadow:0 2px 34px rgba(25,23,20,.32)}
+.hero .names i{color:var(--seal-lite)}
 
-.hero__foot{flex:0 0 auto;display:flex;justify-content:space-between;align-items:flex-end;
-  gap:var(--s4);padding-top:var(--s3);border-top:1px solid var(--line)}
-.hero__meta{display:flex;flex-direction:column;gap:var(--s1)}
-.hero__act{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.hero .btn--fill{background:var(--paper);color:var(--ink)}
+.hero .btn--fill .btn__fill{background:var(--seal)}
+.hero .btn--fill:hover .btn__label,
+.hero .btn--fill:focus-visible .btn__label{color:var(--paper)}
 
-/* ═══════════════════ общий заголовок секции ═══════════════════ */
+/* ═══════════════════ заголовок секции ═══════════════════ */
 .tag{font-family:"Golos Text",sans-serif;font-size:.86rem;text-transform:uppercase;
-  letter-spacing:.19em;opacity:.6;display:flex;align-items:baseline;gap:12px;
-  padding-bottom:var(--s3);margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
-.tag__n{color:var(--seal);opacity:1;font-variant-numeric:tabular-nums}
+  letter-spacing:.19em;opacity:.6;display:flex;align-items:baseline;justify-content:center;
+  gap:12px;padding-bottom:var(--s3);margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
+.tag__n{color:var(--seal);opacity:1}
 
 /* ═══════════════════ 01 приглашение ═══════════════════ */
-.invite__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s4);align-items:start}
-.invite__grid h2{grid-column:1/7}
-.invite__text{grid-column:8/13;display:flex;flex-direction:column;gap:var(--s2);padding-top:8px}
-
 .invite{padding-bottom:0}
-.road{padding-top:0}
 .bleed{margin:var(--s7) 0 0;overflow:hidden}
 .bleed img{width:100%;height:clamp(280px,44vw,660px);object-fit:cover}
 
 /* ═══════════════════ 02 что нужно знать ═══════════════════ */
 .facts-sect .tag{margin-bottom:var(--s6)}
 .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s4)}
-.fact{border-top:1px solid var(--line);padding-top:var(--s3);
-  display:flex;flex-direction:column;gap:12px}
-.fact__n{font-size:.86rem;letter-spacing:.19em;color:var(--seal);font-variant-numeric:tabular-nums}
-.fact .body{max-width:34ch;text-wrap:balance}
+.fact{border-top:1px solid var(--line);padding-top:var(--s3);text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:12px}
+.fact__n{font-size:.86rem;letter-spacing:.19em;color:var(--seal)}
+.fact .body{max-width:32ch}
 
-/* ═══════════════════ 03 галерея — три кадра ═══════════════════ */
-.gal{display:grid;grid-template-columns:.95fr 1.3fr 1.15fr;gap:var(--s4);align-items:end}
-.gal__i{margin:0;display:flex;flex-direction:column;gap:14px}
+/* ═══════════════════ 03 галерея — триптих ═══════════════════ */
+.gal{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:var(--s4);align-items:center}
+.gal__i{margin:0;display:flex;flex-direction:column;gap:14px;text-align:center}
 .gal__i img{width:100%;object-fit:cover}
-.gal__i--1 img{height:clamp(300px,40vw,600px)}
-.gal__i--2 img{height:clamp(220px,29vw,440px)}
-.gal__i--3 img{height:clamp(250px,33vw,500px)}
-.gal__i figcaption{font-size:.86rem;line-height:1.5;opacity:.55;max-width:34ch;
-  min-height:calc(2 * 1.5em);text-wrap:balance}
+.gal__i--side img{height:clamp(240px,29vw,430px)}
+.gal__i--mid img{height:clamp(320px,40vw,600px)}
+.gal__i figcaption{font-size:.86rem;line-height:1.5;opacity:.6;max-width:32ch;
+  margin-inline:auto;text-wrap:balance}
 
 /* ═══════════════════ 04 дорога ═══════════════════ */
+.road{padding-top:0}
 .road .bleed{margin:0 0 var(--s7)}
-.road__col{max-width:64ch;margin-inline:auto;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
-.road__col h2{margin-bottom:var(--s1)}
-.road__addr{margin-inline:auto}
-.road__col .body{max-width:52ch;margin-inline:auto}
-.road__act{display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:var(--s2)}
-.road .tag{justify-content:center}
+.road .bleed img{object-position:50% 30%}
 
 /* ═══════════════════ 05 ответ ═══════════════════ */
 .rsvp{background:var(--paper-deep)}
-.rsvp__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s5) var(--s4);align-items:start}
-.rsvp__side{grid-column:1/6;display:flex;flex-direction:column;gap:var(--s3)}
-.form{grid-column:7/13;display:flex;flex-direction:column;gap:var(--s4);max-width:520px}
-.done{grid-column:7/13;display:flex;flex-direction:column;gap:var(--s3);max-width:520px}
+.form{width:100%;max-width:520px;margin-inline:auto;margin-top:var(--s3);
+  display:flex;flex-direction:column;gap:var(--s4);text-align:left}
+.done{width:100%;max-width:520px;margin-inline:auto;
+  display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
 
-.field{display:flex;flex-direction:column;gap:10px}
+.field{display:flex;flex-direction:column;gap:10px;align-items:center}
+.field .label{text-align:center}
 .field input{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
-  border-radius:0;padding:12px 0;font-size:clamp(17px,1.4vw,21px);
+  border-radius:0;padding:12px 0;text-align:center;
+  font-size:clamp(1.16rem,1.08rem + .46vw,1.46rem);
   transition:border-color 320ms var(--e)}
 .field input::placeholder{color:var(--ink);opacity:.32}
 .field input:focus{border-bottom-color:var(--ink)}
 
-.pick{display:flex;flex-direction:column;gap:12px}
-.pick__row{display:flex;width:max-content;max-width:100%;box-shadow:inset 0 0 0 1px var(--ink)}
+.pick{display:flex;flex-direction:column;gap:12px;align-items:center}
+.pick legend{width:100%;text-align:center}
+.pick__row{display:flex;width:max-content;max-width:100%;margin-inline:auto;
+  box-shadow:inset 0 0 0 1px var(--ink)}
 .pick input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.pick label{position:relative;min-height:54px;padding:0 clamp(20px,3vw,38px);
-  display:flex;align-items:center;cursor:pointer;font-size:.95rem;
+.pick label{position:relative;min-height:56px;padding:0 clamp(22px,3.4vw,42px);
+  display:flex;align-items:center;cursor:pointer;font-size:.98rem;
   transition:background 380ms var(--e),color 300ms var(--e)}
 .pick label+input+label{box-shadow:inset 1px 0 0 var(--ink)}
 .pick input:checked+label{background:var(--ink);color:var(--paper)}
 .pick input:focus-visible+label{outline:2px solid var(--seal);outline-offset:-6px}
 
-/* ═══════════════════ футер ═══════════════════ */
-.foot{padding-block:var(--s4) var(--s5);border-top:1px solid var(--line)}
-.foot__row{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;
-  font-size:.86rem;opacity:.55;text-transform:uppercase;letter-spacing:.14em}
+/* ═══════════════════ подвал ═══════════════════ */
+.foot{padding-block:var(--s5) var(--s6);border-top:1px solid var(--line)}
+.foot__col{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 
 /* ═══════════════════ моушен ═══════════════════ */
 .rise{opacity:0;transform:translateY(28px);filter:blur(14px)}
@@ -205,102 +220,63 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.04;letter-spacing
              transform 900ms var(--e) var(--d,0ms),
              filter 900ms var(--e) var(--d,0ms)}
 
-/* телефон в альбомной: экран ниже 520px — иначе две строки имён не влезают */
-@media (orientation:landscape) and (max-height:520px){
-  .stage{font-size:min(13.4vw,25svh)}
-  .hero__foot{gap:var(--s3)}
-  .lead{font-size:14px}
-}
+/* лесенка появления — задержки в CSS, §0 запрещает инлайновые стили */
+.hero__txt .label{--d:300ms}
+.names{--d:420ms}
+.hero__txt .lead{--d:620ms}
+.hero__cta{--d:760ms}
+.hero__txt .friction{--d:860ms}
 
-/* ═══════════════════ портретная ориентация ═══════════════════
-   Две длинные кириллические строки съедают всю ширину, а полоса под кадр
-   становится узкой и высокой. Имена уходят в поток и центрируются, кадр
-   держит пропорцию 1:2 и клюёт хвост первой строки и голову второй —
-   та же схема B, но по-портретному. */
-@media (orientation:portrait){
-  .stage{font-size:12.5vw;display:flex;flex-direction:column;justify-content:center}
-  .names{position:static;display:flex;flex-direction:column;gap:.1em}
-  .names__a,.names__b{position:static}
-  .names__b{align-self:flex-end}
-  .stage__ph{left:1.97em;width:2.68em;height:5.36em;max-height:none;
-    top:calc(50% - 2.68em);bottom:auto;margin-block:0}
-}
-
-
-/* ═══════════════════ лесенка появления ═══════════════════
-   Задержки живут здесь, а не в атрибутах style — §0 запрещает
-   инлайновые стили в разметке. Шаг 50ms внутри группы, 100ms между группами. */
-.names__a{--d:340ms}
-.stage__ph{--d:480ms}
-.names__b{--d:620ms}
-.hero__meta{--d:820ms}
-.hero__act{--d:940ms}
-
-.invite__text .body:nth-of-type(1){--d:120ms}
-.invite__text .body:nth-of-type(2){--d:180ms}
-.invite__text .sign{--d:220ms}
+.mid .body:nth-of-type(1){--d:120ms}
+.mid .body:nth-of-type(2){--d:180ms}
+.mid .sign{--d:240ms}
+.mid .lead{--d:100ms}
+.mid__cta{--d:240ms}
+.mid .friction{--d:300ms}
 .invite .bleed{--d:120ms}
-
 .fact:nth-child(2){--d:90ms}
 .fact:nth-child(3){--d:180ms}
-
-.gal__i--2{--d:110ms}
-.gal__i--3{--d:220ms}
-
-.road__text .body:nth-of-type(1){--d:120ms}
-.road__text .body:nth-of-type(2){--d:180ms}
-.road__act{--d:220ms}
-
-.form{--d:120ms}
+.gal__i:nth-child(2){--d:110ms}
+.gal__i:nth-child(3){--d:220ms}
+.form{--d:200ms}
 
 /* ═══════════════════ планшет ═══════════════════ */
 @media (max-width:1080px){
-  .invite__grid h2,.road__grid h2{grid-column:1/8}
-  .invite__text,.road__text{grid-column:1/10}
-  .rsvp__side{grid-column:1/9}
-  .form,.done{grid-column:1/11}
-  .facts{grid-template-columns:1fr 1fr}
-  .gal{grid-template-columns:1fr 1fr;align-items:start}
-  .gal__i--1{grid-row:span 2}
-  .gal__i--1 img{height:clamp(420px,58vw,700px)}
-  .gal__i--2 img,.gal__i--3 img{height:clamp(200px,26vw,320px)}
+  /* три факта в две колонки оставляют один в ряду — канон §2 зовёт это браком */
+  .facts{grid-template-columns:1fr;gap:var(--s5)}
+  .fact .body{max-width:46ch}
+  .gal{grid-template-columns:1fr;gap:var(--s5);justify-items:center}
+  .gal__i{max-width:560px;width:100%}
+  .gal__i--side img{height:clamp(260px,44vw,420px)}
+  .gal__i--mid img{height:clamp(360px,62vw,620px)}
 }
 
 /* ═══════════════════ телефон ═══════════════════ */
 @media (max-width:720px){
-  .hero{padding-block:14px 22px}
   .hero__nav{display:none}
-  .hero__top{border-bottom:0;padding-bottom:10px}
-
-
-  .hero__foot{flex-direction:column;align-items:flex-start;gap:var(--s3);padding-top:var(--s2)}
-  .hero__act{align-items:flex-start;width:100%}
-  .hero__act .btn{width:100%}
+  .hero__txt{gap:var(--s2);bottom:clamp(28px,4.6svh,56px)}
+  /* при .5em от 40px росчерк перестаёт читаться — канон «Ротонды» */
+  .names i,.sign i{font-size:.6em}
+  .hero__cta .btn{width:100%}
 
   .tag{margin-bottom:var(--s4)}
-  .invite__grid,.road__grid,.rsvp__grid{grid-template-columns:1fr;gap:var(--s3)}
-  .invite__grid h2,.road__grid h2,.invite__text,.road__text,
-  .rsvp__side,.form,.done{grid-column:auto}
-  .invite__text,.road__text{padding-top:var(--s1)}
-
+  .facts-sect .tag{margin-bottom:var(--s4)}
   .bleed{margin-top:var(--s5)}
   .road .bleed{margin-bottom:var(--s5)}
   .bleed img{height:clamp(240px,62vw,380px)}
 
-  .facts{grid-template-columns:1fr;gap:var(--s4)}
-  .gal{grid-template-columns:1fr;gap:var(--s4)}
-  .gal__i--1 img,.gal__i--2 img,.gal__i--3 img{height:auto;aspect-ratio:4/5}
-  .gal__i--2 img,.gal__i--3 img{aspect-ratio:5/4}
+  .gal{gap:var(--s4)}
+  .gal__i--side img,.gal__i--mid img{height:auto}
+  .gal__i--side img{aspect-ratio:5/4}
+  .gal__i--mid img{aspect-ratio:3/4}
 
   .pick__row{width:100%}
   .pick label{flex:1 1 50%;justify-content:center;padding:0 12px}
-  .foot__row{flex-direction:column;gap:6px}
 }
 
-/* совсем узкие экраны: ручной перенос в подзаголовке hero даёт третью
-   строку в треть длины — отдаём разбивку балансировщику */
+/* совсем узкие экраны: ручной перенос в подзаголовке даёт третью строку в треть длины */
 @media (max-width:360px){
-  .lead br{display:none}
+  .lead br,.fact br{display:none}
 }
 
 @media (prefers-reduced-motion:reduce){
