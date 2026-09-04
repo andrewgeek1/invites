@@ -16,7 +16,7 @@
   --scarlet-lit:#E8323F;
 
   --f-display: Forum, 'Times New Roman', serif;
-  --f-hand:    'Great Vibes', cursive;
+  --f-hand:    'Marck Script', cursive;
   --f-text:    Spectral, Georgia, serif;
 
   --rail:  18vw;          /* ось, вокруг которой вьётся лента */
@@ -191,24 +191,26 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; margin: 0; }
 /* Союз между именами. Всё, что ниже, подобрано ЗАМЕРОМ ЧЕРНИЛ, а не боксов:
    у прописного шрифта бокс сильно больше видимой буквы, и по боксу «и»
    вставала на 18 px ниже и на 15 px правее, чем нужно (замер 2026-09-04).
+   Значения ниже пересчитаны под Marck Script и включают сдвиг на 1 px
+   вправо от идеально симметричного — по просьбе владельца.
      · line-height ниже приравнивает бокс союза к боксу букв;
      · top поднимает чернила так, чтобы просвет сверху и снизу совпал;
      · несимметричные поля разводят зазоры слева и справа поровну —
-       у Great Vibes правая пазуха меньше левой, и «и» липла к «Агате».
+       у прописных правая пазуха меньше левой, и «и» липла к «Агате».
    Смещения не через transform: его затирает `transform: none`
    в конце анимации появления букв. */
 .names .amp, .final__names .amp {
   display: inline-block;
   font-family: var(--f-hand);
-  font-size: .54em;
+  font-size: .481em;
   letter-spacing: 0;
   color: var(--gold); vertical-align: top;
   position: relative; top: -.107em;
-  margin-left: .111em; margin-right: .289em;
+  margin-left: .167em; margin-right: .233em;   /* +1 px вправо от выровненного */
   text-transform: lowercase;
 }
-.names .amp       { line-height: calc(.96 / .54); }   /* line-height родителя .96 */
-.final__names .amp { line-height: calc(1 / .54); }    /* line-height родителя 1    */
+.names .amp        { line-height: calc(.96 / .481); }  /* line-height родителя .96 */
+.final__names .amp { line-height: calc(1 / .481); }    /* line-height родителя 1    */
 /* Буквы входят по очереди, шаг 46 мс — вход слова, а не титры. */
 .names i, .final__names i, .names .amp, .final__names .amp {
   display: inline-block; font-style: normal;
