@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ника и Глеб — 22 мая 2027</title>
-<meta name="description" content="Приглашение на свадьбу Ники и Глеба. 22 мая 2027 года, усадьба «Липовка» под Нижним Новгородом.">
+<title>Вероника и Глеб — 22 мая 2027</title>
+<meta name="description" content="Приглашение на свадьбу Вероники и Глеба. 22 мая 2027 года, усадьба «Липовка» под Нижним Новгородом.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400&family=Tenor+Sans&display=swap" rel="stylesheet">
@@ -38,9 +38,9 @@
 
   <!-- ─────────────────────────── обложка ─────────────────────────── -->
   <section class="hero" id="hero">
-    <h1 class="names" aria-label="Ника и Глеб">
-      <span class="names__row"><i style="--i:0">Н</i><i style="--i:1">И</i><i style="--i:2">К</i><i style="--i:3">А</i><b class="names__amp">и</b></span>
-      <span class="names__row"><i style="--i:4">Г</i><i style="--i:5">Л</i><i style="--i:6">Е</i><i style="--i:7">Б</i></span>
+    <h1 class="names" aria-label="Вероника и Глеб">
+      <span class="names__row"><i style="--i:0">В</i><i style="--i:1">Е</i><i style="--i:2">Р</i><i style="--i:3">О</i><i style="--i:4">Н</i><i style="--i:5">И</i><i style="--i:6">К</i><i style="--i:7">А</i><b class="names__amp">и</b></span>
+      <span class="names__row"><i style="--i:8">Г</i><i style="--i:9">Л</i><i style="--i:10">Е</i><i style="--i:11">Б</i></span>
     </h1>
 
     <!-- Тень падает на имена и на бумагу, но не на саму ветвь: она здесь
@@ -167,6 +167,17 @@
             </label>
           </fieldset>
 
+          <div class="field">
+            <span class="label" id="plusQ">Кто-то приедет с вами?</span>
+            <div class="cnt">
+              <button class="cnt__b" type="button" data-d="-1" aria-label="Убрать одного">&minus;</button>
+              <output class="cnt__v" id="plusV" for="plusQ">0</output>
+              <button class="cnt__b" type="button" data-d="1" aria-label="Добавить одного">+</button>
+              <span class="cnt__hint" id="plusHint">приду один</span>
+            </div>
+            <div class="mates" id="mates"></div>
+          </div>
+
           <label class="check">
             <input type="checkbox" name="bus" value="1">
             <span>Мне нужно место в&nbsp;автобусе</span>
@@ -191,7 +202,7 @@
 
 <footer class="foot">
   <div class="wrap foot__grid">
-    <p class="foot__names">Ника и Глеб</p>
+    <p class="foot__names">Вероника и Глеб</p>
     <p class="foot__meta">22&nbsp;мая 2027 / усадьба «Липовка»</p>
   </div>
 </footer>

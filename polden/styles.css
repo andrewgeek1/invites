@@ -145,7 +145,7 @@ p { text-wrap: pretty; max-width: 58ch; }
   align-self: center;
   display: grid;
   justify-items: start;
-  font-size: clamp(3.4rem, 14vw, 15rem);
+  font-size: calc(clamp(3.4rem, 14vw, 15rem) * var(--fit, 1));
   line-height: .84;
   letter-spacing: -.045em;
   white-space: nowrap;
@@ -373,6 +373,28 @@ p { text-wrap: pretty; max-width: 58ch; }
 /* Метка чекбокса своим правилом: общее `.field label` иначе перебивает её
    по весу селектора, вешает display:block с капслоком — и квадрат наезжает
    на первую букву. Ловушка уже стоила времени на другом сайте. */
+/* число спутников гость набирает сам: и «приду», и «не смогу»
+   спрашивают об этом одинаково — по канону правок */
+.cnt { display: flex; align-items: center; gap: 14px; margin-top: 2px; }
+.cnt__b {
+  width: 40px; height: 40px; flex: none; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ink) 34%, transparent);
+  background: transparent; color: var(--ink); font: inherit; font-size: 19px; line-height: 1;
+  cursor: pointer;
+  transition: border-color 320ms var(--e), background-color 320ms var(--e), color 320ms var(--e);
+}
+.cnt__b:hover:not(:disabled), .cnt__b:focus-visible {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+.cnt__b:disabled { opacity: .32; cursor: default; }
+.cnt__v {
+  min-width: 1.3em; text-align: center; font-size: 24px; line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.cnt__hint { font-size: .95rem; color: color-mix(in srgb, var(--ink) 62%, transparent); }
+.mates { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0 var(--s3); }
+.mates .field { margin-top: var(--s2); width: 100%; }
+
 .check {
   display: inline-flex;
   align-items: center;
@@ -431,7 +453,7 @@ p { text-wrap: pretty; max-width: 58ch; }
 @media (max-width: 767px) {
   /* Два ряда работают и здесь без переделки — каркас изначально
      вертикальный, а не развёрнутый под широкий экран. */
-  .names { font-size: clamp(3.6rem, 20vw, 7rem); line-height: .9; }
+  .names { font-size: calc(clamp(3.6rem, 20vw, 7rem) * var(--fit, 1)); line-height: .9; }
   .branch {
     right: -18%;
     height: 42svh;
