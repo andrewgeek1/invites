@@ -72,7 +72,23 @@ function pinCards() {
     // подвес укорачиваем ровно настолько, чтобы карточка влезла в экран
     const up = h.classList.contains('hang--up');
     const card = $('.card', h);
-    const room = (up ? y : G.vh - y) - card.offsetHeight - 16;   // запас на качание
+    // сколько места есть от нити до края экрана
+    const free = (up ? y : G.vh - y) - 22;
+
+    // карточка не прокручивается вместе с лентой, поэтому она обязана влезть.
+    // Сначала пробуем как есть, потом плотный режим, и только если и он
+    // не спас — отдаём карточке свою прокрутку, чтобы кнопка осталась достижима.
+    card.style.maxHeight = '';
+    card.classList.remove('is-crowded', 'is-tall');
+    if (card.scrollHeight > free) {
+      card.classList.add('is-crowded');
+      if (card.scrollHeight > free) {
+        card.classList.add('is-tall');
+        card.style.maxHeight = free.toFixed(0) + 'px';
+      }
+    }
+
+    const room = free - card.offsetHeight - 16;   // запас на качание
     // длину берём по факту отрисовки: --drop может быть задан через var()
     const want = $('.hang__string', h).offsetHeight;
     h.style.setProperty('--drop', Math.max(6, Math.min(want, room)).toFixed(0) + 'px');
@@ -178,6 +194,12 @@ function renderStep() {
     guests.appendChild(wrap);
   }
   for (let i = have; i > plus; i--) guests.lastElementChild.remove();
+
+  /* карточка висит на нити и не прокручивается: чем больше полей, тем плотнее
+     их приходится складывать, иначе кнопка «Отправить» уезжает под нижний край.
+     Плотный режим включает pinCards() по факту нехватки места, а не по числу. */
+  guests.style.setProperty('--cols', plus > 8 ? 4 : plus > 6 ? 3 : plus > 3 ? 2 : 1);
+  pinCards();
 }
 
 $$('.step__b').forEach(b => b.addEventListener('click', () => {

@@ -274,12 +274,18 @@ p { text-wrap: pretty; max-width: 58ch; }
    а у этой секции своего фона не было — и тень просвечивала сквозь неё,
    наезжая на первую строку заголовка. Непрозрачная бумага её обрезает. */
 .invite { position: relative; z-index: 1; background: var(--paper); padding-top: var(--s7); }
+/* весь текст после обложки — по оси страницы: номер над заголовком,
+   колонка по центру. Одного text-align мало: колонкам с max-width
+   нужен ещё margin-inline. */
 .invite__grid, .road__grid, .answer__grid {
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
 }
-.invite__text { max-width: min(100%, 820px); display: grid; gap: var(--s4); }
+.invite__grid > .num, .road__grid > .num, .answer__grid > .num { margin-bottom: var(--s3); }
+.invite__text { max-width: min(100%, 820px); margin-inline: auto;
+  display: grid; justify-items: center; gap: var(--s4); }
 
 /* Фото во всю ширину окна, впритык к краю — без рамок и радиусов. */
 .shot { margin: var(--s7) 0 0; }
@@ -290,6 +296,11 @@ p { text-wrap: pretty; max-width: 58ch; }
 /* ── 03 что нужно знать ──────────────────────────────────────────────────── */
 .facts { position: relative; z-index: 1; padding: var(--s7) 0; }
 .facts h2 { margin-bottom: var(--s6); }
+.facts .wrap { text-align: center; }
+/* у абзацев в проекте max-width: 58ch — без margin-inline коробка остаётся
+   у левого поля, и по центру встаёт только текст внутри неё */
+.facts .wrap > p, .fact p { margin-inline: auto; }
+.fact { text-align: center; }
 .facts__list {
   list-style: none;
   margin: 0;
@@ -314,13 +325,15 @@ p { text-wrap: pretty; max-width: 58ch; }
 .road { position: relative; z-index: 1; }
 .shot--road { margin-top: 0; }
 .road__grid { padding-top: var(--s6); padding-bottom: var(--s7); }
-.road__text { max-width: min(100%, 760px); display: grid; justify-items: start; gap: var(--s4); }
+.road__text { max-width: min(100%, 760px); margin-inline: auto;
+  display: grid; justify-items: center; gap: var(--s4); }
 
 /* ── 05 ответ ────────────────────────────────────────────────────────────── */
 .answer { position: relative; z-index: 1; padding-bottom: var(--s7); }
-.answer__box { max-width: min(100%, 760px); display: grid; gap: var(--s4); }
+.answer__box { max-width: min(100%, 760px); margin-inline: auto;
+  display: grid; justify-items: center; gap: var(--s4); }
 
-.form { display: grid; gap: var(--s4); justify-items: start; }
+.form { display: grid; gap: var(--s4); justify-items: center; text-align: left; }
 .field { display: grid; gap: var(--s1); width: min(420px, 100%); }
 .field label {
   font-family: var(--f-display);
@@ -373,7 +386,7 @@ p { text-wrap: pretty; max-width: 58ch; }
 }
 .check input { accent-color: var(--accent); width: 18px; height: 18px; }
 
-.thanks { display: grid; gap: var(--s2); }
+.thanks { display: grid; gap: var(--s2); justify-items: center; text-align: center; }
 .thanks__big {
   font-family: var(--f-display);
   font-size: clamp(2rem, 5vw, 4rem);
@@ -389,10 +402,11 @@ p { text-wrap: pretty; max-width: 58ch; }
   padding: var(--s6) 0 var(--s5);
   border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
 }
-.foot__grid { display: grid; gap: var(--s1); }
+/* подвал растянут по ширине: имена у левого поля, дата и место у правого */
+.foot__grid { display: flex; justify-content: space-between; align-items: baseline;
+  gap: var(--s4); flex-wrap: wrap; }
 .foot__names { font-family: var(--f-display); font-size: 26px; letter-spacing: -.02em; }
-.foot__meta { font-size: 14px; opacity: .7; }
-.foot__note { font-size: .84rem; opacity: .5; }
+.foot__meta { font-size: 17px; opacity: .75; text-align: right; }
 
 /* ── появление ───────────────────────────────────────────────────────────── */
 .rise {
@@ -446,4 +460,58 @@ p { text-wrap: pretty; max-width: 58ch; }
   .names i, .names__amp, .branch { transition-delay: 0ms !important; }
   .is-in .rise { transition-duration: 1ms; transition-delay: 0ms; }
   .rise { filter: none; }
+}
+
+
+/* ── листопад с ветви ────────────────────────────────────────────────────── */
+/* Ветвь висит справа сверху, поэтому и листья идут только справа: слой узкий,
+   прижат к правому краю. Падение и качание разнесены по двум элементам,
+   чтобы каждый анимировал ровно один transform. */
+.fall {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(38vw, 560px);
+  height: 100vh;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.fall i {
+  position: absolute;
+  top: -14vh;
+  left: var(--x);
+  width: calc(clamp(19px, 1.9vw, 34px) * var(--sc));
+  aspect-ratio: 30 / 46;
+  animation: leaf-drop var(--dur) linear var(--delay) infinite;
+}
+.fall b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: .62;
+  /* форма повторяет лист на самой ветви: вытянутый овал с прожилкой,
+     а не сердцевидный лист из общей библиотеки */
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 46'%3E%3Cpath fill='%236E6A57' d='M15 1c8 8.6 12.4 17.7 12.4 26.1 0 9.4-5.6 15.6-12.4 18.9C8.2 42.7 2.6 36.5 2.6 27.1 2.6 18.7 7 9.6 15 1Z'/%3E%3Cpath fill='%23000' fill-opacity='.14' d='M14.4 6h1.2v37h-1.2z'/%3E%3C/svg%3E");
+  animation: leaf-sway calc(var(--dur) / 3.4) ease-in-out var(--delay) infinite alternate;
+}
+.fall i:nth-child(3n) b { opacity: .44;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 46'%3E%3Cpath fill='%233F4A32' d='M15 1c8 8.6 12.4 17.7 12.4 26.1 0 9.4-5.6 15.6-12.4 18.9C8.2 42.7 2.6 36.5 2.6 27.1 2.6 18.7 7 9.6 15 1Z'/%3E%3Cpath fill='%23000' fill-opacity='.14' d='M14.4 6h1.2v37h-1.2z'/%3E%3C/svg%3E"); }
+.fall i:nth-child(4n) b { opacity: .56;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 46'%3E%3Cpath fill='%23B07A2E' d='M15 1c8 8.6 12.4 17.7 12.4 26.1 0 9.4-5.6 15.6-12.4 18.9C8.2 42.7 2.6 36.5 2.6 27.1 2.6 18.7 7 9.6 15 1Z'/%3E%3Cpath fill='%23000' fill-opacity='.14' d='M14.4 6h1.2v37h-1.2z'/%3E%3C/svg%3E"); }
+
+@keyframes leaf-drop {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  100% { transform: translate3d(0, 128vh, 0) rotate(var(--rot)); }
+}
+@keyframes leaf-sway {
+  0%   { transform: translate3d(-14px, 0, 0); }
+  100% { transform: translate3d(16px, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .fall { display: none; } }
+@media (max-width: 720px) {
+  /* на телефоне колонка узкая: листья лезли бы на текст */
+  .fall { width: 42vw; }
+  .fall i:nth-child(n+7) { display: none; }
 }

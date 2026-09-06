@@ -60,8 +60,25 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 /* ─────────── первый экран ─────────── */
 .top{padding-block:clamp(72px,13vh,150px) var(--sec)}
 .top__lead{margin-top:clamp(18px,2.4vw,30px);max-width:54ch;font-size:clamp(16px,1.35vw,20px);color:var(--t1)}
-.top__act{margin-top:clamp(30px,4vw,52px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(16px,2.4vw,32px)}
+.top__act{margin-top:clamp(30px,4vw,52px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(14px,1.6vw,20px)}
 .top__note{font-size:14.5px;color:var(--t2);max-width:34ch}
+.top__lead--dim{color:var(--t2);font-size:clamp(15px,1.15vw,17.5px)}
+/* четыре числа вместо абзаца «о нас»: заказчик считывает объём за секунду */
+.top__facts{
+  list-style:none;margin-top:clamp(30px,4vw,52px);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,30px);
+  max-width:900px;
+}
+.top__facts li{display:flex;flex-direction:column;gap:5px;
+  padding-top:14px;border-top:1px solid var(--line)}
+.top__facts b{font-family:var(--f-disp);font-weight:500;letter-spacing:-.03em;
+  font-size:clamp(1.32rem,2.1vw,1.95rem);line-height:1;white-space:nowrap;
+  font-variant-numeric:lining-nums}
+.top__facts span{font-size:14px;color:var(--t2)}
+@media (max-width:720px){
+  .top__facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .band__head{grid-template-columns:minmax(0,1fr)}
+}
 
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
@@ -79,6 +96,8 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .btn:hover::before{transform:none}
 .btn:active{transform:scale(.98)}
 .btn--big{min-height:58px;padding:0 38px;font-size:16.5px}
+.btn--ghost{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn--ghost::before{background:var(--paper-2)}
 
 /* ─────────── общий заголовок раздела ─────────── */
 .head{max-width:64ch;margin-bottom:clamp(34px,4.6vw,68px)}
@@ -87,12 +106,27 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 /* ─────────── работы ─────────── */
 .works{padding-block:0 var(--sec)}
 .grid{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(30px,4vw,64px)}
-.work:first-child{grid-column:1/-1}
-/* Первая карточка занимает обе колонки, поэтому при чётном общем числе
-   последняя остаётся одна в ряду. Правило самонастраивается: растягиваем
-   её ровно тогда, когда она чётная по счёту. Добавится одиннадцатая
-   работа — растяжка снимется сама. */
-.work:last-child:nth-child(even){grid-column:1/-1}
+/* работы разложены по уровням, в каждой полосе чётное число карточек —
+   растяжка первой больше не нужна, ряды и так полные */
+
+/* ─────────── полоса уровня ─────────── */
+.band{padding-top:clamp(34px,4.4vw,64px)}
+.band + .band{margin-top:clamp(46px,6vw,96px);border-top:1px solid var(--line-soft)}
+.band__head{
+  display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);
+  align-items:baseline;column-gap:clamp(16px,2.4vw,30px);row-gap:10px;
+  margin-bottom:clamp(24px,3vw,42px);
+}
+.band__name{
+  font-size:clamp(1.5rem,2.5vw,2.15rem);line-height:1;letter-spacing:-.03em;
+}
+.band__price{
+  font-family:var(--f-disp);font-size:clamp(1.02rem,1.15vw,1.24rem);
+  color:var(--accent);letter-spacing:-.01em;transition:color 700ms var(--e);
+  white-space:nowrap;
+}
+.band__lead{grid-column:1/-1;max-width:62ch;color:var(--t1);font-size:clamp(15px,1.15vw,17px)}
+
 .work__shot{
   display:block;position:relative;overflow:hidden;border-radius:6px;
   background:var(--paper-2);box-shadow:0 1px 0 var(--line);
@@ -198,7 +232,11 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 }
 .tier--mid{border-color:var(--ink)}
 .tier__n{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--t2)}
-.tier__p{font-family:var(--f-disp);font-size:clamp(1.6rem,2.4vw,2.2rem);letter-spacing:-.03em;line-height:1}
+.tier__p{font-family:var(--f-disp);font-size:clamp(2rem,3vw,2.9rem);letter-spacing:-.035em;
+  line-height:1;font-variant-numeric:lining-nums tabular-nums;display:flex;align-items:baseline;gap:.24em}
+.tier__from{font-family:var(--f-text);font-size:.42em;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--t2);transform:translateY(-.15em)}
+.tier__cur{font-size:.62em;color:var(--t2)}
 .tiers p:not(.tier__n):not(.tier__p):not(.tier__t){color:var(--t1);font-size:15.5px}
 .tier__t{margin-top:auto;padding-top:12px;font-size:13.5px;color:var(--t2);border-top:1px solid var(--line-soft)}
 

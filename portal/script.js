@@ -132,8 +132,8 @@ function doves(host, n, opts = {}) {
    по построению, а не подгонкой концов. */
 
 const WAVE = 940;                       // длина волны меандра, px
-const RIBBON = ['top', 'invite', 'count', 'story', 'day', 'venue', 'gallery',
-                'dress', 'asks', 'faq', 'seating', 'rsvp', 'final'];
+const RIBBON = ['top', 'invite', 'count', 'seating', 'day', 'venue', 'gallery',
+                'dress', 'asks', 'faq', 'rsvp', 'final'];
 
 const ribbons = [];                     // {sec, svg, path, len, top, h, from}
 let knots = [];                         // {el, y, lit}

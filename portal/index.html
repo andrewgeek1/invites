@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Лев и Агата · 21 августа 2027</title>
-<meta name="description" content="Приглашение на свадьбу Льва и Агаты. 21 августа 2027, усадьба «Красный Яр» на Волге.">
+<meta name="description" content="Приглашение на свадьбу Льва и Агаты. 21 августа 2027, усадьба «Ярилово» на Волге.">
 <meta name="theme-color" content="#2A0E15">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,8 +87,8 @@
     <h1 class="names" id="names">Лев<span class="amp">и</span>Агата</h1>
     <div class="hero__meta">
       <b data-ru="Суббота, 21 августа 2027" data-en="Saturday, 21 August 2027">Суббота, 21 августа 2027</b>
-      <span data-ru="усадьба «Красный Яр» · село Кадницы · 47 км от Нижнего Новгорода"
-            data-en="Krasny Yar estate · Kadnitsy · 47 km from Nizhny Novgorod">усадьба «Красный Яр» · село Кадницы · 47 км от Нижнего Новгорода</span>
+      <span data-ru="усадьба «Ярилово» · село Кадницы · 47 км от Нижнего Новгорода"
+            data-en="Yarilovo estate · Kadnitsy · 47 km from Nizhny Novgorod">усадьба «Ярилово» · село Кадницы · 47 км от Нижнего Новгорода</span>
     </div>
   </div>
   <div class="hero__scroll" data-ru="Вниз по ленте" data-en="Follow the ribbon">Вниз по ленте</div>
@@ -107,7 +107,7 @@
       <hr class="rule">
       <dl class="facts rise">
         <div><dt data-ru="Когда" data-en="When">Когда</dt><dd data-ru="21 августа 2027, суббота, сбор с 15:00" data-en="21 August 2027, Saturday, from 15:00">21 августа 2027, суббота, сбор с 15:00</dd></div>
-        <div><dt data-ru="Где" data-en="Where">Где</dt><dd data-ru="Усадьба «Красный Яр», Кадницы" data-en="Krasny Yar estate, Kadnitsy">Усадьба «Красный Яр», Кадницы</dd></div>
+        <div><dt data-ru="Где" data-en="Where">Где</dt><dd data-ru="Усадьба «Ярилово», Кадницы" data-en="Yarilovo estate, Kadnitsy">Усадьба «Ярилово», Кадницы</dd></div>
         <div><dt data-ru="Ответить до" data-en="RSVP by">Ответить до</dt><dd data-ru="20 июля 2027" data-en="20 July 2027">20 июля 2027</dd></div>
       </dl>
     </div>
@@ -129,32 +129,20 @@
   </div>
 </section>
 
-<!-- ══ 03 история ═══════════════════════════════════════════════════ -->
-<section class="sect" id="story">
+
+
+<!-- ══ 03 рассадка ══════════════════════════════════════════════════ -->
+<section class="sect" id="seating">
   <div class="wrap">
-    <p class="kicker kicker--num rise" data-n="03" data-ru="Как мы сюда шли" data-en="How we got here">Как мы сюда шли</p>
-    <ol class="story">
-      <li class="story__item rise">
-        <b>2019</b>
-        <p data-ru="Очередь в кассу на «Стрелке». Лев занял её за Агатой и не ушёл, когда она передумала."
-           data-en="A ticket queue at Strelka. Lev stood behind Agata and stayed when she changed her mind.">Очередь в кассу на «Стрелке». Лев занял её за Агатой и не ушёл, когда она передумала.</p>
-      </li>
-      <li class="story__item rise">
-        <b>2021</b>
-        <p data-ru="Первая общая зима и один плед на двоих в съёмной квартире на Ковалихе."
-           data-en="A first winter together and one blanket in a rented flat on Kovalikha.">Первая общая зима и один плед на двоих в съёмной квартире на Ковалихе.</p>
-      </li>
-      <li class="story__item rise">
-        <b>2024</b>
-        <p data-ru="Лодка, Волга и обгоревшие плечи. С этого лета мы считаем закаты."
-           data-en="A boat, the Volga and sunburnt shoulders. We've been counting sunsets since.">Лодка, Волга и обгоревшие плечи. С этого лета мы считаем закаты.</p>
-      </li>
-      <li class="story__item rise">
-        <b>2026</b>
-        <p data-ru="Тот самый берег в Кадницах. Предложение сделано за минуту до того, как солнце ушло."
-           data-en="That same bank at Kadnitsy. The question came a minute before the sun went down.">Тот самый берег в Кадницах. Предложение сделано за минуту до того, как солнце ушло.</p>
-      </li>
-    </ol>
+    <p class="kicker kicker--num rise" data-n="03" data-ru="Рассадка" data-en="Seating">Рассадка</p>
+    <h2 class="h-sect rise" data-ru="Найдите свой стол" data-en="Find your table">Найдите свой стол</h2>
+    <div class="seat__find rise">
+      <label class="sr" for="seat-q" data-ru="Ваше имя" data-en="Your name">Ваше имя</label>
+      <input id="seat-q" type="search" autocomplete="off" placeholder="Введите имя или фамилию"
+             data-ph-ru="Введите имя или фамилию" data-ph-en="Type your name or surname">
+      <p class="seat__answer" id="seat-answer" aria-live="polite"></p>
+    </div>
+    <div class="seat__hall" id="hall"></div>
   </div>
 </section>
 
@@ -174,7 +162,7 @@
   <div class="wrap">
     <div class="side-r">
       <p class="kicker kicker--num rise" data-n="05" data-ru="Место" data-en="Venue">Место</p>
-      <h2 class="h-sect rise" data-ru="Красный Яр" data-en="Krasny Yar">Красный Яр</h2>
+      <h2 class="h-sect rise" data-ru="Ярилово" data-en="Yarilovo">Ярилово</h2>
       <p class="lead rise" data-ru="Высокий берег над Волгой в сорока семи километрах ниже города. Отсюда закат виден целиком, от первого золота до последней полосы."
          data-en="A high bank over the Volga, forty-seven kilometres downstream. The sunset is visible whole from here.">Высокий берег над Волгой в сорока семи километрах ниже города. Отсюда закат виден целиком, от первого золота до последней полосы.</p>
       <hr class="rule">
@@ -234,27 +222,14 @@
   </div>
 </section>
 
-<!-- ══ 10 рассадка ══════════════════════════════════════════════════ -->
-<section class="sect" id="seating">
-  <div class="wrap">
-    <p class="kicker kicker--num rise" data-n="10" data-ru="Рассадка" data-en="Seating">Рассадка</p>
-    <h2 class="h-sect rise" data-ru="Найдите свой стол" data-en="Find your table">Найдите свой стол</h2>
-    <div class="seat__find rise">
-      <label class="sr" for="seat-q" data-ru="Ваше имя" data-en="Your name">Ваше имя</label>
-      <input id="seat-q" type="search" autocomplete="off" placeholder="Введите имя или фамилию"
-             data-ph-ru="Введите имя или фамилию" data-ph-en="Type your name or surname">
-      <p class="seat__answer" id="seat-answer" aria-live="polite"></p>
-    </div>
-    <div class="seat__hall" id="hall"></div>
-  </div>
-</section>
+
 
 <!-- ══ 11 ответ ═════════════════════════════════════════════════════ -->
 <section class="sect sect--rsvp" id="rsvp">
   <img class="rsvp__band" src="assets/sky-band.webp" width="1400" height="620" alt="" aria-hidden="true">
   <div class="wrap">
     <div class="card" id="rsvp-card">
-      <p class="kicker kicker--num rise" data-n="11" data-ru="Ответ" data-en="RSVP">Ответ</p>
+      <p class="kicker kicker--num rise" data-n="10" data-ru="Ответ" data-en="RSVP">Ответ</p>
       <h2 class="h-sect rise" id="rsvp-title" data-ru="Будете с нами?" data-en="Will you be there?">Будете с нами?</h2>
       <form id="form" novalidate>
         <div class="steps" id="steps"></div>

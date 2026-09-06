@@ -1,10 +1,12 @@
-/* Артём и Ксения — простой тариф.
-   Три вещи: ступенчатое появление, один фирменный ход в hero, форма ответа.
-   Ни таймера, ни рассадки, ни сохранения ответов — это уровни выше. */
+/* Роман и Дарья — простой тариф.
+   Появление блоков лесенкой и форма ответа. Кадр обложки статичен:
+   владелец просил, чтобы фотография не ездила при прокрутке.
+   Ни таймера, ни рассадки, ни сохранения ответов: это уровни выше. */
 (function () {
   'use strict';
 
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MAX_PARTY = 30;
 
   /* ---------- появление ---------- */
   var rise = [].slice.call(document.querySelectorAll('.rise'));
@@ -31,72 +33,119 @@
     });
   }
 
-  /* ---------- фирменное взаимодействие: приглашение отрывается от кадра ----------
-     Кадр отстаёт от прокрутки, текстовый блок уходит вверх и гаснет.
-     Идёт через свойство translate, а не transform, чтобы не затирать
-     transform, которым работает появление .rise.                        */
-  var hero = document.querySelector('.hero');
-  var ph   = document.querySelector('.hero__ph');
-  var txt  = document.querySelector('.hero__txt');
-
-  if (hero && ph && txt && !calm) {
-    var ticking = false;
-
-    var draw = function () {
-      ticking = false;
-      var y = window.pageYOffset || document.documentElement.scrollTop;
-      var h = hero.offsetHeight;
-      if (y > h) return;                       /* за пределами первого экрана не считаем */
-      var k = Math.min(y, h);
-      ph.style.translate  = '0 ' + (k * 0.22).toFixed(1) + 'px';
-      txt.style.translate = '0 ' + (k * -0.06).toFixed(1) + 'px';
-      txt.style.opacity   = Math.max(0, 1 - k / (h * 0.7)).toFixed(3);
-    };
-
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(draw);
-    }, { passive: true });
-
-    draw();
-  }
-
-  /* ---------- форма ответа: одно поле и один выбор ---------- */
-  var form  = document.getElementById('form');
-  var done  = document.getElementById('done');
-  var label = document.getElementById('submitLabel');
+  /* ---------- форма ответа ---------- */
+  var form = document.getElementById('form');
+  var done = document.getElementById('done');
   if (!form || !done) return;
 
-  var LABEL = {
-    yes: 'Записать меня в список',
-    no:  'Передать, что не смогу'
-  };
-  var TITLE = { yes: 'Вы в списке', no: 'Очень жаль.' };
-  var TEXT  = {
-    yes: function (n) { return 'Спасибо, ' + n + '. Ждём вас 12 сентября в «Осинках», сбор в 15:00.'; },
-    no:  function (n) { return 'Спасибо, что сказали честно, ' + n + '. Будем скучать.'; }
-  };
+  var who      = document.getElementById('who');
+  var errWho   = document.getElementById('errWho');
+  var label    = document.getElementById('submitLabel');
+  var partyQ   = document.getElementById('partyQ');
+  var partyN   = document.getElementById('partyN');
+  var partyHint= document.getElementById('partyHint');
+  var guests   = document.getElementById('guests');
+  var minusBtn = form.querySelector('.stepper__b--minus');
+  var plusBtn  = form.querySelector('.stepper__b[data-step="1"]');
+
+  var party = 0;
 
   var answer = function () {
     var el = form.querySelector('input[name="answer"]:checked');
     return el ? el.value : 'yes';
   };
 
-  form.addEventListener('change', function (e) {
-    if (e.target.name === 'answer' && label) label.innerHTML = LABEL[answer()];
+  /* числа людей словом до пятерых, дальше числом */
+  var WORD = ['', 'вдвоём', 'втроём', 'вчетвером', 'впятером'];
+  var howMany = function (total, yes) {
+    if (total === 1) return yes ? 'Приду один' : 'Не смогу приехать';
+    if (total <= 5) return (yes ? 'Придём ' : 'Не приедем ') + WORD[total - 1];
+    return (yes ? 'Нас будет ' : 'Не приедет ') + total + ' человек';
+  };
+
+  var renderGuests = function () {
+    var yes = answer() === 'yes';
+    var need = yes ? party : 0;                 /* имена нужны только у тех, кто приедет */
+    while (guests.children.length > need) guests.removeChild(guests.lastChild);
+    while (guests.children.length < need) {
+      var i = guests.children.length + 1;
+      var inp = document.createElement('input');
+      inp.type = 'text';
+      inp.className = 'guest';
+      inp.placeholder = 'Имя спутника';
+      inp.setAttribute('aria-label', 'Имя спутника номер ' + i);
+      guests.appendChild(inp);
+    }
+  };
+
+  var sync = function () {
+    var yes = answer() === 'yes';
+    partyQ.textContent = yes ? 'Кто-то придёт вместе с вами?'
+                             : 'Кто-то не сможет приехать вместе с вами?';
+    partyN.textContent = party;
+    partyHint.textContent = howMany(party + 1, yes);
+    minusBtn.disabled = party === 0;
+    plusBtn.disabled = party === MAX_PARTY;
+    if (label) label.innerHTML = yes
+      ? (party === 0 ? 'Записать меня в&nbsp;список' : 'Записать нас в&nbsp;список')
+      : (party === 0 ? 'Передать, что не&nbsp;смогу' : 'Передать, что не&nbsp;сможем');
+    renderGuests();
+  };
+
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest('.stepper__b');
+    if (!b) return;
+    party = Math.min(MAX_PARTY, Math.max(0, party + (+b.dataset.step)));
+    sync();
   });
+
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'answer') sync();
+  });
+
+  var flag = function (input, on) {
+    if (on) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+  };
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
 
-    var raw  = (document.getElementById('who').value || '').trim();
-    var name = raw.split(/\s+/)[0] || 'друзья';
-    var a    = answer();
+    var name = (who.value || '').trim();
+    var bad = !name;
+    errWho.hidden = !bad;
+    flag(who, bad);
 
-    document.getElementById('doneTitle').textContent = TITLE[a];
-    document.getElementById('doneText').innerHTML    = TEXT[a](name);
+    var names = [];
+    [].forEach.call(guests.children, function (inp) {
+      var v = (inp.value || '').trim();
+      flag(inp, !v);
+      if (!v) bad = true; else names.push(v);
+    });
+
+    if (bad) {
+      (who.getAttribute('aria-invalid') ? who : guests.querySelector('[aria-invalid]')).focus();
+      return;
+    }
+
+    var yes   = answer() === 'yes';
+    var first = name.split(/\s+/)[0];
+    var total = party + 1;
+
+    document.getElementById('doneTitle').textContent = yes ? 'Вы в списке' : 'Очень жаль.';
+
+    var when = ' 12 сентября в «Ольховке», сбор в 15:00.';
+    var text;
+    if (yes) {
+      if (total === 1)     text = 'Спасибо, ' + first + '. Ждём вас' + when;
+      else if (total <= 5) text = 'Спасибо, ' + first + '. Ждём вас ' + WORD[total - 1] + when;
+      else                 text = 'Спасибо, ' + first + '. Ждём вас, ' + total + ' человек,' + when;
+    } else {
+      if (total === 1)     text = 'Спасибо, что сказали честно, ' + first + '. Будем скучать.';
+      else if (total <= 5) text = 'Спасибо, ' + first + '. Записали: не приедете ' + WORD[total - 1] + '. Будем скучать.';
+      else                 text = 'Спасибо, ' + first + '. Записали: не приедет ' + total + ' человек. Будем скучать.';
+    }
+    document.getElementById('doneText').textContent = text;
 
     form.hidden = true;
     done.hidden = false;
@@ -105,4 +154,6 @@
     t.setAttribute('tabindex', '-1');
     t.focus({ preventScroll: true });
   });
+
+  sync();
 })();

@@ -151,8 +151,10 @@ img{display:block;max-width:100%}
 .lead b{font-weight:600}
 .lead em{font-style:normal;color:var(--red)}
 .lead{margin:clamp(18px,2.4vh,34px) auto 0;max-width:30ch;font-size:var(--fs-lead);
-  line-height:1.4;font-weight:400}
-.body{margin:clamp(14px,1.8vh,24px) auto 0;max-width:40ch;font-size:var(--fs-base)}
+  line-height:1.4;font-weight:500}
+/* абзац под лидом: тот же кегль и та же гарнитура, разница только в весе */
+.body{margin:clamp(14px,1.8vh,24px) auto 0;max-width:36ch;font-size:var(--fs-lead);
+  line-height:1.45;font-weight:300}
 .note{margin:clamp(18px,2.4vh,32px) auto 0;max-width:38ch;
   font-size:clamp(1rem,.96rem + .2vw,1.12rem)}
 .addr{margin:clamp(16px,2.2vh,30px) auto 0;font-size:var(--fs-lead);line-height:1.4}
@@ -267,7 +269,33 @@ img{display:block;max-width:100%}
 .step__b:hover:not(:disabled),.step__b:focus-visible{background:var(--red);border-color:var(--red);color:var(--paper)}
 .step__b:disabled{opacity:.3;cursor:default}
 .step__v{font-size:clamp(1.9rem,1.2rem + 1.6vw,2.8rem);min-width:1.6em;line-height:1}
-.guests{display:grid;gap:0}
+.guests{display:grid;gap:0;grid-template-columns:repeat(var(--cols,1),1fr);
+  column-gap:clamp(12px,1.4vw,22px)}
+
+/* плотный режим: спутников много, а карточка не прокручивается —
+   поджимаем поля и отступы, чтобы кнопка не ушла под нижний край экрана */
+.card--big.is-crowded{width:min(74ch,62vw);
+  padding:clamp(20px,2vw,32px) clamp(22px,2.2vw,40px) clamp(22px,2.2vw,34px)}
+.is-crowded .rh{margin-bottom:4px;font-size:clamp(.86rem,.82rem + .2vw,1rem)}
+.is-crowded .h{font-size:clamp(1.7rem,1.2rem + 1.7vw,2.6rem)}
+.is-crowded .form{width:min(58vw,760px);margin-top:clamp(10px,1.4vh,18px)}
+.is-crowded .field{margin-bottom:clamp(9px,1.1vh,14px)}
+.is-crowded .field input{padding:11px 2px 8px}
+.is-crowded .field label{top:11px}
+.is-crowded .note{margin-top:clamp(10px,1.4vh,16px);font-size:clamp(.86rem,.84rem + .16vw,.98rem)}
+.is-crowded .pick{margin-bottom:clamp(12px,1.5vh,18px)}
+.is-crowded .pick span{min-height:44px}
+.is-crowded .step{margin-bottom:clamp(8px,1vh,12px)}
+.is-crowded .step__q{margin-bottom:6px}
+.is-crowded .step__b{width:36px;height:36px}
+.is-crowded .btn{min-height:48px;margin-top:clamp(12px,1.6vh,22px)}
+.is-crowded .step__v{font-size:clamp(1.6rem,1.1rem + 1.1vw,2.1rem)}
+.is-crowded .guests .field{margin-bottom:clamp(8px,1vh,12px)}
+.is-crowded .guests .field input{padding:10px 2px 7px}
+.is-crowded .guests .field label{top:10px}
+.is-crowded .note{margin-top:clamp(10px,1.4vh,16px)}
+/* последняя страховка на низком экране: карточка получает свою прокрутку */
+.card.is-tall{overflow-y:auto}
 
 .btn--send{border-color:var(--ink);background:var(--ink);color:#FFFFFF;font-weight:600;
   box-shadow:6px 6px 0 var(--hair)}

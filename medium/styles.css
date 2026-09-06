@@ -1,5 +1,5 @@
 /* =========================================================
-   Артём и Ксения — средний тариф
+   Егор и Полина — средний тариф
    Токены: бумага / чернила / олива. Одна кривая. Onest 300+400.
    ========================================================= */
 
@@ -346,6 +346,21 @@ figcaption span{font-variant-numeric:tabular-nums;letter-spacing:.14em;
 
 .only-yes{display:contents}
 .form.is-no .only-yes{display:none}
+
+/* число спутников гость набирает сам — и когда придёт, и когда не сможет */
+.cnt__cap{font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:var(--t2)}
+.cnt{display:flex;align-items:center;gap:14px;margin-top:2px}
+.cnt__b{width:44px;height:44px;flex:none;border:1px solid var(--line);border-radius:999px;
+  background:transparent;color:var(--ink);font:inherit;font-size:20px;line-height:1;cursor:pointer;
+  transition:border-color 440ms var(--e),background-color 380ms var(--e),color 320ms var(--e)}
+.cnt__b:hover:not(:disabled),.cnt__b:focus-visible{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cnt__b:disabled{opacity:.32;cursor:default}
+.cnt__v{min-width:1.3em;text-align:center;font-size:26px;line-height:1;
+  font-variant-numeric:lining-nums tabular-nums}
+.cnt__hint{font-size:14px;color:var(--t2)}
+.mates{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:0 clamp(16px,2vw,28px)}
+.mates .f{margin-top:14px}
 
 .pick{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
 .pick__i{position:relative;display:inline-flex;min-height:44px;align-items:center}

@@ -15,6 +15,21 @@
 <!-- фоновая дымка пятен на всю страницу; густой слой живёт в обложке -->
 <div class="shade shade--a" aria-hidden="true"></div>
 
+<!-- листопад: листья срываются с ветви в правом верхнем углу обложки.
+     Только transform и opacity — прокрутка остаётся чистой. -->
+<div class="fall" aria-hidden="true">
+    <i style="--x:4%;--dur:15.5s;--delay:0s;--sc:0.92;--rot:318deg"><b></b></i>
+    <i style="--x:17%;--dur:19.0s;--delay:-3.4s;--sc:0.72;--rot:-260deg"><b></b></i>
+    <i style="--x:31%;--dur:13.4s;--delay:-7.1s;--sc:1.04;--rot:208deg"><b></b></i>
+    <i style="--x:44%;--dur:21.5s;--delay:-1.6s;--sc:0.64;--rot:-330deg"><b></b></i>
+    <i style="--x:56%;--dur:16.8s;--delay:-9.4s;--sc:0.86;--rot:272deg"><b></b></i>
+    <i style="--x:66%;--dur:18.2s;--delay:-5.2s;--sc:1.0;--rot:-190deg"><b></b></i>
+    <i style="--x:75%;--dur:14.6s;--delay:-12.0s;--sc:0.74;--rot:300deg"><b></b></i>
+    <i style="--x:83%;--dur:20.4s;--delay:-8.0s;--sc:0.9;--rot:-238deg"><b></b></i>
+    <i style="--x:90%;--dur:17.2s;--delay:-2.8s;--sc:0.66;--rot:214deg"><b></b></i>
+    <i style="--x:96%;--dur:15.0s;--delay:-11.2s;--sc:0.98;--rot:-292deg"><b></b></i>
+</div>
+
 <header class="top">
   <span class="label">Приглашение</span>
 </header>
@@ -178,7 +193,6 @@
   <div class="wrap foot__grid">
     <p class="foot__names">Ника и Глеб</p>
     <p class="foot__meta">22&nbsp;мая 2027 / усадьба «Липовка»</p>
-    <p class="foot__note">Вопросы в&nbsp;общий чат или прямо нам</p>
   </div>
 </footer>
 

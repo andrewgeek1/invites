@@ -1,4 +1,4 @@
-/* Артём и Ксения — средний тариф. Без зависимостей.
+/* Егор и Полина — средний тариф. Без зависимостей.
    Вся прокрутка обслуживается ОДНИМ слушателем и ОДНИМ кадром rAF:
    геометрия читается не чаще раза на ресайз, в кадре только запись стилей. */
 (function () {
@@ -61,8 +61,8 @@
         'DTSTAMP:20260823T090000Z',
         'DTSTART:20260912T120000Z',
         'DTEND:20260912T203000Z',
-        'SUMMARY:Свадьба Артёма и Ксении',
-        'LOCATION:Усадьба «Осинки», село Богородицкое, Нижегородская область',
+        'SUMMARY:Свадьба Егора и Полины',
+        'LOCATION:Усадьба «Медовка», село Хабарское, Нижегородская область',
         'DESCRIPTION:Сбор гостей в 14:00. Церемония в 15:00. Автобус от площади Минина в 13:00.',
         'END:VEVENT', 'END:VCALENDAR'
       ].join('\r\n');
@@ -108,6 +108,46 @@
 
     name.addEventListener('input', function () { name.closest('.f').classList.remove('is-bad'); });
 
+    /* сколько человек с вами — считает сам гость, а не выбирает из готовых кнопок */
+    var MAX = 20, plus = 0;
+    var plusQ = $('#plusQ'), plusV = $('#plusV'), plusHint = $('#plusHint'), mates = $('#mates');
+
+    function word(n) {
+      return ['никого, приду один', 'ещё один человек', 'ещё двое', 'ещё трое', 'ещё четверо', 'ещё пятеро'][n]
+             || 'ещё ' + n + ' человек';
+    }
+    function wordNo(n) {
+      return ['не сможете только вы', 'не сможете вдвоём', 'не сможете втроём', 'не сможете вчетвером',
+              'не сможете впятером'][n] || 'не сможет ' + (n + 1) + ' человек';
+    }
+    function renderPlus() {
+      var yes = going();
+      plusQ.textContent = yes ? 'Кто-то приедет с вами?' : 'Кто-то не сможет приехать вместе с вами?';
+      plusV.textContent = plus;
+      plusHint.textContent = yes ? word(plus) : wordNo(plus);
+      $$('.cnt__b', f).forEach(function (b) {
+        var d = +b.dataset.d;
+        b.disabled = (d < 0 && plus === 0) || (d > 0 && plus === MAX);
+      });
+      var have = $$('.f', mates).length;
+      for (var i = have; i < plus; i++) {
+        var box = document.createElement('div');
+        box.className = 'f';
+        box.innerHTML = '<label for="mate' + i + '">Кто именно</label>' +
+                        '<input id="mate' + i + '" type="text" placeholder="Имя и фамилия">';
+        mates.appendChild(box);
+      }
+      for (var j = have; j > plus; j--) mates.lastElementChild.remove();
+    }
+    $$('.cnt__b', f).forEach(function (b) {
+      b.addEventListener('click', function () {
+        plus = Math.max(0, Math.min(MAX, plus + (+b.dataset.d)));
+        renderPlus();
+      });
+    });
+    $$('input[name=going]', f).forEach(function (r) { r.addEventListener('change', renderPlus); });
+    renderPlus();
+
     function show(saved) {
       f.hidden = true; done.hidden = false;
       if (saved.going === 'yes') {
@@ -130,7 +170,9 @@
       }
       var data = {
         name: name.value.trim(), going: going() ? 'yes' : 'no',
-        plus: $('#fPlus').value.trim(), menu: $('#fMenu').value,
+        plus: plus,
+        mates: $$('input', mates).map(function (i) { return i.value.trim(); }).filter(Boolean),
+        menu: $('#fMenu').value,
         bus: ($('input[name=bus]:checked', f) || {}).value || '',
         note: $('#fNote').value.trim(), at: new Date().toISOString()
       };

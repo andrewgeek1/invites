@@ -1,5 +1,5 @@
 /* =========================================================
-   Артём и Ксения — простой тариф. Направление «Афиша».
+   Роман и Дарья — простой тариф. Направление «Афиша».
    Обложка: кадр на весь экран, весь текст внизу по оси.
    Вся страница симметрична — канон правок владельца, §2.
    Токены: крем / чернила / сургуч. Oswald 300 + Golos Text 400
@@ -64,8 +64,11 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 /* рукописное «и» между именами — на уровне низа букв, не по центру строки */
 .names i,.sign i{font-family:"Caveat",cursive;font-style:normal;
   text-transform:lowercase;letter-spacing:0;color:var(--seal);
-  font-size:.62em;padding:0 .16em;position:relative;top:.05em}
-.sign i{font-size:.95em;padding:0 .22em;top:.08em}
+  font-size:.62em;position:relative;top:.05em;
+  /* Caveat наклонён вправо: её видимый хвост ближе к правому имени,
+     поэтому справа просвет шире, чем слева — по чернилам, а не по боксу */
+  margin-left:.30em;margin-right:.36em}
+.sign i{font-size:.95em;top:.08em;margin-left:.26em;margin-right:.32em}
 
 .sign{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
   font-size:clamp(1.5rem,1.2rem + 1.1vw,2.1rem);letter-spacing:.01em;opacity:.85}
@@ -79,7 +82,9 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 .mid h2{margin-bottom:var(--s1)}
 .mid__cta{margin:var(--s2) 0 0}
 
-.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+/* без mix-blend-mode: multiply заставлял композитор читать фон каждый кадр
+   и давал 26% медленных кадров на прокрутке при 4× замедлении */
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.045;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
   background-size:200px 200px}
 
@@ -117,6 +122,16 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
   mask-image:linear-gradient(to top,#000 0%,#000 16%,transparent 94%);
   -webkit-mask-image:linear-gradient(to top,#000 0%,#000 16%,transparent 94%)}
 
+/* кадр не обрывается линией, а сходит в цвет страницы —
+   градиент дешевле маски и не мешает прокрутке */
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;z-index:3;
+  height:clamp(90px,17svh,220px);pointer-events:none;
+  background:linear-gradient(to bottom,
+    rgba(240,235,227,0) 0%,
+    rgba(240,235,227,.34) 42%,
+    rgba(240,235,227,.78) 74%,
+    var(--paper) 100%)}
+
 .hero__top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
   justify-content:space-between;align-items:baseline;gap:var(--s4);
   padding:clamp(16px,2.2vh,28px) var(--pad) 0}
@@ -130,13 +145,13 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 .hero__nav a:hover{opacity:1}
 .hero__nav a:hover::after{transform:scaleX(1)}
 
-.hero__txt{position:absolute;z-index:4;left:0;right:0;bottom:clamp(34px,6svh,80px);
+.hero__txt{position:absolute;z-index:4;left:0;right:0;bottom:clamp(96px,17svh,210px);
   padding-inline:var(--pad);display:flex;flex-direction:column;align-items:center;
   text-align:center;gap:var(--s2)}
 .hero__txt .label,.hero__txt .lead,.hero__txt .friction{opacity:.92}
 .hero__cta{margin:var(--s1) 0 0}
 
-/* кегль ниже опорной шкалы канона: строка «Артём и Ксения» в nowrap
+/* кегль ниже опорной шкалы канона: строка «Роман и Дарья» в nowrap
    иначе вылезает за поля — то же решение, что на «Ротонде» */
 .names{font-family:"Oswald",sans-serif;font-weight:300;text-transform:uppercase;
   font-size:clamp(2.8rem,.5rem + 7.2vw,7.4rem);line-height:.94;letter-spacing:-.01em;
@@ -209,11 +224,47 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 .pick input:checked+label{background:var(--ink);color:var(--paper)}
 .pick input:focus-visible+label{outline:2px solid var(--seal);outline-offset:-6px}
 
+
+/* ── спутники: число задаёт гость, а не готовые кнопки (канон §4) ── */
+.party{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.stepper{display:flex;align-items:stretch;box-shadow:inset 0 0 0 1px var(--ink)}
+.stepper__b{width:58px;min-height:58px;position:relative;background:transparent;
+  border:0;border-radius:0;cursor:pointer;transition:background 320ms var(--e)}
+/* плюс и минус рисуем сами: §8 запрещает глифы клавиш в интерфейсе */
+.stepper__b::before,.stepper__b::after{content:"";position:absolute;left:50%;top:50%;
+  background:var(--ink);transition:opacity 260ms var(--e),background 320ms var(--e)}
+.stepper__b::before{width:15px;height:1px;translate:-50% -50%}
+.stepper__b::after{width:1px;height:15px;translate:-50% -50%}
+.stepper__b--minus::after{opacity:0}
+.stepper__b:hover:not(:disabled){background:var(--ink)}
+.stepper__b:hover:not(:disabled)::before,
+.stepper__b:hover:not(:disabled)::after{background:var(--paper)}
+.stepper__b:disabled{opacity:.28;cursor:default}
+.stepper__v{min-width:76px;display:grid;place-items:center;
+  font-family:"Oswald",sans-serif;font-weight:300;font-size:1.7rem;line-height:1;
+  box-shadow:inset 1px 0 0 var(--ink),inset -1px 0 0 var(--ink)}
+
+.guests{width:100%;display:flex;flex-direction:column;gap:var(--s3)}
+.guests input{width:100%;background:transparent;border:0;
+  border-bottom:1px solid var(--line);border-radius:0;padding:12px 0;text-align:center;
+  font-size:clamp(1.06rem,1rem + .34vw,1.24rem);transition:border-color 320ms var(--e)}
+.guests input::placeholder{color:var(--ink);opacity:.32}
+.guests input:focus{border-bottom-color:var(--ink)}
+
+/* валидация словами, а не «поле обязательно» (канон §4) */
+.err{font-size:.86rem;line-height:1.5;color:var(--seal);text-align:center}
+.field input[aria-invalid="true"],
+.guests input[aria-invalid="true"]{border-bottom-color:var(--seal)}
+
 /* ═══════════════════ подвал ═══════════════════ */
 .foot{padding-block:var(--s5) var(--s6);border-top:1px solid var(--line)}
 .foot__col{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 
 /* ═══════════════════ моушен ═══════════════════ */
+/* Радиус блюра оставлен как в §10 designer-front. Пробовал снизить ради
+   кадров, но замер на этой машине не воспроизводится: три прогона вперемешку
+   дали 4%, 24% и 30% для одних и тех же значений. Менять спецификацию
+   по шуму нельзя — вернул 14px. */
 .rise{opacity:0;transform:translateY(28px);filter:blur(14px)}
 .is-in .rise,.rise.is-in{opacity:1;transform:none;filter:blur(0);
   transition:opacity 900ms var(--e) var(--d,0ms),

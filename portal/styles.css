@@ -325,13 +325,21 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; margin: 0; }
 
 /* ── 01 приглашение: три факта ──────────────────────────────────── */
 
-.facts { margin: 0; display: grid; gap: clamp(18px, 3vw, 34px); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+/* три факта — опора всего приглашения, поэтому кегль здесь крупнее лида,
+   а колонки шире: строка «21 августа 2027, суббота, сбор с 15:00»
+   должна ложиться в одну-две ровные строки, а не в три обрывка */
+/* строго три колонки или строго одна: auto-fit оставлял «Ответить до»
+   одиноким на второй строке — по канону это брак */
+.facts { margin: 0; display: grid; gap: clamp(22px, 2.6vw, 38px);
+  grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; gap: clamp(20px, 3vh, 30px); } }
 .facts div { margin: 0; }
 .facts dt {
-  font: 400 .86rem/1 var(--f-display); letter-spacing: .24em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: .9em;
+  font: 400 .95rem/1 var(--f-display); letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .95em;
 }
-.facts dd { margin: 0; font-size: 1.12rem; line-height: 1.5; }
+.facts dd { margin: 0; font-size: clamp(1.26rem, 1.06rem + .58vw, 1.62rem);
+  line-height: 1.38; text-wrap: balance; }
 
 /* ── 02 отсчёт ──────────────────────────────────────────────────── */
 
@@ -348,19 +356,7 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; margin: 0; }
 
 /* ── 03 история ─────────────────────────────────────────────────── */
 
-.story { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(30px, 5vh, 62px); }
-.story__item {
-  display: grid; gap: clamp(10px, 2vw, 30px);
-  grid-template-columns: minmax(0, 8em) minmax(0, 32em);
-  margin-left: clamp(0px, var(--rail), 260px);
-  align-items: start;
-}
-.story__item b {
-  font: 400 clamp(1.9rem, 1.2rem + 2.4vw, 3.2rem)/1 var(--f-display);
-  color: var(--scarlet-lit); font-variant-numeric: lining-nums;
-}
-.story__item p { margin: .35em 0 0; }
-@media (max-width: 720px) { .story__item { grid-template-columns: 1fr; margin-left: 0; } }
+
 
 /* ── 04 хронология: строки висят напротив узлов на ленте ─────────── */
 

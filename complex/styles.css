@@ -494,11 +494,39 @@ html[lang="en"] .lang__on{ opacity:.42; }
 .care__item{ display:flex; flex-direction:column; align-items:center; gap:12px; }
 .care h3{
   margin:0; font-family:"Playfair Display", serif; font-weight:400;
-  font-size:clamp(20px,1.7vw,26px); letter-spacing:-.01em; color:var(--porcelain);
+  font-size:clamp(26px,2.4vw,36px); letter-spacing:-.02em; line-height:1.06;
+  color:var(--porcelain);
 }
 .care p{
-  margin:0; max-width:28ch;
-  font-size:clamp(16px,1.25vw,19px); line-height:1.55; color:rgba(242,237,230,.82);
+  margin:0; max-width:26ch;
+  font-size:clamp(18px,1.45vw,22px); line-height:1.5; color:rgba(242,237,230,.86);
+}
+
+/* тёплый акцент дресс-кода показан цветом, а не только словами:
+   бусины ловят свечу — металл, а не плоский образец */
+.tones{
+  list-style:none; margin:4px 0 0; padding:0;
+  display:flex; gap:clamp(14px,1.4vw,26px);
+}
+.tone{
+  display:flex; align-items:center; gap:9px;
+  font-size:clamp(15px,1.15vw,17px); line-height:1;
+  color:rgba(242,237,230,.8); letter-spacing:.02em;
+}
+.tone i{
+  position:relative; flex:none; width:clamp(22px,1.9vw,28px); aspect-ratio:1;
+  border-radius:50%;
+  background:
+    radial-gradient(60% 60% at 34% 28%, var(--hi) 0%, transparent 62%),
+    linear-gradient(146deg, var(--hi) 6%, var(--lo) 54%, #2A1E0E 100%);
+  box-shadow:
+    0 0 0 1px rgba(240,221,180,.24),
+    0 0 14px -2px color-mix(in srgb, var(--hi) 55%, transparent),
+    inset 0 -3px 6px -2px rgba(0,0,0,.55);
+}
+.tone i::after{   /* блик свечи на металле */
+  content:""; position:absolute; left:26%; top:18%; width:26%; height:18%;
+  border-radius:50%; background:rgba(255,248,232,.82); filter:blur(.4px);
 }
 @media (max-width:860px){
   .care{ grid-template-columns:1fr; gap:clamp(24px,4vh,38px); }
