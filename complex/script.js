@@ -164,6 +164,15 @@
       vpH = window.innerHeight;
       fn();
     });
+    /* Поворот экрана слушаем отдельно: на части устройств innerWidth
+       обновляется позже самого события, и проверка выше его пропустит. */
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () {
+        vpW = window.innerWidth;
+        vpH = window.innerHeight;
+        fn();
+      }, 240);
+    });
   };
 
   /* ---------------------------------------------------------
