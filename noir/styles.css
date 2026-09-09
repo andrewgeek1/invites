@@ -343,8 +343,13 @@ html:not(.js) .spread--dark{background:var(--ink)}
   .lead,.body,.note,.facts,.qa{max-width:none}
   .plan li{grid-template-columns:5em 1fr}
   .plan b{text-align:left}
-  /* кадры на телефоне встают обычными блоками, но всё так же срезаны краем */
-  .swatch li{width:clamp(56px,17vw,90px);height:clamp(80px,24vw,130px)}
+  /* Размеры задаём самому образцу, а не ячейке списка: у ячейки под образцом
+     ещё две строки подписи, и фиксированная высота их обрезала — у «Красного»
+     подпись длиннее всех, поэтому у него выдавливало и сам образец. */
+  .swatch{gap:clamp(12px,3.4vw,22px);align-items:flex-start}
+  .swatch li{width:auto;height:auto;flex:1 1 0;min-width:0;max-width:34%}
+  .chip{width:100%;max-width:clamp(56px,17vw,90px);height:clamp(80px,24vw,124px)}
+  .swatch span{font-size:clamp(.86rem,.82rem + .2vw,.98rem);text-wrap:balance}
   .form{width:100%}
   .hint{display:none}
 }

@@ -143,19 +143,20 @@ function onScroll() {
 }
 
 function frame() {
-  const delta = target - cur;
-  if (Math.abs(delta) * G.travel > 0.4) { cur += delta * (reduce ? 1 : 0.13); dirty = true; }
-  else if (dirty) { cur = target; }
-
-  if (dirty) {
-    const p = cur, px = p * G.travel;
+  /* Лента идёт ровно за пальцем, без догоняющего сглаживания.
+     Прежде она подтягивалась к позиции прокрутки долями (cur += delta * 0.13):
+     на обычной странице это читалось как инерция, а во встроенном браузере
+     Telegram — как дрожание, потому что там прокрутка отдаётся рывками
+     и лента всё время догоняла её с опозданием. */
+  if (dirty || cur !== target) {
+    cur = target;
+    const px = cur * G.travel;
 
     ribbon.style.transform = G.horiz
       ? `translate3d(${-px}px,0,0)`
       : `translate3d(0,${-px}px,0)`;
 
-
-    dirty = Math.abs(target - cur) * G.travel > 0.4;
+    dirty = false;
   }
   requestAnimationFrame(frame);
 }

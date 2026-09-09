@@ -51,6 +51,21 @@
 
   function measure() {
     width = screens[0].getBoundingClientRect().width || window.innerWidth;
+    placeNudge();
+  }
+
+  /* Подсказка «листайте» на телефоне встаёт в строку с датой у правого поля:
+     внизу она перекрывала точки пагинации. Высоту берём от реальной позиции
+     даты, иначе она поедет от длины названия места под ней. */
+  function placeNudge() {
+    var nudge = document.querySelector('.nudge');
+    var date = document.querySelector('.cover__date');
+    var first = screens[0];
+    if (!nudge || !date || !first) return;
+    if (window.innerWidth > 760) { nudge.style.removeProperty('--nudge-bottom'); return; }
+    var sr = first.getBoundingClientRect();
+    var dr = date.getBoundingClientRect();
+    nudge.style.setProperty('--nudge-bottom', Math.round(sr.bottom - dr.bottom) + 'px');
   }
 
   /* ── отрисовка: параллакс + смена активного экрана ── */

@@ -223,6 +223,13 @@ a{ color:inherit; text-decoration:none }
 .nudge i{
   width:44px; height:1px; background:rgba(232,226,212,.35); position:relative; overflow:hidden;
 }
+/* На телефоне подсказка ложилась поверх точек пагинации: обе стоят внизу,
+   и на узком экране их прямоугольники пересекаются. Поднимаем её на строку
+   с датой у правого поля — высоту подставляет скрипт по реальной позиции
+   даты, чтобы не зависеть от длины текста под ней. */
+@media (max-width:760px){
+  .nudge{ bottom:var(--nudge-bottom, 190px); gap:8px; }
+}
 .nudge i::after{
   content:""; position:absolute; inset:0; background:var(--gold);
   animation:sweep 2.6s var(--e-soft) infinite;
