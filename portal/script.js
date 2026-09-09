@@ -813,7 +813,20 @@ function init() {
 
   addEventListener('scroll', onScroll, { passive: true });
   let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { buildRibbon(); onScroll(); }, 160); });
+  /* Панели браузера на телефоне прячутся при прокрутке и стреляют resize
+     без смены ширины. Пересобирать по ним ленту нельзя: она перерисовывается
+     целиком, и страница дёргается под пальцем. */
+  let lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (innerWidth === lastW) return;
+    lastW = innerWidth;
+    clearTimeout(rt);
+    rt = setTimeout(() => { buildRibbon(); onScroll(); }, 160);
+  });
+  addEventListener('orientationchange', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => { lastW = innerWidth; buildRibbon(); onScroll(); }, 240);
+  });
 
   setInterval(countdown, 1000);
   addEventListener('load', () => { buildRibbon(); onScroll(); });

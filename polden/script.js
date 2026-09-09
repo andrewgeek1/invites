@@ -54,10 +54,18 @@
     wake();
   }
 
-  var fitRt;
+  var fitRt, lastW = window.innerWidth;
+  /* Имена подгоняются по ШИРИНЕ. На телефоне resize стреляет ещё и когда
+     прячутся панели браузера — на такой вызов пересчитывать нечего. */
   window.addEventListener('resize', function () {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
     clearTimeout(fitRt);
     fitRt = setTimeout(fitNames, 150);
+  });
+  window.addEventListener('orientationchange', function () {
+    clearTimeout(fitRt);
+    fitRt = setTimeout(function () { lastW = window.innerWidth; fitNames(); }, 240);
   });
 
   /* ── появление блоков ─────────────────────────────────────────────────

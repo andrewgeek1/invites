@@ -135,11 +135,24 @@
   prevBtn.addEventListener('click', function () { go(index - 1); });
   nextBtn.addEventListener('click', function () { go(index + 1); });
 
-  window.addEventListener('resize', function () {
+  /* Панели браузера на телефоне прячутся при прокрутке и стреляют resize
+     без смены ширины. Здесь это особенно заметно: обработчик доводит ленту
+     к текущему экрану, и лишний вызов выглядит как рывок. Ширина не менялась —
+     ничего пересчитывать не нужно. */
+  var lastW = window.innerWidth;
+  function relayout() {
     var was = index;
     measure();
     for (var i = 0; i < layers.length; i++) if (layers[i]) layers[i].last = null;
     reel.scrollTo({ left: was * width, behavior: 'auto' });
+  }
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    relayout();
+  });
+  window.addEventListener('orientationchange', function () {
+    setTimeout(function () { lastW = window.innerWidth; relayout(); }, 240);
   });
 
   /* ══════════════════════════════════════════════════════════

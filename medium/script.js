@@ -309,9 +309,19 @@
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    var rt = 0;
+    var rt = 0, lastW = window.innerWidth;
+      /* Панели браузера на телефоне прячутся при прокрутке и стреляют resize,
+         хотя ширина экрана не менялась. Пересчёт геометрии по такому событию
+         дёргает страницу под пальцем, поэтому реагируем только на смену ширины. */
     window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
       clearTimeout(rt); rt = setTimeout(function () { measure(); onScroll(); }, 160);
+    });
+    window.addEventListener('orientationchange', function () {
+      clearTimeout(rt); rt = setTimeout(function () {
+        lastW = window.innerWidth; measure(); onScroll();
+      }, 240);
     });
     window.addEventListener('load', function () { measure(); onScroll(); });
     frame();

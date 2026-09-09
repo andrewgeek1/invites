@@ -256,7 +256,24 @@ ribbon.addEventListener('focusin', e => {
 function boot() { measure(); onScroll(); cur = target; dirty = true; }
 
 let rt;
-addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(boot, 140); });
+/* На телефоне панели браузера прячутся при прокрутке вниз и возвращаются
+   при прокрутке вверх. Высота окна из-за этого скачет на сотню пикселей,
+   и каждый такой скачок прилетает сюда как resize. Пересчитывать по нему
+   раскладку нельзя: measure() переписывает высоту всего документа, лента
+   съезжает под пальцем и кажется, что страница прыгает и меняет масштаб.
+   Поэтому реагируем только на смену ШИРИНЫ — поворот экрана или ресайз окна. */
+let lastW = innerWidth;
+addEventListener('resize', () => {
+  if (innerWidth === lastW) return;
+  lastW = innerWidth;
+  clearTimeout(rt);
+  rt = setTimeout(boot, 140);
+});
+/* Поворот экрана меняет и ширину, и высоту — его слушаем отдельно и честно. */
+addEventListener('orientationchange', () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { lastW = innerWidth; boot(); }, 240);
+});
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('load', boot);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
