@@ -148,12 +148,31 @@
   });
 
   /* ---------------------------------------------------------
+     Высота вьюпорта — кэш
+     На телефоне адресная строка прячется при прокрутке, окно становится
+     ниже и стреляет resize. Если пересчитывать раскладку на каждое такое
+     событие, страница дёргается под пальцем. Держим высоту в переменной
+     и обновляем её только когда меняется ШИРИНА: поворот экрана или
+     настоящий ресайз окна.
+     --------------------------------------------------------- */
+  var vpH = window.innerHeight;
+  var vpW = window.innerWidth;
+  var onRealResize = function (fn) {
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === vpW) return;   // сменилась только высота
+      vpW = window.innerWidth;
+      vpH = window.innerHeight;
+      fn();
+    });
+  };
+
+  /* ---------------------------------------------------------
      Док
      --------------------------------------------------------- */
   var dock = $('#dock');
   var dockOn = false;
   var syncDock = function () {
-    var want = window.scrollY > window.innerHeight * 0.9;
+    var want = window.scrollY > vpH * 0.9;
     if (want === dockOn) return;
     dockOn = want;
     dock.classList.toggle('is-on', want);
@@ -222,8 +241,15 @@
     var queued = false;
     var paint = function () {
       queued = false;
+      /* На телефоне плёнка листается пальцем: CSS снимает липкость и включает
+         обычную горизонтальную прокрутку. Тогда двигать её скриптом нельзя —
+         иначе он перебивает палец и кадры дёргаются. */
+      if (window.matchMedia('(max-width:760px)').matches) {
+        track.style.transform = '';
+        return;
+      }
       var box = reel.getBoundingClientRect();
-      var span = reel.offsetHeight - window.innerHeight;
+      var span = reel.offsetHeight - vpH;
       if (span <= 0) return;
       var p = Math.min(1, Math.max(0, -box.top / span));
       var dist = track.scrollWidth - window.innerWidth;
@@ -233,7 +259,7 @@
     };
     var queue = function () { if (!queued) { queued = true; requestAnimationFrame(paint); } };
     window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
+    onRealResize(queue);
     paint();
   }
 
@@ -410,7 +436,7 @@
 
   drawPlan();
   var planTimer;
-  window.addEventListener('resize', function () {
+  onRealResize(function () {
     clearTimeout(planTimer);
     planTimer = setTimeout(drawPlan, 180);
   });

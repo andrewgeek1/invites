@@ -234,8 +234,6 @@ section,header.top,footer.end{padding-inline:var(--pad)}
 .tier__n{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--t2)}
 .tier__p{font-family:var(--f-disp);font-size:clamp(2rem,3vw,2.9rem);letter-spacing:-.035em;
   line-height:1;font-variant-numeric:lining-nums tabular-nums;display:flex;align-items:baseline;gap:.24em}
-.tier__from{font-family:var(--f-text);font-size:.42em;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--t2);transform:translateY(-.15em)}
 .tier__cur{font-size:.62em;color:var(--t2)}
 .tiers p:not(.tier__n):not(.tier__p):not(.tier__t){color:var(--t1);font-size:15.5px}
 .tier__t{margin-top:auto;padding-top:12px;font-size:13.5px;color:var(--t2);border-top:1px solid var(--line-soft)}

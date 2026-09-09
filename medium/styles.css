@@ -238,7 +238,7 @@ h3{font-size:clamp(19px,1.5vw,25px);line-height:1.12;letter-spacing:-.018em;font
 /* ======================= 05 ЛОКАЦИЯ ======================= */
 .venue{background:var(--paper-deep);padding-bottom:var(--sec)}
 .venue__media{overflow:hidden}
-.venue__media img{width:100%;height:clamp(300px,58vh,640px);object-fit:cover;object-position:50% 62%}
+.venue__media img{width:100%;height:clamp(300px,58svh,640px);object-fit:cover;object-position:50% 62%}
 .venue__in{padding-top:clamp(52px,6.4vw,100px)}
 .venue__sub{margin-top:clamp(18px,2.2vw,30px);font-size:12.5px;text-transform:uppercase;
   letter-spacing:.16em;color:var(--t2)}

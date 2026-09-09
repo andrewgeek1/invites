@@ -134,7 +134,7 @@ h3{font-size:clamp(1.5rem,1.2rem + 1.1vw,1.9rem);line-height:1.06;letter-spacing
 
 .hero__top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
   justify-content:space-between;align-items:baseline;gap:var(--s4);
-  padding:clamp(16px,2.2vh,28px) var(--pad) 0}
+  padding:clamp(16px,2.2svh,28px) var(--pad) 0}
 .wordmark{font-family:"Golos Text",sans-serif;font-size:.86rem;text-transform:uppercase;
   letter-spacing:.19em;opacity:.75;white-space:nowrap}
 .hero__nav{display:flex;gap:clamp(16px,2vw,34px);font-size:.95rem}

@@ -289,7 +289,7 @@ p { text-wrap: pretty; max-width: 58ch; }
 
 /* Фото во всю ширину окна, впритык к краю — без рамок и радиусов. */
 .shot { margin: var(--s7) 0 0; }
-.shot img { width: 100%; height: clamp(320px, 58vh, 640px); object-fit: cover; }
+.shot img { width: 100%; height: clamp(320px, 58svh, 640px); object-fit: cover; }
 
 /* ── 02 обещание ─────────────────────────────────────────────────────────── */
 .num--c { margin: 0; }
@@ -467,7 +467,7 @@ p { text-wrap: pretty; max-width: 58ch; }
   .invite__grid, .road__grid, .answer__grid { grid-template-columns: 1fr; }
   .facts__list { grid-template-columns: 1fr; gap: var(--s4); }
   .btn { width: 100%; padding-inline: var(--s4); }
-  .shot img { height: clamp(260px, 46vh, 420px); }
+  .shot img { height: clamp(260px, 46svh, 420px); }
 }
 
 /* Планшет: три факта в ряд не помещаются по мере строки. */
@@ -494,14 +494,14 @@ p { text-wrap: pretty; max-width: 58ch; }
   top: 0;
   right: 0;
   width: min(38vw, 560px);
-  height: 100vh;
+  height: 100svh;
   z-index: 5;
   pointer-events: none;
   overflow: hidden;
 }
 .fall i {
   position: absolute;
-  top: -14vh;
+  top: -14svh;
   left: var(--x);
   width: calc(clamp(19px, 1.9vw, 34px) * var(--sc));
   aspect-ratio: 30 / 46;
@@ -525,7 +525,7 @@ p { text-wrap: pretty; max-width: 58ch; }
 
 @keyframes leaf-drop {
   0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
-  100% { transform: translate3d(0, 128vh, 0) rotate(var(--rot)); }
+  100% { transform: translate3d(0, 128svh, 0) rotate(var(--rot)); }
 }
 @keyframes leaf-sway {
   0%   { transform: translate3d(-14px, 0, 0); }
